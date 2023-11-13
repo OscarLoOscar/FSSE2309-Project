@@ -1,0 +1,17 @@
+server:
+  port: 8099
+
+spring.datasource:
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/shopping
+  username: oscarlo
+  password: oscarVenturenixLab2023.
+spring.jpa:
+  show-sql: true
+  hibernate.ddl-auto:
+    update
+    # create-drop
+spring.sql.init:
+  mode: always # always
+  platform: mysql
+spring.profiles.active: enableScheduling
