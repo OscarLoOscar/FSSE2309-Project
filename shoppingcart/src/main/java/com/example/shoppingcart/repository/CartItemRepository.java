@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.example.shoppingcart.entity.CartItem;
 import com.example.shoppingcart.entity.Product;
-import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.oauth.data.user.UserEntity;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 

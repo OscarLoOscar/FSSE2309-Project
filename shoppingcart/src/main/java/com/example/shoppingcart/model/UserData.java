@@ -14,9 +14,7 @@ import lombok.Setter;
 public class UserData {
   Long userId;
 
-  String firstName;
-
-  String lastName;
+  String userName;
 
   String phone;
 

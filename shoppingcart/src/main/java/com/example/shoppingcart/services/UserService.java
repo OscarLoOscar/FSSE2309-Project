@@ -1,8 +1,8 @@
 package com.example.shoppingcart.services;
 
 import java.util.List;
-import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.model.UserData;
+import com.example.shoppingcart.oauth.data.user.UserEntity;
 
 public interface UserService {
 

@@ -1,7 +1,8 @@
-package com.example.shoppingcart.entity;
+package com.example.shoppingcart.oauth.data.user;
 
 import java.io.Serializable;
 import java.util.List;
+import com.example.shoppingcart.entity.Transaction;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,9 +27,7 @@ public class UserEntity implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long userId;
 
-  private String firstName;
-
-  private String lastName;
+   String userName;
 
   String phone;
 

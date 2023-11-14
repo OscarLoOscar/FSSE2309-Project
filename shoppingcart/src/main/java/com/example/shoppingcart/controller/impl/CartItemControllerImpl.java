@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.controller.CartItemController;
 import com.example.shoppingcart.entity.TransactionProduct;
-import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.UserData;
+import com.example.shoppingcart.oauth.data.user.UserEntity;
 import com.example.shoppingcart.services.CartItemService;
 import com.example.shoppingcart.services.impl.CartItemServiceImpl;
 

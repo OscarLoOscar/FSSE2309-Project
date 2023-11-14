@@ -1,6 +1,7 @@
 package com.example.shoppingcart.entity;
 
 import java.io.Serializable;
+import com.example.shoppingcart.oauth.data.user.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.UserData;
+import com.example.shoppingcart.oauth.data.user.UserEntity;
 import com.example.shoppingcart.repository.UserRepository;
 import com.example.shoppingcart.services.UserService;
 
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserData findUserByName(String name) {
-    return Mapper.map(userRepository.findUserByFirstName(name));
+    return Mapper.map(userRepository.findUserByUserName(name));
   }
 
   @Override
