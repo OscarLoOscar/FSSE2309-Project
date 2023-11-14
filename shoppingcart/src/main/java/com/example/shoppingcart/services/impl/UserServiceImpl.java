@@ -2,11 +2,13 @@ package com.example.shoppingcart.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.UserData;
-import com.example.shoppingcart.oauth.data.user.UserEntity;
 import com.example.shoppingcart.repository.UserRepository;
 import com.example.shoppingcart.services.UserService;
 
@@ -49,17 +51,17 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserData findUserByPhone(String phone) {
-    return Mapper.map(userRepository.findUserByPhone(phone));
+    return Mapper.map(userRepository.findUserByPhone(phone).get());
   }
 
   @Override
   public UserData findUserByEmail(String email) {
-    return Mapper.map(userRepository.findUserByEmail(email));
+    return Mapper.map(userRepository.findUserByEmail(email).get());
   }
 
   @Override
-  public UserData findUserByName(String name) {
-    return Mapper.map(userRepository.findUserByUserName(name));
+  public UserData findUserByUserName(String name) {
+    return Mapper.map(userRepository.findUserByUserName(name).get());
   }
 
   @Override
@@ -68,4 +70,17 @@ public class UserServiceImpl implements UserService {
     return Mapper.map(user);
   }
 
+  @Override
+  public UserEntity getEntityByFireBaseUserData(
+      FireBaseUserData fireBaseUserData) {
+    return userRepository.findByFireBaseUid(fireBaseUserData.getFirebaseUid())//
+        .orElseGet(() -> userRepository.save(new UserEntity(fireBaseUserData)));
+    // Optional<UserEntity> userEntity =
+    // userRepository.findByFireBaseUid(fireBaseUserData.getFirebaseUid());
+
+    // if (!userEntity.isPresent()) {
+    // userRepository.save(new UserEntity(fireBaseUserData));
+
+    // Supplier : 左邊parameter，右邊->無野行入面statement
+  }
 }

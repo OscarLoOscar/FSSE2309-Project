@@ -1,8 +1,8 @@
-package com.example.shoppingcart.oauth.data.user;
+package com.example.shoppingcart.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import com.example.shoppingcart.entity.Transaction;
+import com.example.shoppingcart.model.FireBaseUserData;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,8 +12,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -21,23 +23,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity implements Serializable {
   @Id
   @Column(name = "user_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long userId;
 
-   String userName;
+  String userName;
 
   String phone;
 
+  @Column(name = "fireBase_uid", nullable = false, unique = true) // unique = true -> column 入面value唔重覆
   String fireBaseUid;
 
+  @Column(name = "email", nullable = false, unique = true) // unique = true -> column 入面value唔重覆
   String email;
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
       fetch = FetchType.LAZY)
   private List<Transaction> transactions;
+
+  public UserEntity(FireBaseUserData fireBaseUserData) {
+    this.fireBaseUid = fireBaseUserData.getFirebaseUid();
+    this.email = fireBaseUserData.getEmail();
+  }
   // (cascade = CascadeType.ALL , fetch = FetchType.EAGER) check meaning =>
   // @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   // @JoinColumn(name = "shippingAddressId")

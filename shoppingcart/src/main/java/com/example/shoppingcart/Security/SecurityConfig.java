@@ -1,4 +1,4 @@
-package com.example.shoppingcart.oauth.security;
+package com.example.shoppingcart.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+    http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated()) //用緊anyRequest，所有request都會受保護->question: 如何不受保護 
         .csrf(csrf -> csrf.disable());
     http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
         .jwt(jwt -> jwt.decoder(JwtDecoders.fromIssuerLocation(issuer))));

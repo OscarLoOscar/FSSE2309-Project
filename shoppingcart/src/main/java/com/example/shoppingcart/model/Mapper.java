@@ -3,9 +3,9 @@ package com.example.shoppingcart.model;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.entity.CartItem;
 import com.example.shoppingcart.entity.Product;
-import com.example.shoppingcart.oauth.data.user.UserEntity;
 
 // @Component
 public class Mapper {
@@ -41,12 +41,10 @@ public class Mapper {
         .build();
   }
 
-  public static UserEntity map(UserData userEntity) {
+  public static UserEntity map(FireBaseUserData data) {
     return UserEntity.builder()//
-        .userId(userEntity.getUserId())//
-        .userName(userEntity.getUserName())//
-        .phone(userEntity.getPhone())//
-        .email(userEntity.getEmail())//
+        .fireBaseUid(data.getFirebaseUid())//
+        .email(data.getEmail())//
         .build();
   }
 

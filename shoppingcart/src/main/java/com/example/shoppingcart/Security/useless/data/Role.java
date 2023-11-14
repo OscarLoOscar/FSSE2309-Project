@@ -1,4 +1,4 @@
-package com.example.shoppingcart.oauth.data;
+package com.example.shoppingcart.Security.useless.data;
 
 public enum Role {
   ADMIN, //

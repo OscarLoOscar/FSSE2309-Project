@@ -6,31 +6,42 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.infra.JwtUntil;
 import com.example.shoppingcart.controller.CartItemController;
 import com.example.shoppingcart.entity.TransactionProduct;
 import com.example.shoppingcart.model.CartItemData;
+import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.UserData;
-import com.example.shoppingcart.oauth.data.user.UserEntity;
 import com.example.shoppingcart.services.CartItemService;
+import com.example.shoppingcart.services.UserService;
 import com.example.shoppingcart.services.impl.CartItemServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/cart")
 public class CartItemControllerImpl implements CartItemController {
 
   CartItemServiceImpl cartItemService;
 
+  UserService userService;
+
   @Autowired
-  public CartItemControllerImpl(CartItemServiceImpl cartItemService) {
+  public CartItemControllerImpl(CartItemServiceImpl cartItemService, //
+      UserService userService) {
     this.cartItemService = cartItemService;
+    this.userService = userService;
   }
 
   @Override
   public ResponseEntity<List<CartItemData>> getUserCartItems(
-      Authentication authentication) {
+      JwtAuthenticationToken authentication) {
     if (authentication == null || !authentication.isAuthenticated()) {
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
@@ -58,42 +69,16 @@ public class CartItemControllerImpl implements CartItemController {
     cartItemService.deleteAllCartItem();
   }
 
+  // postman : development environment
   @Override
-  public ResponseEntity<String> addItemToCart(String pid, String quantity,
-      Authentication authentication) {
-    if (!authentication.isAuthenticated() || authentication == null) {
-      return new ResponseEntity<>("Authentication required",
-          HttpStatus.UNAUTHORIZED);
-    }
-    if (!this.checkValidNumber(quantity))
-      return new ResponseEntity<>("not a valid number", HttpStatus.BAD_REQUEST);
-
-    // 1. Authenticate the user
-    String username = authentication.getName();
-    UserData user = cartItemService.findUserByName(username);
-
-    // 2. Retrieve the product based on pid
-    ProductData product = cartItemService.getProductById(Long.valueOf(pid));
-
-    // 3. Check if the product and user exist
-    if (product == null || user == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .body("Product or user not found");
-    }
-    
-    int number = 0;
-    if (this.checkValidNumber(quantity))
-      number = Integer.parseInt(quantity, 100);
-
-    CartItemData cartItemData =
-        cartItemService.addItemToCart(user, product, number);
-
-    if (cartItemData == null)
-      return new ResponseEntity<>("Unable to add item to cart",
-          HttpStatus.BAD_REQUEST);
-
-    return ResponseEntity.status(HttpStatus.CREATED)//
-        .body("SUCCESS");
+  public ResponseEntity<String> addCartItem(JwtAuthenticationToken jwt, //
+      @PathVariable String pid, //
+      @PathVariable String quantity) {
+    FireBaseUserData user = new FireBaseUserData(jwt);
+    UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
+    log.info(userEntity.toString());
+    // userService.addUser(userEntity);
+    return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
   }
 
 

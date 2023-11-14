@@ -1,5 +1,6 @@
 package com.example.shoppingcart.model;
 
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,5 @@ public class UserData {
 
   String email;
 
+  public UserData(JwtAuthenticationToken jwt) {}
 }
