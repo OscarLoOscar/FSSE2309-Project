@@ -1,8 +1,6 @@
 package com.example.shoppingcart.entity;
 
 import java.io.Serializable;
-import com.example.shoppingcart.model.ProductData;
-import com.example.shoppingcart.model.UserData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +40,7 @@ public class CartItem implements Serializable {
   @Column(nullable = false)
   Integer quantity;
 
+}
   // @OneToOne
   // @JoinColumn(name = "shippingAddressId")
   // ShippingAddress shippingAddress;
@@ -49,5 +48,3 @@ public class CartItem implements Serializable {
   // @OneToOne
   // @JoinColumn(name = "billingAddresId")
   // BillingAddress billingAddress;
-
-}

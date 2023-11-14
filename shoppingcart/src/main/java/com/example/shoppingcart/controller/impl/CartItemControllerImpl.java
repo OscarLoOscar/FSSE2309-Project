@@ -77,11 +77,11 @@ public class CartItemControllerImpl implements CartItemController {
       String quantity) {
     FireBaseUserData user = new FireBaseUserData(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
-    log.info(userEntity.toString());
+
     cartItemService.addCartItem(userEntity.getUserId(), //
         Long.valueOf(pid), //
         Integer.valueOf(quantity));
-    return new ResponseEntity<>(TransactionStatus.SUCCESS.name(),
+    return new ResponseEntity<>("\"result\":"+TransactionStatus.SUCCESS.name(),
         HttpStatus.CREATED);
   }
 
