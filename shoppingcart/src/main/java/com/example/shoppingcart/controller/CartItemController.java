@@ -3,7 +3,6 @@ package com.example.shoppingcart.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,15 +40,16 @@ public interface CartItemController {
     @Operation(summary = "Update cart quantity")
     @PatchMapping("/{pid}/{quantity}")
     public CartItemData updateCartQuantity(
-            @PathVariable(name = "pid") String pid, //
-            @PathVariable(name = "quantity") String inputQuantity);
+            @PathVariable(name = "pid") String inputPid, //
+            @PathVariable(name = "quantity") String inputQuantity, //
+            JwtAuthenticationToken jwt);
 
-    @DeleteMapping("/removeCartIem/{cartItemId}")
+    // 6.DELETE /cart/{pid}: Remove cart item
+    @DeleteMapping("/{pid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteCartItemByCartItemId(@PathVariable String cartItemId);
+    ResponseEntity<String> removeCartItem(
+            @PathVariable(name = "pid") String inputPid, //
+            JwtAuthenticationToken jwt);
 
-    @DeleteMapping("/removeAllCartItems")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteAllCartItem();// 清空shopping cart
-
+    
 }

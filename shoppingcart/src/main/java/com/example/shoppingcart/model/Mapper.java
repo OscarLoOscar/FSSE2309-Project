@@ -1,17 +1,14 @@
 package com.example.shoppingcart.model;
 
 import java.math.BigDecimal;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
 import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.entity.CartItem;
 import com.example.shoppingcart.entity.Product;
+import com.example.shoppingcart.entity.Transaction;
 
-// @Component
 public class Mapper {
-
-  // @Autowired
-  // private ModelMapper modelMapper;
 
   public static UserData map(UserEntity userEntity) {
     return UserData.builder()//
@@ -71,4 +68,31 @@ public class Mapper {
         .email(userEntity.getEmail())//
         .build();
   }
+
+  public static TransactionData map(Transaction transactionEntity) {
+    return TransactionData.builder()
+        .transactionId(transactionEntity.getTransactionId())
+        .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
+        .datetime(transactionEntity.getDatetime())
+        .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
+        .total(transactionEntity.getTotalPrice())
+       // .items(transactionEntity.getCartItem()) // Implement mapTransactionProducts method
+        .build();
+  }
+
+  // public static Transaction map(TransactionData transactionData) {
+  //   Transaction transaction = Transaction.builder()//
+  //       .datetime(LocalDateTime.now())//
+  //       .status(transactionData.getStatus().name()) // Adjust accordingly
+  //       .totalPrice(transactionData.getTotal())//
+  //       .build();
+
+  //   // Set the transaction in each CartItem
+  //   if (transaction.getCartItem() != null) {
+  //     transaction.getCartItem()
+  //         .forEach(cartItem -> cartItem.setTransaction(transaction));
+  //   }
+
+  //   return transaction;
+  // }
 }

@@ -7,15 +7,8 @@ public enum Code {
   OK(20000, "OK"),
   // 40000 - 49999
   NOTFOUND(40000, "Resource NOT FOUND."), //
-  JPH_NOTFOUND(40001, "JsonPlaceHolder RestClientException."), //
-  FINNHUB_PROFILE2_NOTFOUND(40002,
-      "Finnhub Company Profile2 RestClientException."), //
-  FINNHUB_QUOTE_NOTFOUND(40003, "Finnhub Stock Quote RestClientException."), //
-  FINNHUB_SYMBOL_NOTFOUND(40004, "Finnhub Stock Symbol RestClientException."), //
-  // Trader
-  TRADER_NOTENOUGH_MONEY(41001, "Trader has not enough money."), //
-  TRADER_NOTENOUGH_PRODUCT(41002, "Trader has not enough product."), //
-  MARKET_NOTENOUGH_PRODUCT(41003, "Market has not enough product."), //
+  // Shop
+  SHOP_NOTENOUGH_PRODUCT(41002, "Shop has not enough product."), //
   // Server
   SERVER_TIMEOUT(50000, "Server Timeout."), //
   THIRD_PARTY_SERVER_UNAVAILABLE(50001, "Third Party Service Unavailable."), //

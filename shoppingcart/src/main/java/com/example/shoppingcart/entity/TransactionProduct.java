@@ -24,8 +24,8 @@ import lombok.ToString;
 @ToString
 public class TransactionProduct implements Serializable {
   @Id
-  @Column(name = "tpid")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "tpid")
   Long tpid;
 
   @ManyToOne
@@ -33,6 +33,7 @@ public class TransactionProduct implements Serializable {
   @JsonIgnore
   Transaction transaction;
 
+  @ManyToOne
   @JoinColumn(name = "pid", nullable = false)
   Product productId;
 

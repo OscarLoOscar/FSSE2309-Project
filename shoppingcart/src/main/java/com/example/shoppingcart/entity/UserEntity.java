@@ -51,6 +51,8 @@ public class UserEntity implements Serializable {
     this.fireBaseUid = fireBaseUserData.getFirebaseUid();
     this.email = fireBaseUserData.getEmail();
   }
+
+}
   // (cascade = CascadeType.ALL , fetch = FetchType.EAGER) check meaning =>
   // @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   // @JoinColumn(name = "shippingAddressId")
@@ -67,4 +69,3 @@ public class UserEntity implements Serializable {
   // @JoinColumn(name = "billingAddressId")
   // BillingAddress billingAddress;
 
-}

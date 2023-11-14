@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(value = FinnhubException.class)
+  @ExceptionHandler(value = FSSE2309Exception.class)
   @ResponseStatus(value = HttpStatus.OK)
-  public ApiResp<Void> finnhubExceptionHandler(FinnhubException e) {
+  public ApiResp<Void> finnhubExceptionHandler(FSSE2309Exception e) {
     return ApiResp.<Void>builder() //
         .status(Code.fromCode(e.getCode())) //
         .data(null) //

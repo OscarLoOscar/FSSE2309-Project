@@ -23,6 +23,10 @@ public class CartItemStorage {
         cartItemMap.getOrDefault(productId, 0) + quantity);
   }
 
+  public void changeCartItemQuantity(Long productId, int quantity) {
+    cartItemMap.put(productId, quantity);
+  }
+
   public Map<Long, Integer> getCartItems() {
     return new HashMap<>(cartItemMap);
   }

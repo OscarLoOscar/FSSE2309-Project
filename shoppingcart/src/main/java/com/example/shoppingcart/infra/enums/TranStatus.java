@@ -1,6 +1,6 @@
 package com.example.shoppingcart.infra.enums;
 
-public enum TransactionStatus {
+public enum TranStatus {
   ORDERED(0), //
   PREPARE(1), //
   PROCESSING(2), //
@@ -10,7 +10,7 @@ public enum TransactionStatus {
 
   int code;
 
-  private TransactionStatus(int code) {
+  private TranStatus(int code) {
     this.code = code;
   }
 
@@ -18,20 +18,20 @@ public enum TransactionStatus {
     return this.code;
   }
 
-  public TransactionStatus getTransactionStatus(int orderStatus) {
-    for (TransactionStatus status : TransactionStatus.values()) {
+  public TranStatus getTranStatus(int orderStatus) {
+    for (TranStatus status : TranStatus.values()) {
       if (status.getCode() == orderStatus)
         return status;
     }
     return null;
   }
 
-  public TransactionStatus nextStatus() {
+  public TranStatus nextStatus() {
     int nextStatusCOde = this.getCode() < 5 ? this.code + 1 : this.code;
-    return getTransactionStatus(nextStatusCOde);
+    return getTranStatus(nextStatusCOde);
   }
 
-  public boolean isForwaredStatus(TransactionStatus transactionStatus) {
+  public boolean isForwaredStatus(TranStatus transactionStatus) {
     return this.getCode() < transactionStatus.getCode();
   }
 }
