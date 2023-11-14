@@ -36,7 +36,11 @@ public class Mapper {
   public static CartItemData map(CartItem cartItem) {
     return CartItemData.builder()//
         // .user(modelMapper.map(cartItem.getUser(), UserData.class))//
-        .product(Mapper.map(cartItem.getProduct()))//
+        // .product(Mapper.map(cartItem.getProduct()))//
+        .pid(cartItem.getProduct().getProductId())//
+        .name(cartItem.getProduct().getProductName())//
+        .imageUrl(cartItem.getProduct().getImageUrl())//
+        .price(cartItem.getProduct().getProductPrice())
         .quantity(cartItem.getQuantity())//
         .build();
   }

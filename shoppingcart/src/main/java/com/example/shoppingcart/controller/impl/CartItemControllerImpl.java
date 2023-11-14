@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.exception.BusinessException;
 import com.example.shoppingcart.infra.JwtUntil;
 import com.example.shoppingcart.infra.enums.TransactionStatus;
 import com.example.shoppingcart.controller.CartItemController;
 import com.example.shoppingcart.entity.TransactionProduct;
 import com.example.shoppingcart.model.CartItemData;
+import com.example.shoppingcart.model.CartItemStorage;
 import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.UserData;
@@ -40,12 +42,15 @@ public class CartItemControllerImpl implements CartItemController {
     this.userService = userService;
   }
 
+  @Autowired
+  CartItemStorage cartItemStorage;
+
+
   @Override
-  public ResponseEntity<List<CartItemData>> getUserCartItems(
+  public List<CartItemData> getUserCartItems(
       JwtAuthenticationToken authentication) {
-    if (authentication == null || !authentication.isAuthenticated()) {
-      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
+    // if (authentication == null || !authentication.isAuthenticated()) {
+    // }
     // Retrieve the usename from authentication object
     String userName = authentication.getName();
 
@@ -53,9 +58,10 @@ public class CartItemControllerImpl implements CartItemController {
     List<CartItemData> userCartItems =
         cartItemService.getUserCartItems(userName);
 
-    if (userCartItems == null || userCartItems.isEmpty())
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    return new ResponseEntity<>(userCartItems, HttpStatus.OK);
+    // if (userCartItems == null || userCartItems.isEmpty()) {
+
+    // }
+    return userCartItems;
   }
 
 
@@ -73,16 +79,34 @@ public class CartItemControllerImpl implements CartItemController {
   // postman : development environment
   @Override
   public ResponseEntity<String> addCartItem(JwtAuthenticationToken jwt, //
-      String pid, //
-      String quantity) {
+      String inputPid, //
+      String inputQuantity) {
+    // check user
     FireBaseUserData user = new FireBaseUserData(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
-
+    // convent pid and quantoty
+    Long pid = Long.valueOf(inputPid);
+    Integer quantity = Integer.valueOf(inputQuantity);
+    // add item
+    if (cartItemStorage.getCartItems().containsKey(pid)) {
+      cartItemStorage.addCartItem(pid, quantity);
+    } else {
+      log.info("Adding new cart item for product {} with quantity {}", pid,
+          quantity);
+      // Add the item to the in-memory storage
+      cartItemStorage.addCartItem(pid, quantity);
+    }
+    log.info("1 : " + cartItemStorage.getCartItems().keySet().toString());
+    for (Long i : cartItemStorage.getCartItems().keySet()) {
+      log.info("2 : " + cartItemStorage.getCartItems().get(i));
+    }
+    //
+    // save
     cartItemService.addCartItem(userEntity.getUserId(), //
-        Long.valueOf(pid), //
-        Integer.valueOf(quantity));
-    return new ResponseEntity<>("\"result\":"+TransactionStatus.SUCCESS.name(),
-        HttpStatus.CREATED);
+        pid, //
+        quantity);
+    return new ResponseEntity<>(
+        "\"result\":\"" + TransactionStatus.SUCCESS.name(), HttpStatus.CREATED);
   }
 
 

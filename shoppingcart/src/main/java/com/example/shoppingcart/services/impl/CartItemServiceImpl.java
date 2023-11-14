@@ -50,7 +50,9 @@ public class CartItemServiceImpl implements CartItemService {
   public List<CartItemData> getUserCartItems(String userName) {
     List<CartItemData> output = new ArrayList<>();
     for (CartItem cartItem : cartItemRepository.findAll()) {
-      output.add(Mapper.map(cartItem));
+      CartItemData convent = Mapper.map(cartItem);
+      convent.setStock(cartItem.getProduct().getUnitStock());
+      output.add(convent);
     }
     return output;
   }
