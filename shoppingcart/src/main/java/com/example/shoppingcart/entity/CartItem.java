@@ -1,6 +1,8 @@
 package com.example.shoppingcart.entity;
 
 import java.io.Serializable;
+import com.example.shoppingcart.model.ProductData;
+import com.example.shoppingcart.model.UserData;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -18,7 +22,10 @@ import lombok.Setter;
 @Getter
 @Table(name = "cart_item")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CartItem implements Serializable {
+
   @Id
   @Column(name = "cid")
   @GeneratedValue(strategy = GenerationType.IDENTITY)

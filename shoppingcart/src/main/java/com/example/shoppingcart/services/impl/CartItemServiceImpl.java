@@ -2,11 +2,13 @@ package com.example.shoppingcart.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.entity.CartItem;
+import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.Mapper;
@@ -62,10 +64,13 @@ public class CartItemServiceImpl implements CartItemService {
   }
 
   @Override
-  public void addCartItem(int pid, int quantity,
-      FireBaseUserData fireBaseUserData) {
-    UserEntity userEntity =
-        userService.getEntityByFireBaseUserData(fireBaseUserData);
+  public void addCartItem(long userId, long pid, int quantity) {
+    UserData userEntity = userService.getUserById(userId);
+    ProductData productEntity = productService.getProductById(pid);
+    cartItemRepository.save(CartItem.builder()//
+        .user(Mapper.map(userEntity))//
+        .product(Mapper.map(productEntity))//
+        .quantity(quantity)//
+        .build());
   }
-
 }

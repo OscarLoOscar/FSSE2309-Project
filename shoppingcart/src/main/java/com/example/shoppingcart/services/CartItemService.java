@@ -9,7 +9,7 @@ public interface CartItemService {
   // void addCartItem(Long cartItemId);
   List<CartItemData> getUserCartItems(String userName);
 
-  void addCartItem(int pid, int quantity, FireBaseUserData fireBaseUserData);
+  void addCartItem(long userId, long pid, int quantity);
 
   void deleteCartItemByCartItemId(Long cartItemId);
 

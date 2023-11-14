@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.infra.JwtUntil;
+import com.example.shoppingcart.infra.enums.TransactionStatus;
 import com.example.shoppingcart.controller.CartItemController;
 import com.example.shoppingcart.entity.TransactionProduct;
 import com.example.shoppingcart.model.CartItemData;
@@ -72,13 +73,16 @@ public class CartItemControllerImpl implements CartItemController {
   // postman : development environment
   @Override
   public ResponseEntity<String> addCartItem(JwtAuthenticationToken jwt, //
-      @PathVariable String pid, //
-      @PathVariable String quantity) {
+      String pid, //
+      String quantity) {
     FireBaseUserData user = new FireBaseUserData(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
     log.info(userEntity.toString());
-    // userService.addUser(userEntity);
-    return new ResponseEntity<>("SUCCESS", HttpStatus.CREATED);
+    cartItemService.addCartItem(userEntity.getUserId(), //
+        Long.valueOf(pid), //
+        Integer.valueOf(quantity));
+    return new ResponseEntity<>(TransactionStatus.SUCCESS.name(),
+        HttpStatus.CREATED);
   }
 
 

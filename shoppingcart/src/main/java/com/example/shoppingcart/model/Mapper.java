@@ -59,4 +59,12 @@ public class Mapper {
         .build();
   }
 
+  public static UserEntity map(UserData userEntity) {
+    return UserEntity.builder()//
+        .userId(userEntity.getUserId())//
+        .userName(userEntity.getUserName())//
+        .phone(userEntity.getPhone())//
+        .email(userEntity.getEmail())//
+        .build();
+  }
 }

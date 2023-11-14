@@ -3,6 +3,7 @@ package com.example.shoppingcart.services.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,8 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   public ProductData getProductById(Long productId) {
-    return Mapper.map(productRepository.findById(productId).get());
+    return Mapper.map(productRepository.findById(productId)//
+        .orElseThrow(() -> new NoSuchElementException("No value present")));
   }
 
   @Override
