@@ -75,6 +75,9 @@ public class TransactionServiceImpl implements TransactionService {
       TransactionProduct transactionProduct =
           Mapper.map(transactionProductData);
       transactionProductServiceImpl.save(transactionProduct);
+      // after save to DB , get primary key , set back to DTO
+      transactionProductData.setTpid(transactionProduct.getTpid());
+
       log.info("CHECKING transactionProduct : " + transactionProduct);
       transactionProductData.setCartItemData(cartItemData);
       // 添加其他必要的屬性賦值

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 public class TransactionProductData {
 
-  private String tpid;
+  private Long tpid;
 
   private CartItemData cartItemData;
 
