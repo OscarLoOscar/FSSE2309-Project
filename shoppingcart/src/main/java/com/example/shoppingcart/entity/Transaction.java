@@ -49,5 +49,4 @@ public class Transaction implements Serializable {
 
   @Column(nullable = false)
   private BigDecimal totalPrice;
-
 }

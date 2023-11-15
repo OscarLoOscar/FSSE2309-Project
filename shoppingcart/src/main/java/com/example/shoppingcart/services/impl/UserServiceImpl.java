@@ -15,6 +15,7 @@ import com.example.shoppingcart.services.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
+  
   UserRepository userRepository;
 
   @Autowired
