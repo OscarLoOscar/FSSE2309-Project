@@ -27,9 +27,4 @@ public class TransactionData {
 
   @JsonProperty("items")
   List<TransactionProductData> items;
-
-  Integer quantity;
-
-  @JsonProperty("subtotal")
-  BigDecimal totalPrice;
 }

@@ -13,8 +13,9 @@ public class Mapper {
   public static UserData map(UserEntity userEntity) {
     return UserData.builder()//
         .userId(userEntity.getUserId())//
-        .userName(userEntity.getUserName())//
-        .phone(userEntity.getPhone())//
+        // .userName(userEntity.getUserName())//
+        // .phone(userEntity.getPhone())//
+        .fireBaseUid(userEntity.getFireBaseUid())//
         .email(userEntity.getEmail())//
         .build();
   }
@@ -63,8 +64,9 @@ public class Mapper {
   public static UserEntity map(UserData userEntity) {
     return UserEntity.builder()//
         .userId(userEntity.getUserId())//
-        .userName(userEntity.getUserName())//
-        .phone(userEntity.getPhone())//
+        .fireBaseUid(userEntity.getFireBaseUid())//
+        // .userName(userEntity.getUserName())//
+        // .phone(userEntity.getPhone())//
         .email(userEntity.getEmail())//
         .build();
   }
@@ -76,23 +78,23 @@ public class Mapper {
         .datetime(transactionEntity.getDatetime())
         .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
         .total(transactionEntity.getTotalPrice())
-       // .items(transactionEntity.getCartItem()) // Implement mapTransactionProducts method
+        // .items(transactionEntity.getCartItem()) // Implement mapTransactionProducts method
         .build();
   }
 
   // public static Transaction map(TransactionData transactionData) {
-  //   Transaction transaction = Transaction.builder()//
-  //       .datetime(LocalDateTime.now())//
-  //       .status(transactionData.getStatus().name()) // Adjust accordingly
-  //       .totalPrice(transactionData.getTotal())//
-  //       .build();
+  // Transaction transaction = Transaction.builder()//
+  // .datetime(LocalDateTime.now())//
+  // .status(transactionData.getStatus().name()) // Adjust accordingly
+  // .totalPrice(transactionData.getTotal())//
+  // .build();
 
-  //   // Set the transaction in each CartItem
-  //   if (transaction.getCartItem() != null) {
-  //     transaction.getCartItem()
-  //         .forEach(cartItem -> cartItem.setTransaction(transaction));
-  //   }
+  // // Set the transaction in each CartItem
+  // if (transaction.getCartItem() != null) {
+  // transaction.getCartItem()
+  // .forEach(cartItem -> cartItem.setTransaction(transaction));
+  // }
 
-  //   return transaction;
+  // return transaction;
   // }
 }

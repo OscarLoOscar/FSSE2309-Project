@@ -41,16 +41,18 @@ public class CartItemControllerImpl implements CartItemController {
 
 
   @Override
-  public List<CartItemData> getUserCartItems(
-      JwtAuthenticationToken authentication) {
+  public List<CartItemData> getUserCartItems(JwtAuthenticationToken jwt) {
+    FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
+    UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
+    Long userId = userEntity.getUserId();
+
     // if (authentication == null || !authentication.isAuthenticated()) {
     // }
     // Retrieve the usename from authentication object
-    String userName = authentication.getName();
 
     // Call service to get user cart items
     List<CartItemData> userCartItems =
-        cartItemService.getUserCartItems(userName);
+        cartItemService.getUserCartItems(userId);
 
     // if (userCartItems == null || userCartItems.isEmpty()) {
 
@@ -66,9 +68,10 @@ public class CartItemControllerImpl implements CartItemController {
     // check user
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
+    Long userId = userEntity.getUserId();
     // convent pid and quantoty
-    Long pid = Long.valueOf(inputPid);
-    Integer quantity = Integer.valueOf(inputQuantity);
+    Long pid = Long.parseLong(inputPid);
+    Integer quantity = Integer.parseInt(inputQuantity);
     // add item
     if (cartItemStorage.getCartItems().containsKey(pid)) {
       cartItemStorage.addCartItem(pid, quantity);
@@ -86,10 +89,11 @@ public class CartItemControllerImpl implements CartItemController {
     }
     //
     // save
-    cartItemService.addCartItem(userEntity.getUserId(), //
+    cartItemService.addCartItem(userId, // dead code
         pid, //
         quantity);
-    return new ResponseEntity<>("\"result\":\"" + TranStatus.SUCCESS.name(),
+    return new ResponseEntity<>(
+        "\"result\":\"" + "\"" + TranStatus.SUCCESS.name() + "\n",
         HttpStatus.CREATED);
   }
 
@@ -154,8 +158,8 @@ public class CartItemControllerImpl implements CartItemController {
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
 
     cartItemService.deleteCartItemByCartItemId(Long.valueOf(inputPid));
-    return new ResponseEntity<>(
-        "\"result\":\"" + TranStatus.SUCCESS.name(), HttpStatus.OK);
+    return new ResponseEntity<>("\"result\":\"" + TranStatus.SUCCESS.name(),
+        HttpStatus.OK);
   }
 
 }

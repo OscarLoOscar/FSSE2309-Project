@@ -49,20 +49,21 @@ public class UserServiceImpl implements UserService {
     userRepository.deleteById(userId);
   }
 
-  @Override
-  public UserData findUserByPhone(String phone) {
-    return Mapper.map(userRepository.findUserByPhone(phone).get());
-  }
+  // @Override
+  // public UserData findUserByPhone(String phone) {
+  // return Mapper.map(userRepository.findUserByPhone(phone).get());
+  // }
+
+  // @Override
+  // public UserData findUserByUserName(String name) {
+  // return Mapper.map(userRepository.findUserByUserName(name).get());
+  // }
 
   @Override
   public UserData findUserByEmail(String email) {
     return Mapper.map(userRepository.findUserByEmail(email).get());
   }
 
-  @Override
-  public UserData findUserByUserName(String name) {
-    return Mapper.map(userRepository.findUserByUserName(name).get());
-  }
 
   @Override
   public UserData updateUser(UserEntity user) {

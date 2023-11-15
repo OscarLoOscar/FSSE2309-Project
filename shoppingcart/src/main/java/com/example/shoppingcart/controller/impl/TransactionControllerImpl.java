@@ -2,11 +2,14 @@ package com.example.shoppingcart.controller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.controller.TransactionController;
+import com.example.shoppingcart.entity.Transaction;
 import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.infra.JwtUntil;
+import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.TransactionData;
 import com.example.shoppingcart.services.CartItemService;
@@ -33,11 +36,15 @@ public class TransactionControllerImpl implements TransactionController {
     this.cartItemService = cartItemService;
   }
 
+  // Create a New Transaction
+  // Transaction status -> “PREPARE”
   @Override
   public TransactionData createTransaction(JwtAuthenticationToken jwt) {
     // check user
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
+    Transaction transaction = new Transaction();
+    transaction.setStatus(TranStatus.PREPARE.name());
     return null;
   }
 

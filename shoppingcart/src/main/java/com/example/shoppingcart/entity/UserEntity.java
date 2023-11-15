@@ -29,13 +29,13 @@ import lombok.ToString;
 @ToString
 public class UserEntity implements Serializable {
   @Id
-  @Column(name = "user_id")
+  @Column(name = "uid")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long userId;
 
-  String userName;
+  // String userName;
 
-  String phone;
+  // String phone;
 
   @Column(name = "fireBase_uid", nullable = false, unique = true) // unique = true -> column 入面value唔重覆
   String fireBaseUid;

@@ -37,7 +37,7 @@ public class Transaction implements Serializable {
   private Long transactionId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "userId", nullable = false)
+  @JoinColumn(name = "uid", nullable = false)
   @JsonProperty(value = "buyer_uid")
   private UserEntity user;
 

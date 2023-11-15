@@ -13,8 +13,8 @@ spring.datasource:
 spring.jpa:
   show-sql: true
   hibernate.ddl-auto:
-     update
-    #  create-drop
+      update
+      # create-drop
 spring.sql.init:
   mode: always # always
   platform: mysql

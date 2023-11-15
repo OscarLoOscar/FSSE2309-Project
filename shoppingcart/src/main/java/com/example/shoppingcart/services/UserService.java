@@ -15,9 +15,9 @@ public interface UserService {
 
   UserData getUserById(Long userId);
 
-  UserData findUserByUserName(String userName);
+ // UserData findUserByUserName(String userName);
 
-  UserData findUserByPhone(String phone);
+ // UserData findUserByPhone(String phone);
 
   UserData findUserByEmail(String email);
 
