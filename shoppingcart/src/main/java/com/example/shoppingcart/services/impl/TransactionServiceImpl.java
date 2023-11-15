@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.shoppingcart.entity.CartItem;
@@ -35,8 +36,12 @@ public class TransactionServiceImpl implements TransactionService {
   @Autowired
   CartItemServiceImpl cartItemService;
 
+  @Autowired
+  TransactionProductServiceImpl transactionProductServiceImpl;
+
   @Override
   public TransactionData createTransaction(Long userId) {
+    // for Transaction DataBase
     Transaction recode = Transaction.builder()//
         .user(Mapper.map(userService.getUserById(userId)))//
         .datetime(LocalDateTime.now())//
@@ -45,19 +50,37 @@ public class TransactionServiceImpl implements TransactionService {
         .build();
     log.info("TS recode : " + recode);
     transactionRepository.save(recode);
-
     TransactionData output = Mapper.map(recode);
-    // DONE
-    List<CartItemData> listOfCD = new ArrayList<>();
 
+    List<CartItemData> listOfCD = new ArrayList<>();
     for (CartItemData cartItemData : cartItemService
         .getUserCartItemsByUserId(userId)) {
       listOfCD.add(cartItemData);
     }
     log.info("CHECKT listOfCD : " + listOfCD);
     // DONE
-    // List<TransactionProductData> listOfTPD = new ArrayList<>();
-    output.setItems(listOfCD);
+
+    // for Transaction_product DataBase
+    List<TransactionProductData> listOfTPD = new ArrayList<>();
+    for (CartItemData cartItemData : cartItemService
+        .getUserCartItemsByUserId(userId)) {
+      TransactionProductData transactionProductData =
+          TransactionProductData.builder()//
+              .cartItemData(cartItemData)//
+              .quantity(cartItemData.getQuantity())//
+              .totalPrice(BigDecimal.valueOf(cartItemData.getStock())
+                  .multiply(cartItemData.getPrice()))//
+              .build();
+      // for new TransactionProduct to DB
+      TransactionProduct transactionProduct =
+          Mapper.map(transactionProductData);
+      transactionProductServiceImpl.save(transactionProduct);
+      log.info("CHECKING transactionProduct : " + transactionProduct);
+      transactionProductData.setCartItemData(cartItemData);
+      // 添加其他必要的屬性賦值
+      listOfTPD.add(transactionProductData);
+    }
+    output.setItems(listOfTPD);
 
     return output;
 

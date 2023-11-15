@@ -1,8 +1,6 @@
 package com.example.shoppingcart.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,20 +34,20 @@ public class TransactionProduct implements Serializable {
 
   // @ManyToOne
   // @JoinColumn(name = "pid", nullable = false)
-  Product pid;
+  private Long pid;
 
-  String name;
+  // String name;
 
-  String description;
+  // String description;
 
-  @JsonProperty(value = "image_url")
-  String imageUrl;
+  // @JsonProperty(value = "image_url")
+  // String imageUrl;
 
-  BigDecimal price;
+  // BigDecimal price;
 
-  Integer stock;
+  // Integer stock;
 
-  Integer quantity;
+  private Integer quantity;
 
 
 }

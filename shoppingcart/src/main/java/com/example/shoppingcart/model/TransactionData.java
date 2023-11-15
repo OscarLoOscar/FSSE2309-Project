@@ -29,9 +29,9 @@ public class TransactionData {
 
   BigDecimal total;
 
-  // @JsonProperty("items")
-  // List<TransactionProductData> items;
   @JsonProperty("items")
-  List<CartItemData> items;
+  List<TransactionProductData> items;
+  // @JsonProperty("items")
+  // List<CartItemData> items;
 
 }

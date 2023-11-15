@@ -73,8 +73,7 @@ public class Mapper {
   }
 
   public static TransactionData map(Transaction transactionEntity) {
-    return TransactionData.builder()
-        .transactionId(transactionEntity.getTid())
+    return TransactionData.builder().transactionId(transactionEntity.getTid())
         .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
         .datetime(transactionEntity.getDatetime())
         .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
@@ -88,7 +87,14 @@ public class Mapper {
     return TransactionProductData.builder()//
         .tpid(String.valueOf(transactionProduct.getTpid()))//
         .quantity(transactionProduct.getQuantity())//
-        .totalPrice(transactionProduct.getPrice())//
+        // .totalPrice(transactionProduct.getPrice())//
         .build();
+  }
+
+  public static TransactionProduct map(TransactionProductData tpd) {
+    return TransactionProduct.builder()//
+        .pid(tpd.getCartItemData().getPid())//
+        .quantity(tpd.getQuantity()).build();
+
   }
 }

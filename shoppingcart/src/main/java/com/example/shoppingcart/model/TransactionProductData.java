@@ -6,19 +6,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
 @ToString
 @Getter
 @Setter
 @Builder
 public class TransactionProductData {
 
-  String tpid;
+  private String tpid;
 
-  CartItemData cartItemData;
+  private CartItemData cartItemData;
 
-  Integer quantity;
+  private Integer quantity;
 
   @JsonProperty("subtotal")
-  BigDecimal totalPrice;
+  private BigDecimal totalPrice;
 
 }

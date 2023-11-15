@@ -31,18 +31,18 @@ public class CartItem implements Serializable {
   @Id
   @Column(name = "cid")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long cartId;
+  private Long cartId;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "pid", nullable = true)
-  Product product;
+  private Product product;
 
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "uid", nullable = false)
-  UserEntity user;
+  private UserEntity user;
 
   @Column(nullable = false)
-  Integer quantity;
+  private Integer quantity;
 
 }
 // @OneToOne
