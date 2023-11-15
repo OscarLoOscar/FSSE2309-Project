@@ -44,15 +44,15 @@ public class TransactionControllerImpl implements TransactionController {
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
     Long userId = userEntity.getUserId();
-   TransactionData output =  transactionServiceImpl.createTransaction(userId);
+    TransactionData output = transactionServiceImpl.createTransaction(userId);
     return TransactionData.builder()//
-    .transactionId(output.getTransactionId())//
-    .buyerUid(userId)//
-    .datetime(output.getDatetime())//
-    .status(output.getStatus())//
-    .total(output.getTotal())//
-    .items(output.getItems())//
-    .build();
+        .transactionId(output.getTransactionId())//
+        .buyerUid(userId)//
+        .datetime(output.getDatetime())//
+        .status(output.getStatus())//
+        .total(output.getTotal())//
+        .items(output.getItems())//
+        .build();
   }
 
 }

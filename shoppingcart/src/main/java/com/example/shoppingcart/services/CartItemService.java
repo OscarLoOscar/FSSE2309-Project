@@ -7,9 +7,11 @@ import com.example.shoppingcart.model.FireBaseUserData;
 public interface CartItemService {
 
   // void addCartItem(Long cartItemId);
-  List<CartItemData> getUserCartItems(String userName);
+  List<CartItemData> getUserCartItemsByUserName(String userName);
 
-  List<CartItemData> getUserCartItems(Long pid);
+  List<CartItemData> getUserCartItemsByUserId(Long uid);
+
+  List<CartItemData> getUserCartItemsByProductId(Long pid);
 
   void addCartItem(long userId, long pid, int quantity);
 

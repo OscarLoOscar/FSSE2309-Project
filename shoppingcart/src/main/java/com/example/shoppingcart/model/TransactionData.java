@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 @Builder
-@JsonPropertyOrder({"tid","buyer_uid","datetime","status","total","items"})
+@JsonPropertyOrder({"tid", "buyer_uid", "datetime", "status", "total", "items"})
 public class TransactionData {
   @JsonProperty("tid")
   Long transactionId;
@@ -27,6 +29,9 @@ public class TransactionData {
 
   BigDecimal total;
 
+  // @JsonProperty("items")
+  // List<TransactionProductData> items;
   @JsonProperty("items")
-  List<TransactionProductData> items;
+  List<CartItemData> items;
+
 }

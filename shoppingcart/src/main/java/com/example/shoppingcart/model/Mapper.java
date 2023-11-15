@@ -7,6 +7,7 @@ import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.entity.CartItem;
 import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.entity.Transaction;
+import com.example.shoppingcart.entity.TransactionProduct;
 
 public class Mapper {
 
@@ -73,7 +74,7 @@ public class Mapper {
 
   public static TransactionData map(Transaction transactionEntity) {
     return TransactionData.builder()
-        .transactionId(transactionEntity.getTransactionId())
+        .transactionId(transactionEntity.getTid())
         .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
         .datetime(transactionEntity.getDatetime())
         .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
@@ -82,19 +83,12 @@ public class Mapper {
         .build();
   }
 
-  // public static Transaction map(TransactionData transactionData) {
-  // Transaction transaction = Transaction.builder()//
-  // .datetime(LocalDateTime.now())//
-  // .status(transactionData.getStatus().name()) // Adjust accordingly
-  // .totalPrice(transactionData.getTotal())//
-  // .build();
-
-  // // Set the transaction in each CartItem
-  // if (transaction.getCartItem() != null) {
-  // transaction.getCartItem()
-  // .forEach(cartItem -> cartItem.setTransaction(transaction));
-  // }
-
-  // return transaction;
-  // }
+  public static TransactionProductData map(
+      TransactionProduct transactionProduct) {
+    return TransactionProductData.builder()//
+        .tpid(String.valueOf(transactionProduct.getTpid()))//
+        .quantity(transactionProduct.getQuantity())//
+        .totalPrice(transactionProduct.getPrice())//
+        .build();
+  }
 }

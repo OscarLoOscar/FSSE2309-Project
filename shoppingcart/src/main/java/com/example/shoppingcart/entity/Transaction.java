@@ -22,7 +22,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.ToString;
+@ToString
 @Builder
 @Entity
 @Getter
@@ -34,7 +35,7 @@ public class Transaction implements Serializable {
   @Id
   @Column(name = "tid")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long transactionId;
+  private Long tid;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "uid", nullable = false)

@@ -30,7 +30,7 @@ public class TransactionProduct implements Serializable {
   Long tpid;
 
   @ManyToOne
-  @JoinColumn(name = "transactionId")
+  @JoinColumn(name = "tid")
   @JsonProperty(value = "tid")
   Transaction transaction;
 

@@ -1,11 +1,14 @@
 package com.example.shoppingcart.services;
 
-import com.example.shoppingcart.entity.CartItem;
+import java.util.List;
 import com.example.shoppingcart.entity.TransactionProduct;
 
 public interface TransactionProductService {
 
-  void addUserOrder(TransactionProduct UserOrder);
+  void save(TransactionProduct UserOrder);
 
-  // double getUserOrderTotal(Long cartId);
+  List<TransactionProduct> findAllTransactionProductByTransactionId(Long tid);
+
+  TransactionProduct findProductByProductId(Long pid);
+
 }

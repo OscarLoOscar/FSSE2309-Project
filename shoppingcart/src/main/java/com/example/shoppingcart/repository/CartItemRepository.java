@@ -11,7 +11,7 @@ import com.example.shoppingcart.entity.UserEntity;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Query(value = "SELECT * FROM cart_item c WHERE c.uid=:uid ",
             nativeQuery = true)
-    List<CartItem> findByUser(@Param("uid")Long uid);
+    List<CartItem> findAllByUserid(@Param("uid")Long uid);
 
     List<CartItem> findByUserAndProduct(UserEntity user, Product product);
 }

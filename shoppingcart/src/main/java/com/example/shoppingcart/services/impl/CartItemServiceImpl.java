@@ -22,7 +22,6 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import com.example.shoppingcart.services.ProductService;
-import com.example.shoppingcart.services.TransactionService;
 
 @Slf4j
 @Service
@@ -33,9 +32,6 @@ public class CartItemServiceImpl implements CartItemService {
 
   @Autowired
   CartItemRepository cartItemRepository;
-
-  @Autowired
-  TransactionService transactionService;
 
   @Autowired
   UserService userService;
@@ -55,7 +51,7 @@ public class CartItemServiceImpl implements CartItemService {
   }
 
   @Override
-  public List<CartItemData> getUserCartItems(String userName) {
+  public List<CartItemData> getUserCartItemsByUserName(String userName) {
     List<CartItemData> output = new ArrayList<>();
     for (CartItem cartItem : cartItemRepository.findAll()) {
       CartItemData convent = Mapper.map(cartItem);
@@ -66,10 +62,21 @@ public class CartItemServiceImpl implements CartItemService {
   }
 
   @Override
-  public List<CartItemData> getUserCartItems(Long pid) {
+  public List<CartItemData> getUserCartItemsByUserId(Long uid) {
     List<CartItemData> output = new ArrayList<>();
-    log.info("CHECKING : " + cartItemRepository.findByUser(pid));
-    for (CartItem cartItem : cartItemRepository.findByUser(pid)) {
+    for (CartItem cartItem : cartItemRepository.findAllByUserid(uid)) {
+      CartItemData convent = Mapper.map(cartItem);
+      convent.setStock(cartItem.getProduct().getUnitStock());
+      output.add(convent);
+    }
+    return output;
+  }
+
+
+  @Override
+  public List<CartItemData> getUserCartItemsByProductId(Long pid) {
+    List<CartItemData> output = new ArrayList<>();
+    for (CartItem cartItem : cartItemRepository.findAllByUserid(pid)) {
       CartItemData convent = Mapper.map(cartItem);
       convent.setStock(cartItem.getProduct().getUnitStock());
       output.add(convent);

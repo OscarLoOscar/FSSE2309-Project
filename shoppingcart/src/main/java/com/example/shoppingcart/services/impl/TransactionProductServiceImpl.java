@@ -16,20 +16,19 @@ public class TransactionProductServiceImpl
   TransactionProductRepository transactionProductRepository;
 
   @Override
-  public void addUserOrder(TransactionProduct UserOrder) {
+  public void save(TransactionProduct UserOrder) {
     transactionProductRepository.save(UserOrder);
   }
 
-  // @Override
-  // public double getUserOrderTotal(Long cartId) {
-  // double total = 0;
-  // Transaction cart = cartService.getCartByCartId(cartId);
-  // List<TransactionProduct> cartItems = cart.getCartItem();
-  // for (TransactionProduct item : cartItems) {
-  // total += item.getPrice();
-  // }
-  // return total;
+  @Override
+  public List<TransactionProduct> findAllTransactionProductByTransactionId(
+      Long tid) {
+    return transactionProductRepository
+        .findAllTransactionProductByTid(tid);
+  }
 
-  // }
-
+  @Override
+  public TransactionProduct findProductByProductId(Long pid) {
+    return transactionProductRepository.findProductByPid(pid);
+  }
 }
