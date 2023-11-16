@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import com.example.shoppingcart.model.CartItemData;
+import com.example.shoppingcart.model.TransactionUpdateResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,7 +23,7 @@ public interface CartItemController {
     // Add quantity only, do not reduce stock
     @PutMapping("/{pid}/{quantity}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> addCartItem(JwtAuthenticationToken jwt, //
+    public TransactionUpdateResponse addCartItem(JwtAuthenticationToken jwt, //
             @PathVariable(name = "pid") String inputPid, //
             @PathVariable(name = "quantity") String inputQuantity);
 
@@ -47,7 +48,7 @@ public interface CartItemController {
     // 6.DELETE /cart/{pid}: Remove cart item
     @DeleteMapping("/{pid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    ResponseEntity<String> removeCartItem(
+    TransactionUpdateResponse removeCartItem(
             @PathVariable(name = "pid") String inputPid, //
             JwtAuthenticationToken jwt);
 

@@ -5,7 +5,8 @@ public enum TranStatus {
   PREPARE(1), //
   PROCESSING(2), //
   SUCCESS(3), //
-  CLOSE(4),//
+  FINISH(4), //
+  NOT_SUCCESS(5),//
   ;//
 
   int code;

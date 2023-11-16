@@ -16,6 +16,7 @@ import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.CartItemStorage;
 import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.ProductData;
+import com.example.shoppingcart.model.TransactionUpdateResponse;
 import com.example.shoppingcart.services.UserService;
 import com.example.shoppingcart.services.impl.CartItemServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/cart")
 public class CartItemControllerImpl implements CartItemController {
 
-  CartItemServiceImpl cartItemService;
+  private final CartItemServiceImpl cartItemService;
 
-  UserService userService;
+  private final UserService userService;
 
   @Autowired
   public CartItemControllerImpl(CartItemServiceImpl cartItemService, //
@@ -51,7 +52,8 @@ public class CartItemControllerImpl implements CartItemController {
     // Retrieve the usename from authentication object
 
     // Call service to get user cart items
-    List<CartItemData> userCartItems = cartItemService.findAllByUserUid(userId).get();
+    List<CartItemData> userCartItems =
+        cartItemService.findAllByUserUid(userId).get();
 
     // if (userCartItems == null || userCartItems.isEmpty()) {
 
@@ -61,7 +63,7 @@ public class CartItemControllerImpl implements CartItemController {
 
   // postman : development environment
   @Override
-  public ResponseEntity<String> addCartItem(JwtAuthenticationToken jwt, //
+  public TransactionUpdateResponse addCartItem(JwtAuthenticationToken jwt, //
       String inputPid, //
       String inputQuantity) {
     // check user
@@ -91,9 +93,7 @@ public class CartItemControllerImpl implements CartItemController {
     cartItemService.addCartItem(userId, // dead code
         pid, //
         quantity);
-    return new ResponseEntity<>(
-        "\"result\":\"" + "\"" + TranStatus.SUCCESS.name() + "\n",
-        HttpStatus.CREATED);
+    return new TransactionUpdateResponse(TranStatus.SUCCESS.name());
   }
 
 
@@ -151,14 +151,13 @@ public class CartItemControllerImpl implements CartItemController {
   }
 
   @Override
-  public ResponseEntity<String> removeCartItem(String inputPid,
+  public TransactionUpdateResponse removeCartItem(String inputPid,
       JwtAuthenticationToken jwt) {
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
 
     cartItemService.deleteCartItemByCartItemId(Long.valueOf(inputPid));
-    return new ResponseEntity<>("\"result\":\"" + TranStatus.SUCCESS.name(),
-        HttpStatus.OK);
+    return new TransactionUpdateResponse(TranStatus.SUCCESS.name());
   }
 
 }

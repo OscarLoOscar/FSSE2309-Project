@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.TransactionData;
 import com.example.shoppingcart.model.TransactionProductData;
+import com.example.shoppingcart.model.TransactionUpdateResponse;
 import com.example.shoppingcart.repository.TransactionRepository;
 import com.example.shoppingcart.services.CartItemService;
 import com.example.shoppingcart.services.TransactionProductService;
@@ -30,15 +32,17 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/transaction")
 public class TransactionControllerImpl implements TransactionController {
 
-    UserService userService;
+    private final JwtUntil jwtUntil;
 
-    CartItemService cartItemService;
+    private final UserService userService;
 
-    TransactionServiceImpl transactionService;
+    private final CartItemService cartItemService;
 
-    TransactionProductService transactionProductService;
+    private final TransactionServiceImpl transactionService;
 
-    TransactionRepository transactionRepository;
+    private final TransactionProductService transactionProductService;
+
+    private final TransactionRepository transactionRepository;
 
     @Autowired
     public TransactionControllerImpl(
@@ -46,12 +50,15 @@ public class TransactionControllerImpl implements TransactionController {
             UserService userService, //
             CartItemService cartItemService, //
             TransactionProductService transactionProductService, //
-            TransactionRepository transactionRepository) {
+            TransactionRepository transactionRepository, //
+            JwtUntil jwtUntil) {
         this.transactionService = transactionServiceImpl;
         this.userService = userService;
         this.cartItemService = cartItemService;
         this.transactionProductService = transactionProductService;
         this.transactionRepository = transactionRepository;
+        this.jwtUntil = jwtUntil;
+
     }
 
     // Create a New Transaction
@@ -130,7 +137,6 @@ public class TransactionControllerImpl implements TransactionController {
         UserEntity userEntity =
                 userService.getEntityByFireBaseUserData(fireBaseUserData);
         Long uid = userEntity.getUserId();
-
         // 2. get all transaction by userId
         TransactionData tList = transactionService.findByTidAndUid(tid, uid);
         // 3.get transaction product by tid
@@ -187,10 +193,60 @@ public class TransactionControllerImpl implements TransactionController {
         return null;
     }
 
+    @Override
+    public ResponseEntity<TransactionUpdateResponse> updateTransactionToProcessing(
+            Long tid, JwtAuthenticationToken jwt) {
+        // 1. get userId from jwt
+        FireBaseUserData fireBaseUserData = JwtUntil.getFireBaseUser(jwt);
+        UserEntity userEntity =
+                userService.getEntityByFireBaseUserData(fireBaseUserData);
+        Long uid = userEntity.getUserId();
+        // Fetch the transaction By ID
+        Transaction transaction =
+                transactionService.getTransactionByTransactionId(uid);// null Pointer <<
+        log.info("TEST 2 " + transaction.getStatus());
+        if (transaction != null) {
+            // update the transaction status to PROCESSING
+            transaction.setStatus(TranStatus.PROCESSING.name());
+            transactionRepository.save(transaction);
+            log.info("TEST 3 ");
+
+            // return a success response
+            return ResponseEntity.ok().body(
+                    new TransactionUpdateResponse(TranStatus.SUCCESS.name()));
+        }
+        return ResponseEntity.badRequest().body(
+                new TransactionUpdateResponse(TranStatus.NOT_SUCCESS.name()));
+    }
+
+    @Override
+    public ResponseEntity<TransactionData> finishTransaction(Long tid,
+            JwtAuthenticationToken jwt) {
+        // 1. get userId from jwt
+        FireBaseUserData fireBaseUserData = JwtUntil.getFireBaseUser(jwt);
+        UserEntity userEntity =
+                userService.getEntityByFireBaseUserData(fireBaseUserData);
+        Long uid = userEntity.getUserId();
+
+        // Fetch the transaction By ID
+        Transaction transaction =
+                transactionService.getTransactionByTransactionId(uid);
+        if (transaction != null) {
+            // update the transaction status to PROCESSING
+
+            transaction.setStatus(TranStatus.FINISH.name());
+
+            transactionRepository.save(transaction);
+
+            // log.info("transaction : " + transaction);
+            // Fetch the updated transaction details
+            TransactionData transactionData =
+                    transactionService.findByTidAndUid(tid, uid);
+            // return a success response
+            return ResponseEntity.ok(transactionData);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
-
-
-// WITH (SELECT * FROM transaction_product WHERE tpid = :tpid ) AS tp,
-// LEFT JOIN transaction t ,cart_item c
-// WHERE tp.tid = t.tid
-// AND tp.pid = c.pid

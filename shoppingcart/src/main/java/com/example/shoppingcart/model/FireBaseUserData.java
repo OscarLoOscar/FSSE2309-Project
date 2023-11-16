@@ -1,13 +1,11 @@
 package com.example.shoppingcart.model;
 
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 public class FireBaseUserData {
   private String firebaseUid;
   private String email;
