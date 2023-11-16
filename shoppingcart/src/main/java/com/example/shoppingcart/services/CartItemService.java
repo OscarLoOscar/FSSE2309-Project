@@ -9,7 +9,7 @@ public interface CartItemService {
   // void addCartItem(Long cartItemId);
   List<CartItemData> getUserCartItemsByUserName(String userName);
 
-  List<CartItemData> getUserCartItemsByUserId(Long uid);
+  List<CartItemData> findAllByUserUid(Long uid);
 
   List<CartItemData> getUserCartItemsByProductId(Long pid);
 

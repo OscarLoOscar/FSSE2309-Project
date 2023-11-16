@@ -1,5 +1,6 @@
 package com.example.shoppingcart.services.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -62,9 +63,9 @@ public class CartItemServiceImpl implements CartItemService {
   }
 
   @Override
-  public List<CartItemData> getUserCartItemsByUserId(Long uid) {
+  public List<CartItemData> findAllByUserUid(Long uid) {
     List<CartItemData> output = new ArrayList<>();
-    for (CartItem cartItem : cartItemRepository.findAllByUserid(uid)) {
+    for (CartItem cartItem : cartItemRepository.findAllByUserUid(uid)) {
       CartItemData convent = Mapper.map(cartItem);
       convent.setStock(cartItem.getProduct().getUnitStock());
       output.add(convent);
@@ -76,7 +77,7 @@ public class CartItemServiceImpl implements CartItemService {
   @Override
   public List<CartItemData> getUserCartItemsByProductId(Long pid) {
     List<CartItemData> output = new ArrayList<>();
-    for (CartItem cartItem : cartItemRepository.findAllByUserid(pid)) {
+    for (CartItem cartItem : cartItemRepository.findAllByUserUid(pid)) {
       CartItemData convent = Mapper.map(cartItem);
       convent.setStock(cartItem.getProduct().getUnitStock());
       output.add(convent);
@@ -104,7 +105,7 @@ public class CartItemServiceImpl implements CartItemService {
     CartItem cartItem = CartItem.builder()//
         .user(Mapper.map(userData))// Mapper.map missing fireBase ip -> 中nullpointer，入唔到DBDB
         .product(Mapper.map(productEntity))//
-        .quantity(quantity)//
+        .quantity(BigDecimal.valueOf(quantity))//
         .build();
     cartItem = entityManager.merge(cartItem);
     log.info("service chectk cartItem : " + cartItem.toString());

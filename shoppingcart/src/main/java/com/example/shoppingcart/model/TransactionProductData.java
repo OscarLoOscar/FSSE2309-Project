@@ -14,10 +14,11 @@ import lombok.ToString;
 public class TransactionProductData {
 
   private Long tpid;
-
+  
+  @JsonProperty("product")
   private CartItemData cartItemData;
 
-  private Integer quantity;
+  private BigDecimal quantity;
 
   @JsonProperty("subtotal")
   private BigDecimal totalPrice;

@@ -9,6 +9,7 @@ public interface TransactionProductService {
 
   List<TransactionProduct> findAllTransactionProductByTransactionId(Long tid);
 
-  TransactionProduct findProductByProductId(Long pid);
+  TransactionProduct findByProductId(Long pid);
 
+  TransactionProduct findByTranProductId(Long tpid);
 }

@@ -19,7 +19,7 @@ import lombok.Setter;
 public class ProductData {
 
   @JsonProperty(value = "pid")
-  Long productId;
+  Long pid;
 
   @JsonProperty(value = "name")
   String productName;

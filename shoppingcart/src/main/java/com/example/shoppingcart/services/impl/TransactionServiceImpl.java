@@ -4,20 +4,18 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.shoppingcart.entity.CartItem;
 import com.example.shoppingcart.entity.Transaction;
 import com.example.shoppingcart.entity.TransactionProduct;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.model.CartItemData;
+import com.example.shoppingcart.model.CartItemStorage;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.TransactionData;
 import com.example.shoppingcart.model.TransactionProductData;
 import com.example.shoppingcart.repository.TransactionRepository;
 import com.example.shoppingcart.services.TransactionService;
-import com.example.shoppingcart.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,6 +37,9 @@ public class TransactionServiceImpl implements TransactionService {
   @Autowired
   TransactionProductServiceImpl transactionProductServiceImpl;
 
+  @Autowired
+  CartItemStorage cartItemStorage;
+
   @Override
   public TransactionData createTransaction(Long userId) {
     // for Transaction DataBase
@@ -53,8 +54,7 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionData output = Mapper.map(recode);
 
     List<CartItemData> listOfCD = new ArrayList<>();
-    for (CartItemData cartItemData : cartItemService
-        .getUserCartItemsByUserId(userId)) {
+    for (CartItemData cartItemData : cartItemService.findAllByUserUid(userId)) {
       listOfCD.add(cartItemData);
     }
     log.info("CHECKT listOfCD : " + listOfCD);
@@ -62,19 +62,23 @@ public class TransactionServiceImpl implements TransactionService {
 
     // for Transaction_product DataBase
     List<TransactionProductData> listOfTPD = new ArrayList<>();
-    for (CartItemData cartItemData : cartItemService
-        .getUserCartItemsByUserId(userId)) {
+    for (CartItemData cartItemData : cartItemService.findAllByUserUid(userId)) {
       TransactionProductData transactionProductData =
           TransactionProductData.builder()//
               .cartItemData(cartItemData)//
               .quantity(cartItemData.getQuantity())//
-              .totalPrice(BigDecimal.valueOf(cartItemData.getStock())
-                  .multiply(cartItemData.getPrice()))//
+              .totalPrice(
+                  cartItemData.getQuantity().multiply(cartItemData.getPrice()))//
               .build();
       // for new TransactionProduct to DB
       TransactionProduct transactionProduct =
           Mapper.map(transactionProductData);
+      // set tid to DB
+      transactionProduct.setTransaction(recode);
+
       transactionProductServiceImpl.save(transactionProduct);
+      cartItemStorage.clearCartItems();
+
       // after save to DB , get primary key , set back to DTO
       transactionProductData.setTpid(transactionProduct.getTpid());
 
@@ -84,7 +88,6 @@ public class TransactionServiceImpl implements TransactionService {
       listOfTPD.add(transactionProductData);
     }
     output.setItems(listOfTPD);
-
     return output;
 
   }
@@ -96,19 +99,13 @@ public class TransactionServiceImpl implements TransactionService {
 
 
   @Override
-  public List<Transaction> getTransactionByuserId(Long uid) {
-    return transactionRepository.findAlltransactionByBuyerUid(uid);
+  public List<Transaction> findAllByBuyerUid(Long uid) {
+    return transactionRepository.findAllByBuyerUid(uid);
   }
+
+  @Override
+  public TransactionData findByTidAndUid(Long tid, Long uid) {
+    return Mapper.map(transactionRepository.findByTidAndUid(tid, uid));
+  }
+
 }
-
-
-// List<TransactionProduct> listOfTP = transactionProductService
-// .findAllTransactionProductByTransactionId(recode.getTid());
-// log.info("TS listOfTP : " + listOfTP);
-// List<TransactionProductData> listOfTPD = new ArrayList<>();
-// for (TransactionProduct tp : listOfTP) {
-// listOfTPD.add(Mapper.map(tp));
-// }
-// log.info("TS listOfTPD : " + listOfTPD);
-// output.setItems(listOfTPD);
-// log.info("Final output : " + output);

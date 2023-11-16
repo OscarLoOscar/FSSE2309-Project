@@ -21,12 +21,16 @@ public class TransactionProductServiceImpl
   @Override
   public List<TransactionProduct> findAllTransactionProductByTransactionId(
       Long tid) {
-    return transactionProductRepository
-        .findAllTransactionProductByTid(tid);
+    return transactionProductRepository.findAllByTid(tid);
   }
 
   @Override
-  public TransactionProduct findProductByProductId(Long pid) {
-    return transactionProductRepository.findProductByPid(pid);
+  public TransactionProduct findByProductId(Long pid) {
+    return transactionProductRepository.findByPid(pid);
+  }
+
+  @Override
+  public TransactionProduct findByTranProductId(Long tpid) {
+    return transactionProductRepository.findByTpid(tpid);
   }
 }

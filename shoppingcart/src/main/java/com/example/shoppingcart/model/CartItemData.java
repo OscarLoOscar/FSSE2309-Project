@@ -3,10 +3,15 @@ package com.example.shoppingcart.model;
 import java.math.BigDecimal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Getter
 @Setter
@@ -15,18 +20,20 @@ import lombok.ToString;
     "stock"})
 public class CartItemData {
   // ProductData product;
-  Long pid;
+  private Long pid;
 
-  String name;
+  private String name;
 
   @JsonProperty(value = "image_url")
-  String imageUrl;
+  private String imageUrl;
 
-  BigDecimal price;
+  private String description;
+
+  private BigDecimal price;
 
   @JsonProperty(value = "cart_quantity")
-  Integer quantity;
+  private BigDecimal quantity;
 
-  Integer stock;
+  private Integer stock;
 
 }

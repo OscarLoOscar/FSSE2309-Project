@@ -9,6 +9,7 @@ public interface TransactionService {
 
   Transaction getTransactionByTransactionId(Long transactionId);
 
-  List<Transaction> getTransactionByuserId(Long uid);
+  List<Transaction> findAllByBuyerUid(Long uid);
 
+  TransactionData findByTidAndUid(Long tid,Long uid);
 }

@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.findById(product.getProductId());
     if (!change.isPresent()) {
       return ProductData.builder()//
-          .productId(change.get().getProductId())//
+          .pid(change.get().getProductId())//
           .productName(change.get().getProductName())//
           .productDescription(change.get().getProductDescription())//
           .productPrice(change.get().getProductPrice().doubleValue())//

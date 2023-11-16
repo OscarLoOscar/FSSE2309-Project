@@ -31,7 +31,5 @@ public class TransactionData {
 
   @JsonProperty("items")
   List<TransactionProductData> items;
-  // @JsonProperty("items")
-  // List<CartItemData> items;
 
 }

@@ -1,6 +1,7 @@
 package com.example.shoppingcart.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +43,7 @@ public class CartItem implements Serializable {
   private UserEntity user;
 
   @Column(nullable = false)
-  private Integer quantity;
+  private BigDecimal quantity;
 
 }
 // @OneToOne

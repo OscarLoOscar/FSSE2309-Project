@@ -51,8 +51,7 @@ public class CartItemControllerImpl implements CartItemController {
     // Retrieve the usename from authentication object
 
     // Call service to get user cart items
-    List<CartItemData> userCartItems =
-        cartItemService.getUserCartItems(userId);
+    List<CartItemData> userCartItems = cartItemService.findAllByUserUid(userId);
 
     // if (userCartItems == null || userCartItems.isEmpty()) {
 
@@ -142,11 +141,11 @@ public class CartItemControllerImpl implements CartItemController {
     //
     ProductData productData = cartItemService.getProductById(pid);
     return CartItemData.builder()//
-        .pid(productData.getProductId())//
+        .pid(productData.getPid())//
         .name(productData.getProductName())//
         .imageUrl(productData.getImageUrl())//
         .price(BigDecimal.valueOf(productData.getProductPrice()))//
-        .quantity(quantity)//
+        .quantity(BigDecimal.valueOf(quantity))//
         .stock(productData.getUnitStock())//
         .build();
   }

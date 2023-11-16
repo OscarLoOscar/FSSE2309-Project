@@ -23,7 +23,7 @@ public class Mapper {
 
   public static ProductData map(Product product) {
     return ProductData.builder()//
-        .productId(product.getProductId())//
+        .pid(product.getProductId())//
         .productName(product.getProductName())//
         .productPrice(product.getProductPrice().doubleValue())//
         .productDescription(product.getProductDescription())//
@@ -53,7 +53,7 @@ public class Mapper {
 
   public static Product map(ProductData product) {
     return Product.builder()//
-        .productId(product.getProductId())//
+        .productId(product.getPid())//
         .productName(product.getProductName())//
         .productPrice(BigDecimal.valueOf(product.getProductPrice()))//
         .productDescription(product.getProductDescription())//
@@ -84,17 +84,39 @@ public class Mapper {
 
   public static TransactionProductData map(
       TransactionProduct transactionProduct) {
+    CartItemData cartItemData = getCartItemData(transactionProduct);
     return TransactionProductData.builder()//
-        .tpid(String.valueOf(transactionProduct.getTpid()))//
+        .tpid(transactionProduct.getTpid())//
         .quantity(transactionProduct.getQuantity())//
-        // .totalPrice(transactionProduct.getPrice())//
-        .build();
+        .cartItemData(cartItemData).build();
+  }
+
+  // Add a method to get CartItemData from TransactionProduct
+  private static CartItemData getCartItemData(
+      TransactionProduct transactionProduct) {
+    CartItemData cartItemData = new CartItemData();
+
+    // Set properties from TransactionProduct to CartItemData
+    cartItemData.setPid(transactionProduct.getPid());
+    cartItemData.setName(transactionProduct.getName());
+    cartItemData.setImageUrl(transactionProduct.getImageUrl());
+    cartItemData.setPrice(transactionProduct.getPrice());
+    cartItemData.setQuantity(transactionProduct.getQuantity());
+    cartItemData.setStock(transactionProduct.getStock());
+
+    return cartItemData;
   }
 
   public static TransactionProduct map(TransactionProductData tpd) {
     return TransactionProduct.builder()//
         .pid(tpd.getCartItemData().getPid())//
-        .quantity(tpd.getQuantity()).build();
+        .name(tpd.getCartItemData().getName())//
+        .description(tpd.getCartItemData().getDescription())//
+        .imageUrl(tpd.getCartItemData().getImageUrl())//
+        .price(tpd.getCartItemData().getPrice())//
+        .quantity(tpd.getQuantity())//
+        .stock(tpd.getCartItemData().getStock())//
+        .build();
 
   }
 }
