@@ -27,6 +27,7 @@ public class Mapper {
         .productName(product.getProductName())//
         .productPrice(product.getProductPrice().doubleValue())//
         .productDescription(product.getProductDescription())//
+        .productPrice(product.getProductPrice().doubleValue())//
         .imageUrl(product.getImageUrl())//
         .unitStock(product.getUnitStock())//
         .build();

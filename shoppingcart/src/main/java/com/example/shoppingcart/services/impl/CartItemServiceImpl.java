@@ -3,15 +3,13 @@ package com.example.shoppingcart.services.impl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.entity.CartItem;
-import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.model.CartItemData;
-import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.UserData;
@@ -63,27 +61,55 @@ public class CartItemServiceImpl implements CartItemService {
   }
 
   @Override
-  public List<CartItemData> findAllByUserUid(Long uid) {
-    List<CartItemData> output = new ArrayList<>();
-    for (CartItem cartItem : cartItemRepository.findAllByUserUid(uid)) {
-      CartItemData convent = Mapper.map(cartItem);
-      convent.setStock(cartItem.getProduct().getUnitStock());
-      output.add(convent);
+  public Optional<List<CartItemData>> findAllByUserUid(Long uid) {
+    // return cartItemRepository.findAllByUserUid(uid)//
+    // .stream()//
+    // .map(cartItem -> {
+    // CartItemData cartItemData = Mapper.map(cartItem);
+    // cartItemData.setStock(cartItem.getProduct().getUnitStock());
+    // return cartItemData;
+    // })//
+    // .collect(Collectors.toList());
+    List<CartItem> cartItems = cartItemRepository.findAllByUserUid(uid).get();
+
+    // Check if the list is empty
+    if (cartItems.isEmpty()) {
+      return Optional.empty();
+    } else {
+      return Optional.of(cartItems.stream()//
+          .map(Mapper::map)//
+          .collect(Collectors.toList()));
     }
-    return output;
+    // List<CartItemData> output = new ArrayList<>();
+    // for (CartItem cartItem : cartItemRepository.findAllByUserUid(uid)) {
+    // CartItemData convent = Mapper.map(cartItem);
+    // convent.setStock(cartItem.getProduct().getUnitStock());
+    // output.add(convent);
+    // }
+    // return output;
   }
 
 
   @Override
-  public List<CartItemData> getUserCartItemsByProductId(Long pid) {
-    List<CartItemData> output = new ArrayList<>();
-    for (CartItem cartItem : cartItemRepository.findAllByUserUid(pid)) {
-      CartItemData convent = Mapper.map(cartItem);
-      convent.setStock(cartItem.getProduct().getUnitStock());
-      output.add(convent);
+  public Optional<List<CartItemData>> getUserCartItemsByProductId(Long pid) {
+    List<CartItem> cartItemDatas =
+        cartItemRepository.findAllByUserUid(pid).get();
+    if (cartItemDatas.isEmpty()) {
+      return Optional.empty();
+    } else {
+      return Optional.of(cartItemDatas.stream()//
+          .map(Mapper::map)//
+          .collect(Collectors.toList()));
     }
-    return output;
   }
+  // List<CartItemData> output = new ArrayList<>();
+  // for (CartItem cartItem : cartItemRepository.findAllByUserUid(pid)) {
+  // CartItemData convent = Mapper.map(cartItem);
+  // convent.setStock(cartItem.getProduct().getUnitStock());
+  // output.add(convent);
+  // }
+  // return output;
+  // }
 
   public ProductData getProductById(Long productId) {
     return productService.getProductById(productId);
@@ -108,8 +134,8 @@ public class CartItemServiceImpl implements CartItemService {
         .quantity(BigDecimal.valueOf(quantity))//
         .build();
     cartItem = entityManager.merge(cartItem);
-    log.info("service chectk cartItem : " + cartItem.toString());
-
+    log.info("Service check cartItem: {}", cartItem);
+    
     cartItemRepository.save(cartItem);
   }
 }

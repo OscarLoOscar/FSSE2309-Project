@@ -138,7 +138,7 @@ public class TransactionControllerImpl implements TransactionController {
                 .findAllTransactionProductByTransactionId(tid);
 
         // 4.get all cart_item by userId
-        List<CartItemData> cList = cartItemService.findAllByUserUid(uid);
+        List<CartItemData> cList = cartItemService.findAllByUserUid(uid).get();
 
         // 5.convent from List<TransactionProduct> to List<TransactionProductData>
         List<TransactionProductData> items = new ArrayList<>();

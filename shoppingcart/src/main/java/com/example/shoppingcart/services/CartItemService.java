@@ -1,17 +1,17 @@
 package com.example.shoppingcart.services;
 
 import java.util.List;
+import java.util.Optional;
 import com.example.shoppingcart.model.CartItemData;
-import com.example.shoppingcart.model.FireBaseUserData;
 
 public interface CartItemService {
 
   // void addCartItem(Long cartItemId);
   List<CartItemData> getUserCartItemsByUserName(String userName);
 
-  List<CartItemData> findAllByUserUid(Long uid);
+  Optional<List<CartItemData> >findAllByUserUid(Long uid);
 
-  List<CartItemData> getUserCartItemsByProductId(Long pid);
+  Optional<List<CartItemData>> getUserCartItemsByProductId(Long pid);
 
   void addCartItem(long userId, long pid, int quantity);
 

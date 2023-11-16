@@ -52,17 +52,11 @@ public class ProductServiceImpl implements ProductService {
   public ProductData editProduct(Product product) {
     Optional<Product> change =
         productRepository.findById(product.getProductId());
-    if (!change.isPresent()) {
-      return ProductData.builder()//
-          .pid(change.get().getProductId())//
-          .productName(change.get().getProductName())//
-          .productDescription(change.get().getProductDescription())//
-          .productPrice(change.get().getProductPrice().doubleValue())//
-          .imageUrl(change.get().getImageUrl())//
-          .unitStock(change.get().getUnitStock())//
-          .build();
+    if (change.isPresent()) {
+      return Mapper.map(change.get());
+    } else {
+      return null;
     }
-    return null;
   }
 
   @Override

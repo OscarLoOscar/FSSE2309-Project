@@ -51,7 +51,7 @@ public class CartItemControllerImpl implements CartItemController {
     // Retrieve the usename from authentication object
 
     // Call service to get user cart items
-    List<CartItemData> userCartItems = cartItemService.findAllByUserUid(userId);
+    List<CartItemData> userCartItems = cartItemService.findAllByUserUid(userId).get();
 
     // if (userCartItems == null || userCartItems.isEmpty()) {
 
