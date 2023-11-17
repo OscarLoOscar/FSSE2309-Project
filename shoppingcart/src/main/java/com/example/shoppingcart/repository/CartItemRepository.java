@@ -10,13 +10,24 @@ import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.entity.UserEntity;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
-    @Query(value = "SELECT * FROM cart_item c WHERE c.uid=:uid ",
-            nativeQuery = true)
-    Optional<List<CartItem>> findAllByUserUid(@Param("uid") Long uid);
+        @Query(value = "SELECT * FROM cart_item c WHERE c.uid=:uid ",
+                        nativeQuery = true)
+        Optional<List<CartItem>> findAllByUserUid(@Param("uid") Long uid);
 
-    Optional<List<CartItem>> findByUserAndProduct(UserEntity user,
-            Product product);
+        Optional<List<CartItem>> findByUserAndProduct(UserEntity user,
+                        Product product);
 
-    // Optional<CartItem> findByUserAndProduct(UserEntity uid, Long pid);
+        // @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM cart_item c "
+        //                 + "WHERE c.uid = :uid AND c.pid = :pid",nativeQuery = true)
+        // boolean existsByuidAndpid(@Param("uid") Long uid,
+        //                 @Param("pid") Long pid);
 
+        @Query(value = "SELECT * FROM cart_item c WHERE c.uid = :uid AND c.pid = :pid",
+                        nativeQuery = true)
+        Optional<CartItem> findByUser_UidAndProduct_Pid(@Param("uid") Long uid,
+                        @Param("pid") Long pid);
 }
+
+
+// org.hibernate.query.sqm.ParsingException:
+// mismatched input 'THEN' expecting {<EOF>, '+', '-', '*', '/', '%', '||', AND, BY, DAY, EPOCH, GROUP, HOUR, MINUTE, MONTH, NANOSECOND, OR, ORDER, QUARTER, SECOND, WEEK, YEAR}

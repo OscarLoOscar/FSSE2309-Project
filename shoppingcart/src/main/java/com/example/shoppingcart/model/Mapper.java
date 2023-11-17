@@ -33,25 +33,6 @@ public class Mapper {
         .build();
   }
 
-  public static CartItemData map(CartItem cartItem) {
-    return CartItemData.builder()//
-        // .user(modelMapper.map(cartItem.getUser(), UserData.class))//
-        // .product(Mapper.map(cartItem.getProduct()))//
-        .pid(cartItem.getProduct().getProductId())//
-        .name(cartItem.getProduct().getProductName())//
-        .imageUrl(cartItem.getProduct().getImageUrl())//
-        .price(cartItem.getProduct().getProductPrice())
-        .quantity(cartItem.getQuantity())//
-        .build();
-  }
-
-  public static UserEntity map(FireBaseUserData data) {
-    return UserEntity.builder()//
-        .fireBaseUid(data.getFirebaseUid())//
-        .email(data.getEmail())//
-        .build();
-  }
-
   public static Product map(ProductData product) {
     return Product.builder()//
         .productId(product.getPid())//
@@ -62,6 +43,27 @@ public class Mapper {
         .unitStock(product.getUnitStock())//
         .build();
   }
+
+  public static CartItemData map(CartItem cartItem) {
+    return CartItemData.builder()//
+        .pid(cartItem.getProduct().getProductId())//
+        .name(cartItem.getProduct().getProductName())//
+        .imageUrl(cartItem.getProduct().getImageUrl())//
+        .price(cartItem.getProduct().getProductPrice())
+        .quantity(cartItem.getQuantity())//
+        .description(cartItem.getProduct().getProductDescription())//
+        .stock(cartItem.getProduct().getUnitStock())//
+        .build();
+  }
+
+  public static UserEntity map(FireBaseUserData data) {
+    return UserEntity.builder()//
+        .fireBaseUid(data.getFirebaseUid())//
+        .email(data.getEmail())//
+        .build();
+  }
+
+
 
   public static UserEntity map(UserData userEntity) {
     return UserEntity.builder()//
@@ -79,7 +81,7 @@ public class Mapper {
         .datetime(transactionEntity.getDatetime())
         .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
         .total(transactionEntity.getTotalPrice())
-        // .items(transactionEntity.getCartItem()) // Implement mapTransactionProducts method
+
         .build();
   }
 
@@ -89,23 +91,24 @@ public class Mapper {
     return TransactionProductData.builder()//
         .tpid(transactionProduct.getTpid())//
         .quantity(transactionProduct.getQuantity())//
-        .cartItemData(cartItemData).build();
+        .cartItemData(cartItemData)//
+        .totalPrice(transactionProduct.getPrice()
+            .multiply(transactionProduct.getQuantity()).setScale(2))
+        .build();
   }
 
   // Add a method to get CartItemData from TransactionProduct
   private static CartItemData getCartItemData(
       TransactionProduct transactionProduct) {
-    CartItemData cartItemData = new CartItemData();
-
-    // Set properties from TransactionProduct to CartItemData
-    cartItemData.setPid(transactionProduct.getPid());
-    cartItemData.setName(transactionProduct.getName());
-    cartItemData.setImageUrl(transactionProduct.getImageUrl());
-    cartItemData.setPrice(transactionProduct.getPrice());
-    cartItemData.setQuantity(transactionProduct.getQuantity());
-    cartItemData.setStock(transactionProduct.getStock());
-
-    return cartItemData;
+    return CartItemData.builder()//
+        .pid(transactionProduct.getPid())//
+        .name(transactionProduct.getName())//
+        .imageUrl(transactionProduct.getImageUrl())//
+        .price(transactionProduct.getPrice())//
+        .quantity(transactionProduct.getQuantity())//
+        .stock(transactionProduct.getStock())//
+        .description(transactionProduct.getDescription())//
+        .build();
   }
 
   public static TransactionProduct map(TransactionProductData tpd) {

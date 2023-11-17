@@ -13,7 +13,6 @@ import com.example.shoppingcart.entity.Transaction;
 import com.example.shoppingcart.entity.TransactionProduct;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.model.CartItemData;
-import com.example.shoppingcart.model.CartItemStorage;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.TransactionData;
 import com.example.shoppingcart.model.TransactionProductData;
@@ -31,19 +30,17 @@ public class TransactionServiceImpl implements TransactionService {
   private final TransactionRepository transactionRepository;
   private final CartItemServiceImpl cartItemService;
   private final TransactionProductServiceImpl transactionProductServiceImpl;
-  private final CartItemStorage cartItemStorage;
+  // private final CartItemStorage cartItemStorage;
 
   @Autowired
   public TransactionServiceImpl(UserServiceImpl userService,
       TransactionRepository transactionRepository,
       CartItemServiceImpl cartItemService,
-      TransactionProductServiceImpl transactionProductServiceImpl,
-      CartItemStorage cartItemStorage) {
+      TransactionProductServiceImpl transactionProductServiceImpl) {
     this.userService = userService;
     this.transactionRepository = transactionRepository;
     this.cartItemService = cartItemService;
     this.transactionProductServiceImpl = transactionProductServiceImpl;
-    this.cartItemStorage = cartItemStorage;
   }
 
   @Transactional
@@ -94,7 +91,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     if (optionalCartItems.isPresent()) {
       List<CartItemData> cartItemDataList = optionalCartItems.get();
-      cartItemStorage.clearCartItems();
+      // cartItemStorage.clearCartItems();
       return cartItemDataList;
     } else {
       // handle the case when cart items are not present
@@ -116,19 +113,20 @@ public class TransactionServiceImpl implements TransactionService {
   private TransactionProductData saveTransactionProduct(
       Transaction transactionRecord, CartItemData cartItemData) {
     TransactionProductData transactionProductData =
-        TransactionProductData.builder().cartItemData(cartItemData)
-            .quantity(cartItemData.getQuantity())
+        TransactionProductData.builder()//
+            .cartItemData(cartItemData)//
+            .quantity(cartItemData.getQuantity())//
             .totalPrice(
-                cartItemData.getQuantity().multiply(cartItemData.getPrice()))
+                cartItemData.getQuantity().multiply(cartItemData.getPrice()))//
             .build();
 
-    TransactionProduct transactionProduct = Mapper.map(transactionProductData);
+    TransactionProduct transactionProduct = Mapper.map(transactionProductData);// desc , stock is null
     transactionProduct.setTransaction(transactionRecord);
     transactionProductServiceImpl.save(transactionProduct);
     //
-    log.info("Before clearing cart items 2: " + cartItemStorage.getCartItems());
-    cartItemStorage.clearCartItems();
-    log.info("After clearing cart items 2 : " + cartItemStorage.getCartItems());
+    // log.info("Before clearing cart items 2: " + cartItemStorage.getCartItems());
+    // cartItemStorage.clearCartItems();
+    // log.info("After clearing cart items 2 : " + cartItemStorage.getCartItems());
     //
     transactionProductData.setTpid(transactionProduct.getTpid());
 

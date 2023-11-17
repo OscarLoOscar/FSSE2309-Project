@@ -1,5 +1,6 @@
 package com.example.shoppingcart.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.model.ProductData;
@@ -18,5 +19,7 @@ public interface ProductService {
   ProductData updateProductstock(Long productId, int unitStock);
 
   void deleteProductById(Long productId);
+
+  boolean isEnoughStock(Long pid, Integer quantity);
 
 }

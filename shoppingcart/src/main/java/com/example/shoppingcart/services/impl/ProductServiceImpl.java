@@ -74,4 +74,9 @@ public class ProductServiceImpl implements ProductService {
     productRepository.save(before);
     return Mapper.map(before);
   }
+
+  @Override
+  public boolean isEnoughStock(Long pid, Integer quantity) {
+    return productRepository.findById(pid).get().getUnitStock() >= quantity;
+  }
 }

@@ -32,8 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/transaction")
 public class TransactionControllerImpl implements TransactionController {
 
-    private final JwtUntil jwtUntil;
-
     private final UserService userService;
 
     private final CartItemService cartItemService;
@@ -50,15 +48,12 @@ public class TransactionControllerImpl implements TransactionController {
             UserService userService, //
             CartItemService cartItemService, //
             TransactionProductService transactionProductService, //
-            TransactionRepository transactionRepository, //
-            JwtUntil jwtUntil) {
+            TransactionRepository transactionRepository) {
         this.transactionService = transactionServiceImpl;
         this.userService = userService;
         this.cartItemService = cartItemService;
         this.transactionProductService = transactionProductService;
         this.transactionRepository = transactionRepository;
-        this.jwtUntil = jwtUntil;
-
     }
 
     // Create a New Transaction
@@ -156,7 +151,6 @@ public class TransactionControllerImpl implements TransactionController {
 
             // Create a new TransactionProductData instance for each iteration
             TransactionProductData transactionProductData = Mapper.map(tp);
-
             if (matchedCartItem != null) {
                 items.add(transactionProductData);
             }
@@ -173,8 +167,9 @@ public class TransactionControllerImpl implements TransactionController {
                     .buyerUid(uid)//
                     .datetime(tList.getDatetime())//
                     .status(tList.getStatus())//
-                    .total(total)//
+                    .total(total.setScale(2))//
                     .items(items)//
+
                     .build();
         }
 

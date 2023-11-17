@@ -1,10 +1,7 @@
 package com.example.shoppingcart.controller.impl;
 
-import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +10,7 @@ import com.example.shoppingcart.infra.JwtUntil;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.controller.CartItemController;
 import com.example.shoppingcart.model.CartItemData;
-// import com.example.shoppingcart.model.CartItemStorage;
 import com.example.shoppingcart.model.FireBaseUserData;
-import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.TransactionUpdateResponse;
 import com.example.shoppingcart.services.UserService;
 import com.example.shoppingcart.services.impl.CartItemServiceImpl;
@@ -37,8 +32,8 @@ public class CartItemControllerImpl implements CartItemController {
     this.userService = userService;
   }
 
-  @Autowired
-  CartItemStorage cartItemStorage;
+  // @Autowired
+  // CartItemStorage cartItemStorage;
 
 
   @Override
@@ -70,30 +65,16 @@ public class CartItemControllerImpl implements CartItemController {
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
     Long userId = userEntity.getUserId();
+    log.info("userId : " + userId);
     // convent pid and quantoty
     Long pid = Long.parseLong(inputPid);
+    log.info("pid : " + pid);
+
     Integer quantity = Integer.parseInt(inputQuantity);
-    // add item
-    if (cartItemStorage.getCartItems().containsKey(pid)) {
-      cartItemStorage.addCartItem(pid, quantity);
-    } else {
-      log.info("Adding new cart item for product {} with quantity {}", pid,
-          quantity);
-      // Add the item to the in-memory storage
-      cartItemStorage.addCartItem(pid, quantity);
-    }
-    log.info(
-        "add item : " + cartItemStorage.getCartItems().keySet().toString());
-    for (Long i : cartItemStorage.getCartItems().keySet()) {
-      log.info(
-          "check item : " + i + " : " + cartItemStorage.getCartItems().get(i));
-    }
-    //
+
     // save
-    cartItemService.addCartItem(userId, // dead code
-        pid, //
-        quantity);
-    return new TransactionUpdateResponse(TranStatus.SUCCESS.name());
+    cartItemService.updateCartQuantity(userId, pid, quantity);
+    return new TransactionUpdateResponse(TranStatus.PREPARE.name());
   }
 
 
@@ -117,37 +98,22 @@ public class CartItemControllerImpl implements CartItemController {
     // check user
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
+    Long uid = userEntity.getUserId();
     // convent pid and quantoty
     Long pid = Long.valueOf(inputPid);
     Integer quantity = Integer.valueOf(inputQuantity);
     // Update cart quantity
-    if (cartItemStorage.getCartItems().containsKey(pid)) {
-      cartItemStorage.changeCartItemQuantity(pid, quantity);
+    boolean success = cartItemService.updateCartQuantity(uid, pid, quantity);
+
+    if (success) {
+      // Return the updated cart item details
+      return cartItemService.getCartItemDetails(uid, pid);
     } else {
-      // Add the item to the in-memory storage
-      cartItemStorage.addCartItem(pid, quantity);
+      // Handle the case where the update was not successful (e.g., item not found)
+      // You can customize this part based on your business logic
+      return new CartItemData(); // Return an empty object or handle accordingly
     }
-    log.info("before update item : "
-        + cartItemStorage.getCartItems().keySet().toString());
-    for (Long i : cartItemStorage.getCartItems().keySet()) {
-      log.info("updated item : " + i + " : "
-          + cartItemStorage.getCartItems().get(i));
-    }
-    //
-    // save
-    cartItemService.addCartItem(userEntity.getUserId(), //
-        pid, //
-        quantity);
-    //
-    ProductData productData = cartItemService.getProductById(pid);
-    return CartItemData.builder()//
-        .pid(productData.getPid())//
-        .name(productData.getProductName())//
-        .imageUrl(productData.getImageUrl())//
-        .price(BigDecimal.valueOf(productData.getProductPrice()))//
-        .quantity(BigDecimal.valueOf(quantity))//
-        .stock(productData.getUnitStock())//
-        .build();
+
   }
 
   @Override
