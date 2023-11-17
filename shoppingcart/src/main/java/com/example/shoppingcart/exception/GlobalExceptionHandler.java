@@ -1,5 +1,6 @@
 package com.example.shoppingcart.exception;
 
+import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,10 +10,41 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(value = FSSE2309Exception.class)
-  @ResponseStatus(value = HttpStatus.OK)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ApiResp<Void> finnhubExceptionHandler(FSSE2309Exception e) {
     return ApiResp.<Void>builder() //
         .status(Code.fromCode(e.getCode())) //
+        .concatMessageIfPresent(e.getMessage())//
+        .data(null) //
+        .build();
+  }
+
+  @ExceptionHandler(value = UserNotExistException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public ApiResp<Void> finnhubExceptionHandler(UserNotExistException e) {
+    return ApiResp.<Void>builder() //
+        .status(Code.fromCode(e.getCode())) //
+        .concatMessageIfPresent(e.getMessage())//
+        .data(null) //
+        .build();
+  }
+
+  @ExceptionHandler(value = ProductNotExistException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public ApiResp<Void> finnhubExceptionHandler(ProductNotExistException e) {
+    return ApiResp.<Void>builder() //
+        .status(Code.fromCode(e.getCode())) //
+        .concatMessageIfPresent(e.getMessage())//
+        .data(null) //
+        .build();
+  }
+
+  @ExceptionHandler(value = NoSuchElementException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public ApiResp<Void> finnhubExceptionHandler(NoSuchElementException e) {
+    return ApiResp.<Void>builder() //
+        .status(getRespCode(e))//
+        .concatMessageIfPresent(e.getMessage())//
         .data(null) //
         .build();
   }
@@ -22,7 +54,8 @@ public class GlobalExceptionHandler {
   public ApiResp<Void> runtimeExceptionHandler(RuntimeException e) {
     return ApiResp.<Void>builder() //
         .status(getRespCode(e)) //
-        .concatMessageIfPresent(e.getMessage()).data(null) //
+        .concatMessageIfPresent(e.getMessage())//
+        .data(null) //
         .build();
   }
 
@@ -31,7 +64,8 @@ public class GlobalExceptionHandler {
   public ApiResp<Void> exceptionHandler(Exception e) {
     return ApiResp.<Void>builder() //
         .status(getRespCode(e)) //
-        .concatMessageIfPresent(e.getMessage()).data(null) //
+        .concatMessageIfPresent(e.getMessage())//
+        .data(null) //
         .build();
   }
 

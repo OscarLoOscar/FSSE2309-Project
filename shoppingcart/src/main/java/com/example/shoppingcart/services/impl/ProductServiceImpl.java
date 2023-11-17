@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public ProductData getProductById(Long productId) {
     return Mapper.map(productRepository.findById(productId)//
-        .orElseThrow(() -> new NoSuchElementException("No value present")));
+        .orElseThrow(() -> new NoSuchElementException("No value present : "+ productId + " is not valid productId")));
   }
 
   @Override
