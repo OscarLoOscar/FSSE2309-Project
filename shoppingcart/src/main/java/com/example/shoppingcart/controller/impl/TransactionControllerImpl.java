@@ -132,61 +132,9 @@ public class TransactionControllerImpl implements TransactionController {
         UserEntity userEntity =
                 userService.getEntityByFireBaseUserData(fireBaseUserData);
         Long uid = userEntity.getUserId();
-        // 2. get all transaction by userId
-        TransactionData tList = transactionService.findByTidAndUid(tid, uid);
-        // 3.get transaction product by tid
-        List<TransactionProduct> tpList = transactionProductService
-                .findAllTransactionProductByTransactionId(tid);
-
-        // 4.get all cart_item by userId
-        List<CartItemData> cList = cartItemService.findAllByUserUid(uid).get();
-
-        // 5.convent from List<TransactionProduct> to List<TransactionProductData>
-        List<TransactionProductData> items = new ArrayList<>();
-
-        CartItemData matchedCartItem = null;
-        for (TransactionProduct tp : tpList) {
-            Transaction t = tp.getTransaction();
-            matchedCartItem = findMatchingCartItem(tp, t, cList);
-
-            // Create a new TransactionProductData instance for each iteration
-            TransactionProductData transactionProductData = Mapper.map(tp);
-            if (matchedCartItem != null) {
-                items.add(transactionProductData);
-            }
-        }
-
-        // 6.ensure correct placement of return statement
-        if (!items.isEmpty()) {
-            // Assuming total calculation is correct based on matchedCartItem
-            BigDecimal total = matchedCartItem.getPrice()
-                    .multiply(items.get(0).getQuantity());
-
-            return TransactionData.builder()//
-                    .transactionId(tid)//
-                    .buyerUid(uid)//
-                    .datetime(tList.getDatetime())//
-                    .status(tList.getStatus())//
-                    .total(total.setScale(2))//
-                    .items(items)//
-
-                    .build();
-        }
-
-        return null;
+        return transactionService.getTransactionDetailByTransactionId(tid, uid);
     }
 
-    // 7.Encapsulate for finding match cart item
-    private CartItemData findMatchingCartItem(TransactionProduct tp,
-            Transaction t, List<CartItemData> cList) {
-        for (CartItemData c : cList) {
-            if (c.getPid().equals(tp.getPid())
-                    && tp.getTransaction().getTid().equals(t.getTid())) {
-                return c;
-            }
-        }
-        return null;
-    }
 
     @Override
     public ResponseEntity<TransactionUpdateResponse> updateTransactionToProcessing(
@@ -196,21 +144,15 @@ public class TransactionControllerImpl implements TransactionController {
         UserEntity userEntity =
                 userService.getEntityByFireBaseUserData(fireBaseUserData);
         Long uid = userEntity.getUserId();
-        // Fetch the transaction By ID
-        Transaction transaction =
-                transactionService.getTransactionByTransactionId(uid);// null Pointer <<
-        if (transaction != null) {
-            // update the transaction status to PROCESSING
-            transaction.setStatus(TranStatus.PROCESSING.name());
-            transactionRepository.save(transaction);
-            log.info("TEST 3 ");
 
-            // return a success response
-            return ResponseEntity.ok().body(
-                    new TransactionUpdateResponse(TranStatus.SUCCESS.name()));
+        if (transactionService.updateTransactionToProcessing(tid, uid)) {
+            return ResponseEntity.ok()//
+                    .body(new TransactionUpdateResponse(
+                            TranStatus.SUCCESS.name()));
         }
-        return ResponseEntity.badRequest().body(
-                new TransactionUpdateResponse(TranStatus.NOT_SUCCESS.name()));
+        return ResponseEntity.badRequest()//
+                .body(new TransactionUpdateResponse(
+                        TranStatus.NOT_SUCCESS.name()));
     }
 
     @Override
@@ -222,25 +164,12 @@ public class TransactionControllerImpl implements TransactionController {
                 userService.getEntityByFireBaseUserData(fireBaseUserData);
         Long uid = userEntity.getUserId();
 
-        // Fetch the transaction By ID
-        Transaction transaction =
-                transactionService.getTransactionByTransactionId(uid);
-        if (transaction != null) {
-            // update the transaction status to PROCESSING
 
-            transaction.setStatus(TranStatus.FINISH.name());
+        TransactionData transaction =
+                transactionService.finishTransaction(tid, uid);
 
-            transactionRepository.save(transaction);
+        return ResponseEntity.ok(transaction);//
 
-            // log.info("transaction : " + transaction);
-            // Fetch the updated transaction details
-            TransactionData transactionData =
-                    transactionService.findByTidAndUid(tid, uid);
-            // return a success response
-            return ResponseEntity.ok(transactionData);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
 }
