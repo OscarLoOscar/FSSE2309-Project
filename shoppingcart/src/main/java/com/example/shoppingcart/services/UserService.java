@@ -2,6 +2,7 @@ package com.example.shoppingcart.services;
 
 import java.util.List;
 import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.exception.UserNotExistException;
 import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.UserData;
 
@@ -13,11 +14,11 @@ public interface UserService {
 
   UserEntity getEntityByFireBaseUserData(FireBaseUserData fireBaseUserData);
 
-  UserData getUserById(Long userId);
+  UserData getUserById(Long userId) throws UserNotExistException;
 
- // UserData findUserByUserName(String userName);
+  // UserData findUserByUserName(String userName);
 
- // UserData findUserByPhone(String phone);
+  // UserData findUserByPhone(String phone);
 
   UserData findUserByEmail(String email);
 

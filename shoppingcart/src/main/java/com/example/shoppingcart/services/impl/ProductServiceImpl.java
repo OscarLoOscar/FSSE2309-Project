@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.shoppingcart.entity.Product;
+import com.example.shoppingcart.exception.Code;
+import com.example.shoppingcart.exception.ProductNotExistException;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.repository.ProductRepository;
@@ -38,9 +40,11 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public ProductData getProductById(Long productId) {
+  public ProductData getProductById(Long productId)
+      throws ProductNotExistException {
     return Mapper.map(productRepository.findById(productId)//
-        .orElseThrow(() -> new NoSuchElementException("No value present : "+ productId + " is not valid productId")));
+        .orElseThrow(
+            () -> new ProductNotExistException(Code.PRODUCT_NOT_EXIST)));
   }
 
   @Override

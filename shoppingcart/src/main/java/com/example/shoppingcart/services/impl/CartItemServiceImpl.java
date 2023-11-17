@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.shoppingcart.entity.CartItem;
+import com.example.shoppingcart.exception.ProductNotExistException;
+import com.example.shoppingcart.exception.UserNotExistException;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.ProductData;
@@ -98,7 +100,8 @@ public class CartItemServiceImpl implements CartItemService {
   // return output;
   // }
 
-  public ProductData getProductById(Long productId) {
+  public ProductData getProductById(Long productId)
+      throws ProductNotExistException {
     return productService.getProductById(productId);
   }
 
@@ -112,57 +115,59 @@ public class CartItemServiceImpl implements CartItemService {
   // @Override
   // @Transactional
   // public boolean updateCartQuantity(long userId, long pid, int quantity) {
-  //   UserData userData = userService.getUserById(userId);
+  // UserData userData = userService.getUserById(userId);
 
-  //   List<CartItem> cartItems =
-  //       cartItemRepository.findAllByUserUid(userId).get();
+  // List<CartItem> cartItems =
+  // cartItemRepository.findAllByUserUid(userId).get();
 
-  //   if (!cartItems.isEmpty()) {
-  //     CartItem cartItem2 = getEntityByUidAndPid(userId, pid);
-  //     cartItem2.setQuantity(
-  //         cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
-  //     cartItem2 = entityManager.merge(cartItem2);
-  //     cartItemRepository.save(cartItem2);
-  //   } else {
-  //     ProductData productEntity = productService.getProductById(pid);
-  //     CartItem cartItementity = CartItem.builder()//
-  //         .product(Mapper.map(productEntity))//
-  //         .user(Mapper.map(userData))//
-  //         .quantity(BigDecimal.valueOf(quantity))//
-  //         .build();
-  //     cartItementity = entityManager.merge(cartItementity);
-  //     cartItemRepository.save(cartItementity);
-  //     // bug
-  //     // Update the cartItems list with the newly created entity
-  //     cartItems.add(cartItementity);
-  //   }
-  //   return true;
+  // if (!cartItems.isEmpty()) {
+  // CartItem cartItem2 = getEntityByUidAndPid(userId, pid);
+  // cartItem2.setQuantity(
+  // cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
+  // cartItem2 = entityManager.merge(cartItem2);
+  // cartItemRepository.save(cartItem2);
+  // } else {
+  // ProductData productEntity = productService.getProductById(pid);
+  // CartItem cartItementity = CartItem.builder()//
+  // .product(Mapper.map(productEntity))//
+  // .user(Mapper.map(userData))//
+  // .quantity(BigDecimal.valueOf(quantity))//
+  // .build();
+  // cartItementity = entityManager.merge(cartItementity);
+  // cartItemRepository.save(cartItementity);
+  // // bug
+  // // Update the cartItems list with the newly created entity
+  // cartItems.add(cartItementity);
+  // }
+  // return true;
   // }
   @Override
   @Transactional
-  public boolean updateCartQuantity(long userId, long pid, int quantity) {
-      UserData userData = userService.getUserById(userId);
-  
-      Optional<CartItem> optionalCartItem = getEntityByUidAndPid(userId, pid);
-  
-      if (optionalCartItem.isPresent()) {
-          CartItem cartItem2 = optionalCartItem.get();
-          cartItem2.setQuantity(cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
-          cartItem2 = entityManager.merge(cartItem2);
-          cartItemRepository.save(cartItem2);
-      } else {
-          ProductData productEntity = productService.getProductById(pid);
-          CartItem cartItementity = CartItem.builder()//
-                  .product(Mapper.map(productEntity))//
-                  .user(Mapper.map(userData))//
-                  .quantity(BigDecimal.valueOf(quantity))//
-                  .build();
-          cartItementity = entityManager.merge(cartItementity);
-          cartItemRepository.save(cartItementity);
-      }
-      return true;
+  public boolean updateCartQuantity(long userId, long pid, int quantity)
+      throws ProductNotExistException, UserNotExistException {
+    UserData userData = userService.getUserById(userId);
+
+    Optional<CartItem> optionalCartItem = getEntityByUidAndPid(userId, pid);
+
+    if (optionalCartItem.isPresent()) {
+      CartItem cartItem2 = optionalCartItem.get();
+      cartItem2.setQuantity(
+          cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
+      cartItem2 = entityManager.merge(cartItem2);
+      cartItemRepository.save(cartItem2);
+    } else {
+      ProductData productEntity = productService.getProductById(pid);
+      CartItem cartItementity = CartItem.builder()//
+          .product(Mapper.map(productEntity))//
+          .user(Mapper.map(userData))//
+          .quantity(BigDecimal.valueOf(quantity))//
+          .build();
+      cartItementity = entityManager.merge(cartItementity);
+      cartItemRepository.save(cartItementity);
+    }
+    return true;
   }
-  
+
   // old
   // public CartItem getEntityByUidAndPid(Long uid, Long pid) {
   // return cartItemRepository.findByUser_UidAndProduct_Pid(uid, pid)//

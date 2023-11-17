@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.controller.ProductController;
 import com.example.shoppingcart.entity.Product;
+import com.example.shoppingcart.exception.ProductNotExistException;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.request.ProductRequest;
 import com.example.shoppingcart.services.ProductService;
@@ -40,7 +41,8 @@ public class ProductControllerImpl implements ProductController {
   }
 
   @Override
-  public ProductData getProductById(String productId) {
+  public ProductData getProductById(String productId)
+      throws ProductNotExistException {
     return productService.getProductById(Long.valueOf(productId));
   }
 
@@ -62,7 +64,8 @@ public class ProductControllerImpl implements ProductController {
   }
 
   @Override
-  public ProductData editProductPrice(String productId) {
+  public ProductData editProductPrice(String productId)
+      throws ProductNotExistException {
     return productService.getProductById(Long.valueOf(productId));
   }
 

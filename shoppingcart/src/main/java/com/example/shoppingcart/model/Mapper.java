@@ -80,8 +80,7 @@ public class Mapper {
         .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
         .datetime(transactionEntity.getDatetime())
         .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
-        .total(transactionEntity.getTotalPrice())
-
+        .total(transactionEntity.getTotalPrice().setScale(2))
         .build();
   }
 

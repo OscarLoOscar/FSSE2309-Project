@@ -6,6 +6,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.exception.ProductNotExistException;
+import com.example.shoppingcart.exception.UserNotExistException;
 import com.example.shoppingcart.infra.JwtUntil;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.controller.CartItemController;
@@ -60,7 +62,7 @@ public class CartItemControllerImpl implements CartItemController {
   @Override
   public TransactionUpdateResponse addCartItem(JwtAuthenticationToken jwt, //
       String inputPid, //
-      String inputQuantity) {
+      String inputQuantity) throws ProductNotExistException , UserNotExistException {
     // check user
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
@@ -94,7 +96,8 @@ public class CartItemControllerImpl implements CartItemController {
 
   @Override
   public CartItemData updateCartQuantity(String inputPid, String inputQuantity,
-      JwtAuthenticationToken jwt) {
+      JwtAuthenticationToken jwt)
+      throws ProductNotExistException, UserNotExistException {
     // check user
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);

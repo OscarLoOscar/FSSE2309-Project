@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import com.example.shoppingcart.exception.ProductNotExistException;
 import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.request.ProductRequest;
 
@@ -25,7 +26,8 @@ public interface ProductController {
 
   @GetMapping("/product/{productId}")
   @ResponseStatus(HttpStatus.OK)
-  ProductData getProductById(@PathVariable String productId);
+  ProductData getProductById(@PathVariable String productId)
+      throws ProductNotExistException;
 
   @DeleteMapping("/deleteProduct/{productId}")
   @ResponseStatus(HttpStatus.OK)
@@ -33,10 +35,12 @@ public interface ProductController {
 
   @PutMapping("/editProduct")
   @ResponseStatus(HttpStatus.CREATED)
-  ProductData editProduct(@RequestBody ProductRequest product);
+  ProductData editProduct(@RequestBody ProductRequest product)
+      throws ProductNotExistException;
 
   @PatchMapping("/editProductPrice/{productId}")
   @ResponseStatus(HttpStatus.CREATED)
-  ProductData editProductPrice(@PathVariable String productId);
+  ProductData editProductPrice(@PathVariable String productId)
+      throws ProductNotExistException;
 
 }

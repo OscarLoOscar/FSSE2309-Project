@@ -70,7 +70,7 @@ public class TransactionControllerImpl implements TransactionController {
                 .buyerUid(userId)//
                 .datetime(output.getDatetime())//
                 .status(output.getStatus())//
-                .total(output.getTotal())//
+                .total(output.getTotal().setScale(2))//
                 .items(output.getItems())//
                 .build();
     }
@@ -199,7 +199,6 @@ public class TransactionControllerImpl implements TransactionController {
         // Fetch the transaction By ID
         Transaction transaction =
                 transactionService.getTransactionByTransactionId(uid);// null Pointer <<
-        log.info("TEST 2 " + transaction.getStatus());
         if (transaction != null) {
             // update the transaction status to PROCESSING
             transaction.setStatus(TranStatus.PROCESSING.name());

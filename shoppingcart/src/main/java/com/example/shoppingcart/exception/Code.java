@@ -9,6 +9,11 @@ public enum Code {
   NOTFOUND(40000, "Resource NOT FOUND."), //
   // Shop
   SHOP_NOTENOUGH_PRODUCT(41002, "Shop has not enough product."), //
+  PRODUCT_NOT_EXIST(41003, "Product not exist."), //
+  InsufficientStockException(41004,
+      "Can't add more items to the cart than the available stock."), //
+  CartItemNotFoundException(41005, "Item is not found in the cart."), //
+  USER_NOT_FOUND(41006, "User not exists."), //
   // Server
   SERVER_TIMEOUT(50000, "Server Timeout."), //
   THIRD_PARTY_SERVER_UNAVAILABLE(50001, "Third Party Service Unavailable."), //
@@ -16,8 +21,7 @@ public enum Code {
   // RuntimeException: 90000 - 99999
   IAE_EXCEPTION(90000, "Illegal Argument Exception."), //
   ENTITY_NOT_FOUND(90001, "Entity Not Found."), //
-  VALIDATOR_FAIL(90002, "Validator Fail.")
-  ;
+  VALIDATOR_FAIL(90002, "Validator Fail.");
 
   private final int code;
   private final String desc;
@@ -33,7 +37,8 @@ public enum Code {
         return c;
       }
     }
-    throw new IllegalArgumentException("No matching constant for code: " + code);
+    throw new IllegalArgumentException(
+        "No matching constant for code: " + code);
   }
 
 }

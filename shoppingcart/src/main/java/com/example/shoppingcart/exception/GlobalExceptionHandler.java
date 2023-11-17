@@ -9,45 +9,55 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(value = FSSE2309Exception.class)
+  // @ExceptionHandler(value = FSSE2309Exception.class)
+  // @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  // public ApiResp<Void> finnhubExceptionHandler(FSSE2309Exception e) {
+  //   return ApiResp.<Void>builder() //
+  //       .status(Code.fromCode(e.getCode())) //
+  //       .concatMessageIfPresent(e.getMessage())//
+  //       // .data(null) //
+  //       .build();
+  // }
+
+  @ExceptionHandler(value = BusinessException.class)
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-  public ApiResp<Void> finnhubExceptionHandler(FSSE2309Exception e) {
+  public ApiResp<Void> finnhubExceptionHandler(BusinessException e) {
     return ApiResp.<Void>builder() //
         .status(Code.fromCode(e.getCode())) //
         .concatMessageIfPresent(e.getMessage())//
-        .data(null) //
+        // .data(null) //
         .build();
   }
 
-  @ExceptionHandler(value = UserNotExistException.class)
-  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-  public ApiResp<Void> finnhubExceptionHandler(UserNotExistException e) {
-    return ApiResp.<Void>builder() //
-        .status(Code.fromCode(e.getCode())) //
-        .concatMessageIfPresent(e.getMessage())//
-        .data(null) //
-        .build();
-  }
+  // @ExceptionHandler(value = UserNotExistException.class)
+  // @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  // public ApiResp<Void> finnhubExceptionHandler(UserNotExistException e) {
+  //   return ApiResp.<Void>builder() //
+  //       .status(Code.fromCode(e.getCode())) //
+  //       .concatMessageIfPresent(e.getMessage())//
+  //       // .data(null) //
+  //       .build();
+  // }
 
-  @ExceptionHandler(value = ProductNotExistException.class)
-  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-  public ApiResp<Void> finnhubExceptionHandler(ProductNotExistException e) {
-    return ApiResp.<Void>builder() //
-        .status(Code.fromCode(e.getCode())) //
-        .concatMessageIfPresent(e.getMessage())//
-        .data(null) //
-        .build();
-  }
+  // @ExceptionHandler(value = ProductNotExistException.class)
+  // @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  // public ApiResp<Void> finnhubExceptionHandler(ProductNotExistException e) {
+  //   return ApiResp.<Void>builder() //
+  //       .status(Code.fromCode(e.getCode())) //
+  //       .concatMessageIfPresent(e.getMessage())//
+  //       // .data(null) //
+  //       .build();
+  // }
 
-  @ExceptionHandler(value = NoSuchElementException.class)
-  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-  public ApiResp<Void> finnhubExceptionHandler(NoSuchElementException e) {
-    return ApiResp.<Void>builder() //
-        .status(getRespCode(e))//
-        .concatMessageIfPresent(e.getMessage())//
-        .data(null) //
-        .build();
-  }
+  // @ExceptionHandler(value = NoSuchElementException.class)
+  // @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  // public ApiResp<Void> finnhubExceptionHandler(NoSuchElementException e) {
+  //   return ApiResp.<Void>builder() //
+  //       .status(getRespCode(e))//
+  //       .concatMessageIfPresent(e.getMessage())//
+  //       // .data(null) //
+  //       .build();
+  // }
 
   @ExceptionHandler(value = RuntimeException.class)
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -55,7 +65,7 @@ public class GlobalExceptionHandler {
     return ApiResp.<Void>builder() //
         .status(getRespCode(e)) //
         .concatMessageIfPresent(e.getMessage())//
-        .data(null) //
+        // .data(null) //
         .build();
   }
 
@@ -65,7 +75,7 @@ public class GlobalExceptionHandler {
     return ApiResp.<Void>builder() //
         .status(getRespCode(e)) //
         .concatMessageIfPresent(e.getMessage())//
-        .data(null) //
+        // .data(null) //
         .build();
   }
 
