@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.web.SecurityFilterChain;
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Value;
 
 @EnableWebSecurity
@@ -18,6 +19,9 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> auth//
+        // 小心import 錯：import org.springframework.boot.web.servlet.DispatcherType;
+        // import jakarta.servlet.DispatcherType; 先啱
+        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()//
         .requestMatchers("/user/**", "/transaction/**", "/public/**")//
         .permitAll()//
         .anyRequest()//

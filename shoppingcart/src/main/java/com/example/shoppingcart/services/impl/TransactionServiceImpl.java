@@ -66,8 +66,10 @@ public class TransactionServiceImpl implements TransactionService {
   private Transaction createTransactionRecord(Long userId) {
     UserData userData = userService.getUserById(userId);
     Transaction transactionRecord = Transaction.builder()
-        .user(Mapper.map(userData)).datetime(LocalDateTime.now())
-        .status(TranStatus.PREPARE.name()).build();
+        .user(Mapper.map(userData))//
+        .datetime(LocalDateTime.now())
+        .status(TranStatus.PREPARE)//
+        .build();
 
     // Calculate and set the total price
     BigDecimal totalPrice = calculateTotalPrice(Collections.emptyList()); // Pass an empty list or the appropriate list
@@ -237,7 +239,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     if (transaction != null) {
       // update the transaction status to PROCESSING
-      transaction.setStatus(TranStatus.PROCESSING.name());
+      transaction.setStatus(TranStatus.PROCESSING);
       transactionRepository.save(transaction);
       return true;
     }
@@ -257,7 +259,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     if (transaction != null) {
       // update the transaction status to FINISH
-      transaction.setStatus(TranStatus.FINISH.name());
+      transaction.setStatus(TranStatus.FINISH);
 
       transactionRepository.save(transaction);
 
@@ -281,7 +283,7 @@ public class TransactionServiceImpl implements TransactionService {
           .transactionId(tid)//
           .buyerUid(uid)//
           .datetime(transaction.getDatetime())//
-          .status(TranStatus.valueOf(transaction.getStatus()))//
+          .status(transaction.getStatus())//
           .total(transaction.getTotalPrice())//
           .items(items)//
           .build();

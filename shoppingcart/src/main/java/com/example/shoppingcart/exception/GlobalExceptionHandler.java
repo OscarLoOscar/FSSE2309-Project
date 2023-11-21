@@ -1,10 +1,11 @@
 package com.example.shoppingcart.exception;
 
-import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.example.shoppingcart.exception.setting.ApiResp;
+import com.example.shoppingcart.exception.setting.Code;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

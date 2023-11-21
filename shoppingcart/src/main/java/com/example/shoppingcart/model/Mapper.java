@@ -14,8 +14,6 @@ public class Mapper {
   public static UserData map(UserEntity userEntity) {
     return UserData.builder()//
         .userId(userEntity.getUserId())//
-        // .userName(userEntity.getUserName())//
-        // .phone(userEntity.getPhone())//
         .fireBaseUid(userEntity.getFireBaseUid())//
         .email(userEntity.getEmail())//
         .build();
@@ -69,8 +67,6 @@ public class Mapper {
     return UserEntity.builder()//
         .userId(userEntity.getUserId())//
         .fireBaseUid(userEntity.getFireBaseUid())//
-        // .userName(userEntity.getUserName())//
-        // .phone(userEntity.getPhone())//
         .email(userEntity.getEmail())//
         .build();
   }
@@ -79,7 +75,7 @@ public class Mapper {
     return TransactionData.builder().transactionId(transactionEntity.getTid())
         .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
         .datetime(transactionEntity.getDatetime())
-        .status(TranStatus.valueOf(transactionEntity.getStatus())) // Adjust accordingly
+        .status(transactionEntity.getStatus()) // Adjust accordingly
         .total(transactionEntity.getTotalPrice().setScale(2))
         .build();
   }

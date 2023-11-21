@@ -1,4 +1,4 @@
-package com.example.shoppingcart.exception;
+package com.example.shoppingcart.exception.setting;
 
 import lombok.Getter;
 

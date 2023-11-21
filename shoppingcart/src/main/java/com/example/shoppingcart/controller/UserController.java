@@ -9,7 +9,6 @@ import com.example.shoppingcart.infra.JwtUntil;
 import com.example.shoppingcart.model.FireBaseUserData;
 import com.example.shoppingcart.model.UserData;
 import com.example.shoppingcart.services.UserService;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/user")

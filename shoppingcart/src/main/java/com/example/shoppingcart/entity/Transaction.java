@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import com.example.shoppingcart.infra.enums.TranStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,9 +48,12 @@ public class Transaction implements Serializable {
   @Column(nullable = false)
   private LocalDateTime datetime;
 
+  // @Column(name = "status", nullable = false)
+  // private String status;
   @Column(name = "status", nullable = false)
-  private String status;
-
+  @Enumerated(EnumType.STRING)
+  private TranStatus status;
+  
   @Column(nullable = false)
   private BigDecimal totalPrice;
 }

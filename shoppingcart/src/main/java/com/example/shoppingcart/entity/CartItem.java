@@ -46,10 +46,3 @@ public class CartItem implements Serializable {
   private BigDecimal quantity;
 
 }
-// @OneToOne
-// @JoinColumn(name = "shippingAddressId")
-// ShippingAddress shippingAddress;
-
-// @OneToOne
-// @JoinColumn(name = "billingAddresId")
-// BillingAddress billingAddress;

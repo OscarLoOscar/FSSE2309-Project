@@ -41,12 +41,4 @@ public class Product implements Serializable {
 
   @Column(name = "unit", nullable = false)
   Integer unitStock;
-
-
-  // @Column(name = "category")
-  // String productCategory;
-
-  // @Column(name = "manufacturer")
-  // String productManufacturer;
-
 }

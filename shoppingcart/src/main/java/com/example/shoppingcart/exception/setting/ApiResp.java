@@ -1,5 +1,4 @@
-package com.example.shoppingcart.exception;
-
+package com.example.shoppingcart.exception.setting;
 
 public class ApiResp<T> {
   // attribute name by default same as JSON field name after serialziation
