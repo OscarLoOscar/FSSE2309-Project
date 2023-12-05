@@ -8,6 +8,8 @@
 [Must]
 `npm install @mui/base`
 
+`npm i react-collapsed`
+[Nested collapsible components](https://blog.logrocket.com/create-collapsible-react-components-react-collapsed/)
 `npm install @mui/material @emotion/react @emotion/styled`
 
 `npm install react@latest react-dom@latest`

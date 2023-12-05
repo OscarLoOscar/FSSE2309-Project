@@ -4,6 +4,7 @@ import TopContainerLeft from '../component/TopContainer';
 import BottomWrapper from '../component/BottomWrapper';
 import ItemTab from '../component/ItemTab';
 import SerachBox from '../component/SearchBox';
+import NaviWrapper from '../component/NaviWrapper';
 
 // 定义一个ShoppingSite组件
 const ShoppingSite = () => {
@@ -220,7 +221,11 @@ const ShoppingSite = () => {
           style={{ display: 'block', margin: 'auto' }}
         />
         <ItemTab />
-        <SerachBox/>
+
+        <NaviWrapper />
+
+        <SerachBox />
+
         <BottomWrapper />
         <div className="navi wrapper">
           <div className="container">
