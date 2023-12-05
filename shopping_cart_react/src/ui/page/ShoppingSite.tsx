@@ -3,6 +3,7 @@ import TopContainer from '../component/TopContainer';
 import TopContainerLeft from '../component/TopContainer';
 import BottomWrapper from '../component/BottomWrapper';
 import ItemTab from '../component/ItemTab';
+import SerachBox from '../component/SearchBox';
 
 // 定义一个ShoppingSite组件
 const ShoppingSite = () => {
@@ -211,8 +212,16 @@ const ShoppingSite = () => {
           />
         </div>
         <TopContainer />
-        <BottomWrapper />
+        <img
+          alt="Logo"
+          src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
+          title="company_logo"
+          width={500}
+          style={{ display: 'block', margin: 'auto' }}
+        />
         <ItemTab />
+        <SerachBox/>
+        <BottomWrapper />
         <div className="navi wrapper">
           <div className="container">
             <div className="cat-menu">
