@@ -1,4 +1,4 @@
-import { Box, Button, Theme } from "@mui/material";
+import { Box, Button, Fab, Theme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -87,20 +87,26 @@ const MainWrapper = () => {
   return (
     <>
       <Box display="flex" justifyContent="center" alignItems="center">
-        <Button
+        {/* <Button
           onClick={prevPhoto}
           className={classes.button}
           variant="contained"
         //sx={{ marginLeft: -10 }}
         >
           <ArrowBackIosSharpIcon />
-        </Button>
+        </Button> */}
+        <Fab aria-label="edit" onClick={prevPhoto} sx={{ position: 'relative' }}>
+          <ArrowBackIosSharpIcon />
+        </Fab>
         <img src={photos[currentPhoto]} alt="Display photo" />
-        <Button startIcon={<ArrowForwardIosSharpIcon />}
+        {/* <Button startIcon={<ArrowForwardIosSharpIcon />}
           onClick={nextPhoto}
           className={classes.button}
           variant="contained">
-        </Button>
+        </Button> */}
+        <Fab aria-label="edit" onClick={nextPhoto} sx={{ position: 'relative' }}>
+          <ArrowForwardIosSharpIcon />
+        </Fab>
       </Box>
       {/* <Box className={classes.indicator}>
         {renderIndicators()}
