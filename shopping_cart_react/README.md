@@ -18,7 +18,10 @@
 
 `npm install axios`
 
+`npm i @mui/styles --save --force` => ==NPM install of @mui/styles is not working for React 18==
  `npm install moment --save`
+
+`npm install @mui/icons-material @mui/material @emotion/styled @emotion/react --force`
 
  ### Open src/index.js, add the following import statement in the file head:
 import 'bootstrap/dist/css/bootstrap.min.css';
