@@ -4,12 +4,19 @@ import TopContainerLeft from '../component/TopContainer';
 import BottomWrapper from '../component/BottomWrapper';
 import ItemTab from '../component/ItemTab';
 import SerachBox from '../component/SearchBox';
-import MainWrapper from '../component/MainWrapper';
+import MainWrapper from '../component/adv/MainWrapper';
 import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
 
+const photos = [
+  "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_231106074059.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
+];
+
 // 定义一个ShoppingSite组件
 const ShoppingSite = () => {
+
   const [data, setData] = useState<ImgData | undefined>(undefined);
 
   const fetchImgData = async () => {
@@ -244,8 +251,7 @@ const ShoppingSite = () => {
 
         <SerachBox />
         <BottomWrapper />
-        {/* <MainWrapper imgData={data} /> */}
-        <MainWrapper />
+        <MainWrapper imgs={photos}/>
 
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>
