@@ -244,7 +244,8 @@ const ShoppingSite = () => {
 
         <SerachBox />
         <BottomWrapper />
-        <MainWrapper imgData={data} />
+        {/* <MainWrapper imgData={data} /> */}
+        <MainWrapper />
 
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>

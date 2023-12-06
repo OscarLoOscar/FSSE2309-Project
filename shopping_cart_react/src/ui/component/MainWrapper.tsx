@@ -1,41 +1,58 @@
-import React from "react";
-import { Box, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
-import Card from '@mui/material/Card';
-import { ImgData } from "../../data/ImgData";
+import { Box, Button } from "@mui/material";
+import { useEffect, useState } from "react";
 
-type AdvProps = {
-  imgData: ImgData | undefined;
+const photos = [
+  //imgData: ImgData | undefined;
+  "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_231106074059.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
+];
+
+const MainWrapper = () => {
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhoto((prevCurrentPhoto) => (prevCurrentPhoto + 1) % photos.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const prevPhoto = () => {
+    setCurrentPhoto((prevPhoto) => (prevPhoto - 1 + photos.length) % photos.length);
+  }
+  const nextPhoto = () => {
+    setCurrentPhoto((prevPhoto) => (prevPhoto + 1) % photos.length);
+  }
+  const photoIndicators = [];
+  for (let i = 0; i < photos.length; i++) {
+    photoIndicators.push(
+      <button key={i} onClick={() => setCurrentPhoto(i)}>
+        {i === currentPhoto ? '●' : '○'}
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <img src={photos[currentPhoto]} alt="Display photo" />
+      {/* <button onClick={prevPhoto}>Prev</button>
+      <button onClick={nextPhoto}>Next</button>
+      <div>{photoIndicators}</div> */}
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Button onClick={prevPhoto} variant="contained" color="primary">
+          Prev
+        </Button>
+        <Button onClick={nextPhoto} variant="contained" color="primary">
+          Next
+        </Button>
+      </Box>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        {photoIndicators}
+      </Box>
+    </>
+  );
 }
-
-const Adv: React.FC<AdvProps> = (props) => (
-  <React.Fragment>
-    <Card component="div"
-      sx={{ maxWidth: 750, display: 'flex', flexDirection: 'column', maxHeight: 400, overflowY: 'auto' }}>
-      <CardActionArea>
-        <CardMedia
-          data-position={props.imgData?.position}
-          component="img"
-          height="340"
-          src={props.imgData?.data[0].src}
-          alt={props.imgData?.data[0].alt}
-          style={{ cursor: "pointer" }}
-          tabIndex={-1}
-        />
-      </CardActionArea>
-    </Card>
-  </React.Fragment>
-);
-
-type MainWrapperProps = {
-  imgData: ImgData | undefined;
-}
-
-const MainWrapper: React.FC<MainWrapperProps> = (props) => (
-  <Box sx={{ maxWidth: 750 }} justifyContent="center">
-    <Card variant="outlined">
-      <Adv imgData={props.imgData} />
-    </Card>
-  </Box>
-);
 
 export default MainWrapper;
+
