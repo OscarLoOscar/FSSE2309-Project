@@ -7,6 +7,7 @@ import SerachBox from '../component/SearchBox';
 import MainWrapper from '../component/adv/MainWrapper';
 import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
+import NavBar from '../component/NavBar';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -248,10 +249,10 @@ const ShoppingSite = () => {
         <ItemTab />
 
         {/* <NaviWrapper /> */}
-
-        <SerachBox />
+        <NavBar />
+        {/* <SerachBox /> */}
         <BottomWrapper />
-        <MainWrapper imgs={photos}/>
+        <MainWrapper imgs={photos} />
 
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>
