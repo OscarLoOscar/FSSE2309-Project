@@ -297,17 +297,16 @@ const ShoppingSite = () => {
         <MainWrapper imgs={photos} />
         <Grid
           container
-          direction="row"
-          spacing={2}
-          columns={16}
+          spacing={3}
+          columnSpacing={{ xs: 2, sm: 2, md: 2 }}
           width={1500}
           justifyContent="center"
         // alignItems="center"
         >
-          <Grid item xs={2} sm={2} md={2}></Grid>
+          <Grid item xs={1} sm={1} md={1}></Grid>
           {pData.map((data, index) => (
             <Grid
-              item xs={4} sm={3} md={4}
+              item xs="auto" sm="auto" md="auto"
               //justifyContent="center"
               //        alignItems="center"
               key={index}>
@@ -315,7 +314,7 @@ const ShoppingSite = () => {
             </Grid>
           ))
           }
-          <Grid item xs={2} sm={2} md={2}></Grid>
+          <Grid item xs={1} sm={1} md={1}></Grid>
         </Grid>
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>
