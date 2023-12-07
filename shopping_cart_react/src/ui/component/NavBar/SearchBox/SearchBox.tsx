@@ -1,4 +1,4 @@
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 

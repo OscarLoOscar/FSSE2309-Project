@@ -14,6 +14,7 @@ const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
 ];
 
+
 // 定义一个ShoppingSite组件
 const ShoppingSite = () => {
 
@@ -252,7 +253,6 @@ const ShoppingSite = () => {
         {/* <SerachBox /> */}
         <BottomWrapper />
         <MainWrapper imgs={photos} />
-
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>
       </div>
