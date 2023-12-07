@@ -3,11 +3,10 @@ import TopContainer from '../component/TopContainer';
 import TopContainerLeft from '../component/TopContainer';
 import BottomWrapper from '../component/BottomWrapper';
 import ItemTab from '../component/ItemTab';
-import SerachBox from '../component/SearchBox';
 import MainWrapper from '../component/adv/MainWrapper';
 import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
-import NavBar from '../component/NavBar';
+import NavBar from '../component/NavBar/NavBar';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
