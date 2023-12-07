@@ -23,10 +23,11 @@
 
 `npm install @mui/icons-material @mui/material @emotion/styled @emotion/react --force`
 
+`npm i @fortawesome/react-fontawesome --force`
 *****
 [Nested Menu , useful](https://mui-nested-menu.vercel.app/installation)
 `npm install mui-nested-menu`
-
+***** 
  ### Open src/index.js, add the following import statement in the file head:
 import 'bootstrap/dist/css/bootstrap.min.css';
 

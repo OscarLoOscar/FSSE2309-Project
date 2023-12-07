@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import TopContainer from '../component/TopContainer';
 import TopContainerLeft from '../component/TopContainer';
-import BottomWrapper from '../component/BottomWrapper';
-import ItemTab from '../component/ItemTab';
+import BottomWrapper from '../component/BottomWrapper/BottomWrapper';
+import ItemTab from '../component/ItemTab/ItemTab';
 import MainWrapper from '../component/adv/MainWrapper';
 import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
 import NavBar from '../component/NavBar/NavBar';
+import MyComponent from '../component/NavBar/UserStatus/UserStatus';
+import ProductListCard from '../component/ProductListCard/ProductListCard';
+import { ProductListData } from '../../data/dto/ProductListData';
+import { Grid } from '@mui/material';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -14,6 +18,45 @@ const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
 ];
 
+const pData: ProductListData[] =
+  [{
+    "pid": 1,
+    "name": "TEST",
+    "price": 123,
+    "has_stock": true,
+  },
+  {
+    "pid": 2,
+    "name": "TEST",
+    "price": 123,
+    "has_stock": true,
+  },
+  {
+    "pid": 3,
+    "name": "TEST",
+    "price": 123,
+    "has_stock": true,
+  },
+  {
+    "pid": 4,
+    "name": "TEST",
+    "price": 123,
+    "has_stock": true,
+  },
+  {
+    "pid": 5,
+    "name": "TEST",
+    "price": 123,
+    "has_stock": true,
+  },
+  {
+    "pid": 6,
+    "name": "TEST",
+    "price": 123,
+    "has_stock": true,
+  }
+  ]
+  ;
 
 // 定义一个ShoppingSite组件
 const ShoppingSite = () => {
@@ -250,9 +293,30 @@ const ShoppingSite = () => {
 
         {/* <NaviWrapper /> */}
         <NavBar />
-        {/* <SerachBox /> */}
         <BottomWrapper />
         <MainWrapper imgs={photos} />
+        <Grid
+          container
+          direction="row"
+          spacing={2}
+          columns={16}
+          width={1500}
+          justifyContent="center"
+        // alignItems="center"
+        >
+          <Grid item xs={2} sm={2} md={2}></Grid>
+          {pData.map((data, index) => (
+            <Grid
+              item xs={4} sm={3} md={4}
+              //justifyContent="center"
+              //        alignItems="center"
+              key={index}>
+              <ProductListCard productData={data} key={index} />
+            </Grid>
+          ))
+          }
+          <Grid item xs={2} sm={2} md={2}></Grid>
+        </Grid>
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>
       </div>

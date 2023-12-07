@@ -8,8 +8,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/Notifications';
 
 import React, { useState } from 'react';
-import { Menu, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Menu, Theme, makeStyles } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) => ({
   grow: {
@@ -194,3 +193,4 @@ function MyComponent() {
 }
 
 export default MyComponent;
+
