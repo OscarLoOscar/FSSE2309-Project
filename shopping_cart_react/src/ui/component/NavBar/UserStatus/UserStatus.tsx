@@ -27,6 +27,7 @@ export default function UserStatus() {
       <BottomNavigation
         sx={{
           width: 500, backgroundColor: 'transparent',
+          cursor: 'pointer',
           '& .Mui-selected': {
             '& .MuiBottomNavigationAction-label': {
               fontSize: theme => theme.typography.caption,
@@ -46,8 +47,13 @@ export default function UserStatus() {
           label="Login "
           value="Login"
           icon={<PersonIcon sx={{ color: 'white' }} />}
-          onClick={handleClick} 
-          />
+          onClick={handleClick}
+          sx={{
+            '&:hover': {
+              backgroundColor: '#90caf9'
+            }
+          }}
+        />
         {/**handleChange 之前icon白色 */}
 
 
@@ -55,6 +61,11 @@ export default function UserStatus() {
           label="Notifications"
           value="Notifications"
           icon={<NotificationsIcon sx={{ color: 'white' }} />}
+          sx={{
+            '&:hover': {
+              backgroundColor: '#90caf9'
+            }
+          }}
         />
         <Menu
           id="basic-menu"
@@ -73,13 +84,23 @@ export default function UserStatus() {
           label="Favorites"
           value="favorites"
           icon={<FavoriteIcon sx={{ color: 'white' }} />}
+          sx={{
+            '&:hover': {
+              backgroundColor: '#90caf9'
+            }
+          }}
         />
         <BottomNavigationAction
           label="ShoppingCart"
           value="ShoppingCart"
           icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
+          sx={{
+            '&:hover': {
+              backgroundColor: '#90caf9'
+            }
+          }}
         />
-      </BottomNavigation>
+      </BottomNavigation >
     </>
   );
 }
