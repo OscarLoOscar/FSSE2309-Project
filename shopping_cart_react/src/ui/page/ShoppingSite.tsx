@@ -202,6 +202,7 @@ const ShoppingSite = () => {
       <ItemTab />
 
       <NavBar />
+
       <BottomWrapper />
       <MainWrapper imgs={photos} />
 

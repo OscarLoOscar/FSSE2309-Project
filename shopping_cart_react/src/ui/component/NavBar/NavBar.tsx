@@ -11,6 +11,8 @@ import { Accordion, Autocomplete, Menu, MenuItem, Stack, TextField } from '@mui/
 import SearchBox from './SearchBox/SearchBox';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
+import MyComponent from './UserStatus/UserStatus';
+import UserStatus from './UserStatus/UserStatus';
 // import MyComponent from './UserStatus/UserStatus';
 
 type Props = {
@@ -122,9 +124,7 @@ export default function NavBar() {
       <Box sx={{ flexGrow: 2 }}>
         <AppBar position="static">
           <Toolbar>
-
             <SearchBox />
-            {/* <MyComponent /> */}
             <Stack spacing={2}
               sx={{
                 width: 800,
@@ -139,6 +139,7 @@ export default function NavBar() {
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             </Box>
+            <UserStatus/>
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
