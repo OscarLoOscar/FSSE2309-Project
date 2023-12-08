@@ -5,17 +5,22 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
-import styled from '@emotion/styled';
-
-
-
+import { Menu, MenuItem } from '@mui/material';
 
 export default function UserStatus() {
   const [value, setValue] = React.useState('recents');
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -41,7 +46,8 @@ export default function UserStatus() {
           label="Login "
           value="Login"
           icon={<PersonIcon sx={{ color: 'white' }} />}
-        />
+          onClick={handleClick} 
+          />
         {/**handleChange 之前icon白色 */}
 
 
@@ -50,6 +56,19 @@ export default function UserStatus() {
           value="Notifications"
           icon={<NotificationsIcon sx={{ color: 'white' }} />}
         />
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
         <BottomNavigationAction
           label="Favorites"
           value="favorites"
