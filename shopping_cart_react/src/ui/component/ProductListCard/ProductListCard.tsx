@@ -20,6 +20,7 @@ import orga from "../../../assets/Orga.png"
 // import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { Grid } from "@mui/material";
 
 const productPhotoMapping: { [key: number]: string } = {
   1: anguirus,
@@ -53,38 +54,52 @@ export default function ProductListCard(props: Props) {
 
   return (
     <>
-      <Col style={{ width: "200px" }}>
-        <Card style={{ backgroundColor: "transparent", border: "0px" }}>
-          <Card.Img
-            className="card-image"
-            variant="top"
-            src={productPhotoMapping[props.productData.pid]}
-            width={200}
+      <Grid
+        container
+        spacing={3}
+        columnSpacing={{ xs: 2, sm: 2, md: 2 }}
+        width={1500}
+        justifyContent="center"
+      // alignItems="center"
+      >
+        <Col style={{ width: "200px" }}>
+
+          <Card style={{ backgroundColor: "transparent", border: "0px" }}>
+            <Card.Img
+              className="card-image"
+              variant="top"
+              src={productPhotoMapping[props.productData.pid]}
+              width={200}
             // onClick={productDetailNavigate} 
             />
-          <Card.Body>
-            <Card.Title
-              className="product-title"
-              style={{ fontWeight: "bolder" }}
+            <Card.Body>
+              <Card.Title
+                className="product-title"
+                style={{ fontWeight: "bolder" }}
               // onClick={productDetailNavigate}
               >
-              {props.productData.name}
-            </Card.Title>
-            <Card.Text style={{ fontSize: "14px" }}>
-              {`HK$${props.productData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer className={"d-flex justify-content-between align-items-center"} style={{ borderTop: "2px solid #666362", fontWeight: "bolder", color: "red", backgroundColor: "transparent" }}>
-            <div>
-              <FontAwesomeIcon icon={faBell} shake style={{ color: "red", marginRight: "10px" }} />
-              Exclusive Item
-            </div>
-            <div style={{ fontSize: "12px", fontWeight: "bolder", color: "black", textAlign: "right" }}>
-              {props.productData.has_stock ? "In-Stock" : "Out of Stock"}
-            </div>
-          </Card.Footer>
-        </Card>
-      </Col>
+                {props.productData.name}
+              </Card.Title>
+              <Card.Text style={{ fontSize: "14px" }}>
+                {`HK$${props.productData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+              </Card.Text>
+            </Card.Body>
+            <Card.Footer className={"d-flex justify-content-between align-items-center"} style={{ borderTop: "2px solid #666362", fontWeight: "bolder", color: "red", backgroundColor: "transparent" }}>
+              <div>
+                <FontAwesomeIcon icon={faBell} shake style={{ color: "red", marginRight: "10px" }} />
+                Exclusive Item
+              </div>
+              <div style={{ fontSize: "12px", fontWeight: "bolder", color: "black", textAlign: "right" }}>
+                {props.productData.has_stock ? "In-Stock" : "Out of Stock"}
+              </div>
+            </Card.Footer>
+          </Card>
+
+          
+        </Col>
+
+
+      </Grid>
     </>
   )
 }

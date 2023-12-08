@@ -10,7 +10,9 @@ import NavBar from '../component/NavBar/NavBar';
 import MyComponent from '../component/NavBar/UserStatus/UserStatus';
 import ProductListCard from '../component/ProductListCard/ProductListCard';
 import { ProductListData } from '../../data/dto/ProductListData';
-import { Grid } from '@mui/material';
+import { Grid, Table, TableContainer, TableHead, TableRow } from '@mui/material';
+import ProductListCard2 from '../component/ProductListCard/ProductListCard2';
+import ProductListCardLoading from '../component/ProductListCard/ProductListCardLoading';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -21,37 +23,43 @@ const photos = [
 const pData: ProductListData[] =
   [{
     "pid": 1,
-    "name": "TEST",
+    "name": "anguirus",
     "price": 123,
     "has_stock": true,
   },
   {
     "pid": 2,
-    "name": "TEST",
+    "name": "baragon",
     "price": 123,
     "has_stock": true,
   },
   {
     "pid": 3,
-    "name": "TEST",
+    "name": "destoroyah",
     "price": 123,
     "has_stock": true,
   },
   {
     "pid": 4,
-    "name": "TEST",
+    "name": "godzilla2016",
     "price": 123,
     "has_stock": true,
   },
   {
     "pid": 5,
-    "name": "TEST",
+    "name": "godzilla1",
     "price": 123,
     "has_stock": true,
   },
   {
     "pid": 6,
-    "name": "TEST",
+    "name": "godzilla2",
+    "price": 123,
+    "has_stock": true,
+  },
+  {
+    "pid": 7,
+    "name": "godzilla2",
     "price": 123,
     "has_stock": true,
   }
@@ -146,6 +154,35 @@ const ShoppingSite = () => {
   //     console.error('Transaction failed:', error);
   //   } setTransactionComplete(true);
   // };
+
+
+  // const [productListData, setProductListData] = useState<ProductListData[]>([])
+
+  // const renderProductCard = () => {
+  //   if (productListData.length !== 0) {
+  //     return productListData.map((value) => (
+  //       <ProductListCard
+  //         key={value.pid}
+  //         productData={value} />
+  //     ))
+  //   }
+  //   else {
+  //     return Array.from({ length: 15 }).map((_, index) => (<ProductListCardLoading key={index} />))
+  //   }
+  // }
+
+  // const fetchProductListData = async () => {
+  //   setProductListData([]);
+  //   const productDetailResponse = await GetProductApi.getAllProduct();
+  //   setTimeout(() => {
+  //     try {
+  //       setProductListData(productDetailResponse ?? []);
+  //     }
+  //     catch (error) {
+  //       navigate("/error")
+  //     }
+  //   }, 1500)
+  // }
 
   return (
     <>
@@ -295,26 +332,19 @@ const ShoppingSite = () => {
         <NavBar />
         <BottomWrapper />
         <MainWrapper imgs={photos} />
-        <Grid
-          container
-          spacing={3}
-          columnSpacing={{ xs: 2, sm: 2, md: 2 }}
-          width={1500}
-          justifyContent="center"
-        // alignItems="center"
-        >
-          <Grid item xs={1} sm={1} md={1}></Grid>
-          {pData.map((data, index) => (
-            <Grid
-              item xs="auto" sm="auto" md="auto"
-              //justifyContent="center"
-              //        alignItems="center"
-              key={index}>
-              <ProductListCard productData={data} key={index} />
-            </Grid>
-          ))
-          }
-          <Grid item xs={1} sm={1} md={1}></Grid>
+        {/* {pData.map((data, index) => (
+          <ProductListCard2 productData={data} key={index} />
+        ))
+        } */}
+        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
+          <Grid container spacing={5} maxWidth={1200} sx={{ margin: '0 auto' }}>
+            {pData.map((data, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 4 }}>
+                <ProductListCard2 productData={data} key={index} />
+              </Grid>
+            ))
+            }
+          </Grid>
         </Grid>
         <div id="countdownTimerWrapper"></div>
         <div id="navScrollingBarWrapper"></div>
@@ -481,7 +511,7 @@ const ShoppingSite = () => {
 
 
 <![endif]*/}
-      <input
+      < input
         className="landingCurrentPage"
         type="hidden"
         defaultValue="page-GadgetsandelectronicsLandingPage"
@@ -491,7 +521,7 @@ const ShoppingSite = () => {
     Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
     -------------------------------------------------*/}
       <noscript>
-        &lt;div style="display:inline;"&gt; &lt;img alt="" height="1"
+        & lt;div style="display:inline;"&gt; &lt;img alt="" height="1"
         src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/964752338/?value=0&amp;amp;guid=ON&amp;amp;script=0"
         style="border-style:none;" width="1"&gt; &lt;/img&gt; &lt;/div&gt;
       </noscript>
