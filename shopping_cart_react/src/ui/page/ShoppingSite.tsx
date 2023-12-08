@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import TopContainer from '../component/TopContainer';
-import TopContainerLeft from '../component/TopContainer';
+import TopContainer from '../component/TopContainer/TopContainer';
+import TopContainerLeft from '../component/TopContainer/TopContainer';
 import BottomWrapper from '../component/BottomWrapper/BottomWrapper';
 import ItemTab from '../component/ItemTab/ItemTab';
 import MainWrapper from '../component/adv/MainWrapper';
@@ -8,16 +8,20 @@ import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
 import NavBar from '../component/NavBar/NavBar';
 import MyComponent from '../component/NavBar/UserStatus/UserStatus';
-import ProductListCard from '../component/ProductListCard/ProductListCard';
 import { ProductListData } from '../../data/dto/ProductListData';
 import { Grid, Table, TableContainer, TableHead, TableRow } from '@mui/material';
-import ProductListCard2 from '../component/ProductListCard/ProductListCard2';
+import ProductListCard from '../component/ProductListCard/ProductListCard';
 import ProductListCardLoading from '../component/ProductListCard/ProductListCardLoading';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
   "//images.hktvmall.com/image_slider/bannerzh_231106074059.jpg",
   "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_231106074059.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_231129045222.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_230907025912.jpg",
+  "//images.hktvmall.com/image_slider/bannerzh_220712063428.jpg",
+
 ];
 
 const pData: ProductListData[] =
@@ -186,169 +190,33 @@ const ShoppingSite = () => {
 
   return (
     <>
-      <title>大腦場 | HKTVmall 香港最大網購平台</title>
-      <meta content="hktv://www.hktvmall.com/" property="al:ios:url" />
-      <meta content={"910398738"} property="al:ios:app_store_id" />
-      <meta content="HKTVmall" property="al:ios:app_name" />
-      <meta content="https://www.hktvmall.com/" property="al:android:url" />
-      <meta content="com.hktv.android.hktvmall" property="al:android:package" />
-      <meta content="HKTVmall" property="al:android:app_name" />
-      <meta content="text/html; charset=utf-8" httpEquiv="Content-Type" />
-      <meta content="香港電視，網上購物" name="keywords" />
-      <meta content="香港電視網上購物" name="description" />
-      <meta content="index,follow" name="robots" />
-      <meta content="True" name="HandheldFriendly" />
-      <meta content={"1280"} name="MobileOptimized" />
-      <meta
-        content="width=1280, target-densitydpi=160, maximum-scale=1.0"
-        name="viewport"
+      <title>Venturenix Lab React Project</title>
+      <TopContainer />
+      <img
+        alt="Logo"
+        src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
+        title="company_logo"
+        width={500}
+        style={{ display: 'block', margin: 'auto' }}
       />
-      <meta content="大腦場 | HKTVmall 香港最大網購平台" property="og:title" />
-      <meta content="香港電視，網上購物" property="og:keywords" />
-      <meta content="香港電視網上購物" property="og:description" />
-      <meta content={"750069328396293"} property="fb:app_id" />
-      <meta
-        content="app-id=910398738, app-argument=https://www.hktvmall.com/"
-        name="apple-itunes-app"
-      />
-      <link href="https://www.hktvmall.com/hktv/zh/" rel="canonical" />
-      <link
-        href="/_ui/desktop/common/images/favicon.ico"
-        media="all"
-        rel="shortcut icon"
-        type="image/x-icon"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/reset1511.css&/_ui/desktop/common/css/base1511.css&/_ui/desktop/common/css/general1511.css&/_ui/desktop/common/css/productBrief1511.css&/_ui/desktop/common/css/priceLabel1511.css&/_ui/desktop/common/css/colorBox1511.css&/_ui/desktop/common/css/colorbox-desktop.css&/_ui/desktop/common/css/sprite1511.css&/_ui/desktop/common/css/header_1511.css&/_ui/desktop/common/css/footer_1511.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/tooltipster.css&/_ui/desktop/common/css/productDetailPanel1511.css&/_ui/desktop/common/css/recentlyView.css&/_ui/desktop/common/css/recentlyView_2015.css&/_ui/desktop/common/css/print1511.css&/_ui/desktop/common/css/generalHeaderFooter_1511.css&/_ui/desktop/common/css/crazyAd_1511.css&/_ui/desktop/common/css/productVariantDropdownSelector.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/shared/common/css/ui/ui-button-confirm.css&/_ui/shared/common/css/ui/ui-selection-box.css&/_ui/shared/common/css/ui/layout/ui-overlay-view.css&/_ui/shared/common/css/ui/layout/ui-alert-box-view.css&/_ui/shared/common/css/productSharedSpriteMap.css&/_ui/shared/common/css/slick-1.5.7.css&"
-        rel="stylesheet"
-      />
-      {/*?if !IE?*/}
-      {/*?endif?*/}
-      {/*[if gte IE 9]>
-<link rel="stylesheet" href="/yuicombo?/_ui/desktop/common/css/ie9_1511.css&">
-  <![endif]*/}
-      {/*[if IE 8]>
-<![endif]*/}
-      <link
-        href="/yuicombo?/_ui/shared/common/css/slick-custom.css&/_ui/shared/common/css/autoRotateProductList.css&/_ui/desktop/common/css/rotatingImageSlider.css&/_ui/desktop/common/css/hktv.productListView.css&/_ui/desktop/common/css/famousBrand.css&/_ui/desktop/common/css/1188Banner.css&/_ui/desktop/common/css/bannerTop.css&/_ui/shared/common/css/product-brief.css&/_ui/desktop/common/css/allPromotionBox/allPromotionBox.css&/_ui/shared/common/css/deliveryLabel.css&/_ui/desktop/common/css/hw-common/ui-hw-show-more-anchor.css&/_ui/desktop/common/css/hw-common/ui-hw-show-more-button.css&/_ui/desktop/common/css/st12-common/st12-show-more-button.css&/_ui/desktop/common/css/gadgetsandelectronicsLanding.css&/_ui/desktop/common/css/navCountdown.css&/_ui/desktop/common/css/st12-mechanics-banner/mechanics-banner.css&/_ui/desktop/common/css/navScrollingTextBar.css&/_ui/desktop/common/css/currentVisitor.css&/_ui/desktop/common/css/gadgets-hotcat/gadgets-hotcat-card.css&/_ui/desktop/common/css/gadgets-hotcat/gadgets-hotcat-list.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/blogContentShowAllbtn.css&/_ui/desktop/common/css/blogContentDesktop.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/st12-trp/st12-trp.css&/_ui/desktop/common/css/st12-slider-b/st12-slider-b-slide.css&/_ui/desktop/common/css/st12-slider-b/st12-slider-b-slider.css&/_ui/desktop/common/css/st12-slider-b/st12-slider-b.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/promo-cat/mixnmatch/promo-cat-mixnmatch-promo-image-matrix.css&/_ui/desktop/common/css/promo-cat/mixnmatch/promo-cat-mixnmatch-promo-brief.css&/_ui/desktop/common/css/promo-cat/mixnmatch/promo-cat-mixnmatch-promos.css&/_ui/desktop/common/css/promo-cat/mixnmatch/promo-cat-mixnmatch-tab.css&/_ui/desktop/common/css/promo-cat/mixnmatch/promo-cat-mixnmatch.css&/_ui/desktop/common/css/promo-cat/sku/promo-cat-sku-products.css&/_ui/desktop/common/css/promo-cat/sku/promo-cat-sku-tab.css&/_ui/desktop/common/css/promo-cat/sku/promo-cat-sku.css&/_ui/desktop/common/css/promo-cat/promo-cat.css&/_ui/desktop/common/css/famous-brand/ui-famous-brand-slide.css&/_ui/desktop/common/css/famous-brand/st12-famous-brand-slider.css&/_ui/desktop/common/css/st12-review/selectedReview_desktop_st12.css&/_ui/desktop/common/css/PremiumStores/PremiumStoresComponent.css&/_ui/desktop/common/css/Voucher/VoucherComponent.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/sfpi-st12-rec.css&/_ui/desktop/common/css/promotionSlot.css&/_ui/desktop/common/css/st12-mechanics-review/ui-mechanics-review-slide.css&/_ui/desktop/common/css/st12-mechanics-review/st12-mechanics-review-slider.css&/_ui/desktop/common/css/simplifiedStoreContent.css&/_ui/desktop/common/css/st12-pt10.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/shared/common/css/advancedPromotionBox/advancedPromotionBox.css&"
-        rel="stylesheet"
-      />
-      <link
-        href="/yuicombo?/_ui/desktop/common/css/gadgets-recom-brand/gadgets-recom-brand-slider.css&/_ui/desktop/common/css/gadgets-zone-promo-slot/gadgets-zone-promo-slot.css&"
-        rel="stylesheet"
-      />
-      {/* Custom Audience Pixel Code */}
-      {/* Insert Your Custom Audience Pixel ID below. */}
-      <noscript>
-        &lt;img height="1"
-        src="https://www.facebook.com/tr?id=761332883983543&amp;amp;ev=PageView&amp;amp;noscript=1"
-        style="display:none" width="1"/&gt;
-      </noscript>
-      {/* End Custom Audience Pixel Code */}
-      {/* Data Layer Declaration */}
-      {/* End Data Layer Declaration */}
-      {/* Google Tag Manager */}
-      {/* End Google Tag Manager */}
-      <div style={{ display: "none" }}></div>
-      {/* Google Tag Manager (noscript) */}
-      <noscript>
-        &lt;iframe height="0" src="//www.googletagmanager.com/ns.html?id=GTM-5XJPTB"
-        style="display:none;visibility:hidden" width="0"&gt; &lt;/iframe&gt;
-      </noscript>
-      {/* End Google Tag Manager (noscript) */}
-      <div className="bodyWrapper">
-        <div className="gadgetsandelectronics" id="header">
-          <div id="bannerTop">
-            <div className="banner-1188" style={{ backgroundColor: "#d3dfce" }}>
-              <div className="width-1188">
-                <a
-                  className="topBannerGa"
-                  data-//mabsrefid="Ad_GadgetsAndElectronics_TopBanner_NA_NA_H8024001_20231204_7_235194"
-                  href="https://www.hktvmall.com/hktv/zh/main/s/H8024001"
-                  tabIndex={-1}
-                >
-                  <img
-                    alt="Logi_xmas"
-                    src="//images.hktvmall.com/banner/bannerzh_231130051555.jpg"
-                    title="Logi_xmas"
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="animatedHeaderWrapper"></div>
-          <style
-            dangerouslySetInnerHTML={{
-              __html:
-                "\n     body #header .top .bar>div:first-child ul li a {\n                        color : #;\n                    }\n                    body #header .top .bar>div:first-child li:nth-last-child(n+2)::after {\n                        color : #;\n                    }\n    "
-            }}
-          />
-          <style
-            dangerouslySetInnerHTML={{
-              __html:
-                "\n     body #header .top .bar>div:last-child ul li a {\n                        color : #;\n                    }\n                    body #header .top .bar>div:last-child li:nth-last-child(n+2)::after {\n                        color : #;\n                    }\n    "
-            }}
-          />
-        </div>
-        <TopContainer />
-        <img
-          alt="Logo"
-          src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
-          title="company_logo"
-          width={500}
-          style={{ display: 'block', margin: 'auto' }}
-        />
-        <ItemTab />
+      <ItemTab />
 
-        {/* <NaviWrapper /> */}
-        <NavBar />
-        <BottomWrapper />
-        <MainWrapper imgs={photos} />
-        {/* {pData.map((data, index) => (
-          <ProductListCard2 productData={data} key={index} />
-        ))
-        } */}
-        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
-          <Grid container spacing={5} maxWidth={1200} sx={{ margin: '0 auto' }}>
-            {pData.map((data, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 4 }}>
-                <ProductListCard2 productData={data} key={index} />
-              </Grid>
-            ))
-            }
-          </Grid>
+      <NavBar />
+      <BottomWrapper />
+      <MainWrapper imgs={photos} />
+
+      <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
+        <Grid container spacing={5} maxWidth={1200} sx={{ margin: '0 auto' }}>
+          {pData.map((data, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 4 }}>
+              <ProductListCard productData={data} key={index} />
+            </Grid>
+          ))
+          }
         </Grid>
-        <div id="countdownTimerWrapper"></div>
-        <div id="navScrollingBarWrapper"></div>
-      </div>
+      </Grid>
+      <div id="countdownTimerWrapper"></div>
+      <div id="navScrollingBarWrapper"></div>
       <div className="wrapper-footer gadgetsandelectronics">
         <div className="footer-content">
           <div className="wrapper-footer-top-content">

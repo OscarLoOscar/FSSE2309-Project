@@ -1,6 +1,5 @@
-import { Card, Col } from "react-bootstrap";
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Container, Grid, Typography } from "@mui/material";
 import { ProductListData } from "../../../data/dto/ProductListData";
-
 import anguirus from "../../../assets/Anguirus.png"
 import baragon from "../../../assets/Baragon.png"
 import destoroyah from "../../../assets/Destoroyah.png";
@@ -17,10 +16,7 @@ import godzilla4 from "../../../assets/Godzilla-2nd Form-2016.png"
 import gigan from "../../../assets/Gigan.png"
 import keizerGhidorah from "../../../assets/Keizer Ghidorah.png"
 import orga from "../../../assets/Orga.png"
-// import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { Grid } from "@mui/material";
+
 
 const productPhotoMapping: { [key: number]: string } = {
   1: anguirus,
@@ -41,65 +37,51 @@ const productPhotoMapping: { [key: number]: string } = {
   16: orga
 }
 
+
 type Props = {
   productData: ProductListData
 }
 
-export default function ProductListCard(props: Props) {
-  // const navigate = useNavigate();
-
-  // const productDetailNavigate = () => {
-  //   navigate(`/product/${props.productData.pid}`)
-  // }
-
+export default function ProductListCard2({ productData }: Props) {
   return (
     <>
-      <Grid
-        container
-        spacing={3}
-        columnSpacing={{ xs: 2, sm: 2, md: 2 }}
-        width={1500}
-        justifyContent="center"
-      // alignItems="center"
-      >
-        <Col style={{ width: "200px" }}>
+      {/* <Container>
+        <Grid container spacing={1} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
+          <Grid spacing={1} sx={{ margin: '0 auto' }}> */}
 
-          <Card style={{ backgroundColor: "transparent", border: "0px" }}>
-            <Card.Img
-              className="card-image"
-              variant="top"
-              src={productPhotoMapping[props.productData.pid]}
-              width={200}
-            // onClick={productDetailNavigate} 
-            />
-            <Card.Body>
-              <Card.Title
-                className="product-title"
-                style={{ fontWeight: "bolder" }}
-              // onClick={productDetailNavigate}
-              >
-                {props.productData.name}
-              </Card.Title>
-              <Card.Text style={{ fontSize: "14px" }}>
-                {`HK$${props.productData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer className={"d-flex justify-content-between align-items-center"} style={{ borderTop: "2px solid #666362", fontWeight: "bolder", color: "red", backgroundColor: "transparent" }}>
-              <div>
-                <FontAwesomeIcon icon={faBell} shake style={{ color: "red", marginRight: "10px" }} />
-                Exclusive Item
-              </div>
-              <div style={{ fontSize: "12px", fontWeight: "bolder", color: "black", textAlign: "right" }}>
-                {props.productData.has_stock ? "In-Stock" : "Out of Stock"}
-              </div>
-            </Card.Footer>
-          </Card>
+            <Card sx={{ maxWidth: 1000 }}>
+              <CardActionArea sx={{ flexGrow: 1, borderRadius: 0 }} >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={productPhotoMapping[productData.pid]}
+                  alt=""
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {productData.name}
+                  </Typography>
+                  <Typography gutterBottom variant="h6" component="div">
+                    {`HK$${productData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    paragraph
+                  </Typography>
+                  <div style={{ fontSize: "12px", fontWeight: "bolder", color: "black", textAlign: "right" }}>
+                    {productData.has_stock ? "In-Stock" : "Out of Stock"}
+                  </div>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Button size="small" color="primary">
+                  Share
+                </Button>
+              </CardActions>
+            </Card>
 
-          
-        </Col>
-
-
-      </Grid>
+          {/* </Grid>
+        </Grid>
+      </Container> */}
     </>
-  )
+  );
 }
