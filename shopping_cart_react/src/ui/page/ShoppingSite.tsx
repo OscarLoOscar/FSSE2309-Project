@@ -124,7 +124,7 @@ const pData: ProductListData[] =
   ]
   ;
 
-// 定义一个ShoppingSite组件
+// define一個ShoppingSite组件
 const ShoppingSite = () => {
 
   const [data, setData] = useState<ImgData | undefined>(undefined);

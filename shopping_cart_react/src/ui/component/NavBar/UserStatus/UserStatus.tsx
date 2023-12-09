@@ -6,9 +6,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { Menu, MenuItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserStatus() {
-  const [value, setValue] = React.useState('recents');
+  const [value, setValue] = React.useState('Login');
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
@@ -21,14 +22,21 @@ export default function UserStatus() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const navigate = useNavigate();
+
+  const navigateLoginPage = () => {
+    navigate("/login")
+  }
   return (
     <>
       {/** handleChange之後keep白色 */}
       <BottomNavigation
         sx={{
-          width: 500, backgroundColor: 'transparent',
+          width: 500,
+          backgroundColor: 'transparent',
           cursor: 'pointer',
           '& .Mui-selected': {
+            // '&:hover': {
             '& .MuiBottomNavigationAction-label': {
               fontSize: theme => theme.typography.caption,
               //     transition: 'none',
@@ -37,8 +45,8 @@ export default function UserStatus() {
               color: 'white'
             }
           }
-
         }}
+        showLabels
         value={value}
         onChange={handleChange}
       >
@@ -47,12 +55,13 @@ export default function UserStatus() {
           label="Login "
           value="Login"
           icon={<PersonIcon sx={{ color: 'white' }} />}
-          onClick={handleClick}
+          onClick={navigateLoginPage}
           sx={{
             '&:hover': {
-              backgroundColor: '#90caf9'
+              backgroundColor: '#90caf9',
             }
-          }}
+          }
+          }
         />
         {/**handleChange 之前icon白色 */}
 
@@ -63,11 +72,11 @@ export default function UserStatus() {
           icon={<NotificationsIcon sx={{ color: 'white' }} />}
           sx={{
             '&:hover': {
-              backgroundColor: '#90caf9'
+              backgroundColor: '#90caf9',
             }
           }}
         />
-        <Menu
+        {/* <Menu
           id="basic-menu"
           anchorEl={anchorEl}
           open={open}
@@ -79,7 +88,7 @@ export default function UserStatus() {
           <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
           <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
+        </Menu> */}
         <BottomNavigationAction
           label="Favorites"
           value="favorites"

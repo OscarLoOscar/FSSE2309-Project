@@ -25,6 +25,8 @@
 
 `npm i @fortawesome/react-fontawesome --force`
 
+`npm i styled-components --force`
+
 [Styling BottomNavigation in React.js Material-UI](https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui)
 
 ---
