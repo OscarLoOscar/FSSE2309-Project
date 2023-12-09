@@ -1,6 +1,5 @@
 import { useState } from "react";
-import * as Components from './styles';
-
+import * as Components from './Components';
 export default function LoginPage() {
   const [signIn, toggle] = useState(true);
   return (

@@ -27,6 +27,10 @@ export default function UserStatus() {
   const navigateLoginPage = () => {
     navigate("/login")
   }
+
+  const navigateShoppingCartPage = () => {
+    navigate("/shoppingcart")
+  }
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -103,6 +107,8 @@ export default function UserStatus() {
           label="ShoppingCart"
           value="ShoppingCart"
           icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
+          onClick={navigateShoppingCartPage}
+
           sx={{
             '&:hover': {
               backgroundColor: '#90caf9'

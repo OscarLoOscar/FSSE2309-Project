@@ -1,5 +1,3 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Container, Grid, Typography } from "@mui/material";
-import { ProductListData } from "../../../data/dto/ProductListData";
 import almaviva from "../../../assets/wine/almaviva.png";
 import borgogno_no_name from "../../../assets/wine/borgogno_no_name.png";
 import branaire_ducru from "../../../assets/wine/branaire_ducru.png";
@@ -15,6 +13,7 @@ import les_griffons_de_pichon_baron_1 from "../../../assets/wine/les_griffons_de
 import luce_della_vite_brunello_di_montalcino_1 from "../../../assets/wine/luce_della_vite_brunello_di_montalcino_1.png";
 import mouton_2004 from "../../../assets/wine/mouton_2004.png";
 import quintessa from "../../../assets/wine/quintessa.png";
+import {Item} from "../../../data/dto/TransactionDetailData";
 
 const productPhotoMapping: { [key: number]: string } = {
   1: almaviva,
@@ -33,45 +32,36 @@ const productPhotoMapping: { [key: number]: string } = {
   14: mouton_2004,
   15: quintessa
 }
-
-
 type Props = {
-  productData: ProductListData
+    transactionProduct: Item
 }
 
-export default function ProductListCard2({ productData }: Props) {
-  return (
-    <>
-      <Card sx={{ maxWidth: 1000 }}>
-        <CardActionArea sx={{ flexGrow: 1, borderRadius: 0 }} >
-          <CardMedia
-            component="img"
-            height='auto'
-            image={productPhotoMapping[productData.pid]}
-            alt=""
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {productData.name}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="div">
-              {`HK$${productData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              paragraph
-            </Typography>
-            <div style={{ fontSize: "12px", fontWeight: "bolder", color: "black", textAlign: "right" }}>
-              {productData.has_stock ? "In-Stock" : "Out of Stock"}
-            </div>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-        </CardActions>
-      </Card>
-
-    </>
-  );
+export default function CheckoutTableRow({transactionProduct}: Props) {
+    return (
+        <>
+            <tr>
+                <th scope="row">
+                    <div className="d-flex align-items-center bg-white">
+                        <img src={productPhotoMapping[transactionProduct.product.pid]}
+                             className="img-fluid rounded-3 bg-transparent"
+                             style={{width: "120px"}} alt="Product"/>
+                        <div className="ms-4 pt-3 align-items-center justify-content-center bg-white">
+                            <p className="mb-2 bg-white">{transactionProduct.product.name}</p>
+                        </div>
+                    </div>
+                </th>
+                <td className="align-middle">
+                    <p className="mb-0 bg-white" style={{fontWeight: "500"}}>{transactionProduct.product.price.toLocaleString(undefined,{style: "currency", currency: "HKD"})}</p>
+                </td>
+                <td className="align-middle">
+                    <div className="d-flex flex-row bg-white">
+                        <p className="mb-0 bg-white ps-2" style={{fontWeight: "500"}}>{transactionProduct.quantity}</p>
+                    </div>
+                </td>
+                <td className="align-middle">
+                    <p className="mb-0 bg-white" style={{fontWeight: "500"}}>{transactionProduct.subtotal.toLocaleString(undefined,{style: "currency", currency: "HKD"})}</p>
+                </td>
+            </tr>
+        </>
+    )
 }

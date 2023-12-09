@@ -1,40 +1,63 @@
-import { Breadcrumbs, Grid, Link, Typography } from "@mui/material";
+import { Breadcrumbs, Grid, Link, Typography, AppBar } from "@mui/material";
+import Container from "@mui/material/Container";
+import { red } from '@mui/material/colors';
 
 type Props = {};
 
 export default function BottomWrapper(props: Props) {
+  const color = red[50];
+
   return (
-    <Grid container justifyContent="center">
-      <Grid sx={{ textAlign: { xs: 'center', md: 'center' } }}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Typography color="text.primary">熱門搜尋:</Typography>
-          <Link underline="hover" color="inherit" href="/sponsor/momax-flagship">
-            (贊助) <u>momax旗艦店</u>
+    // <Grid container justifyContent="center">
+    //   <Grid sx={{ textAlign: { xs: 'center', md: 'center' } }}>
+    //     <Breadcrumbs aria-label="breadcrumb">
+    // <footer style={{ position: 'fixed', top: 0, left: 0, width: '100%' }}>
+    <AppBar position="sticky" sx={{
+      // backgroundColor: "transparent"
+      backgroundColor: "#0091ea"
+    }}
+    >
+      <Container maxWidth="lg">
+        <Typography color="text.primary" align="center">熱門搜尋:
+          {'  (贊助) '}
+          <Link underline="hover" color={color} href="/sponsor/momax-flagship">
+            momax旗艦店
           </Link>
-          <Link underline="hover" color="inherit" href="/iphone15">
-            <u> iPhone15</u>
+          {' | '}
+          <Link underline="hover" color={color} href="/iphone15">
+            iPhone15
           </Link>
-          <Link underline="hover" color="inherit" href="/switch">
-            <u> Switch</u>
+          {' | '}
+          <Link underline="hover" color={color} href="/switch">
+            Switch
           </Link>
-          <Link underline="hover" color="inherit" href="/sony">
-            <u>  SONY</u>
+          {' | '}
+          <Link underline="hover" color={color} href="/sony">
+            SONY
           </Link>
-          <Link underline="hover" color="inherit" href="/soundbar">
-            <u> Soundbar</u>
+          {' | '}
+          <Link underline="hover" color={color} href="/soundbar">
+            Soundbar
           </Link>
-          <Link underline="hover" color="inherit" href="/tab-s9">
-            <u> Tab S9</u>
+          {' | '}
+          <Link underline="hover" color={color} href="/tab-s9">
+            Tab S9
           </Link>
+          {' | '}
           <Link
             underline="hover"
-            color="inherit"
+            color={color}
             href="/material-ui/getting-started/installation/"
           >
-            <u>Core</u>
+            Core
           </Link>
-        </Breadcrumbs>
-      </Grid>
-    </Grid>
+        </Typography>
+      </Container>
+    </AppBar >
+    //   </footer>
+
+    //     {/* </Breadcrumbs>
+    //   </Grid>
+    // </Grid> */}
   );
 }

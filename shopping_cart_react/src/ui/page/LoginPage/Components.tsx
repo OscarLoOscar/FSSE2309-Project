@@ -13,6 +13,10 @@ overflow: hidden;
 width: 678px;
 max-width: 100%;
 min-height: 400px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
 `;
 
 export const SignUpContainer = styled.div<ContainerProps>`

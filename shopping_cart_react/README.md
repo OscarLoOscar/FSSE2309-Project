@@ -27,6 +27,8 @@
 
 `npm i styled-components --force`
 
+`npm i firebase --force` 
+
 [Styling BottomNavigation in React.js Material-UI](https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui)
 
 ---
