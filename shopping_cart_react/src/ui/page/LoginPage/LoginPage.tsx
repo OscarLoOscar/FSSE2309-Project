@@ -1,9 +1,26 @@
 import { useState } from "react";
 import * as Components from './Components';
+import TopContainer from "../../component/TopContainer/TopContainer";
+import ItemTab from "../../component/ItemTab/ItemTab";
+import NavBar from "../../component/NavBar/NavBar";
+import Footer from "../../component/Footer/Footer";
 export default function LoginPage() {
   const [signIn, toggle] = useState(true);
   return (
     <>
+      <title>Venturenix Lab React Project</title>
+      <TopContainer />
+      <img
+        alt="Logo"
+        src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
+        title="company_logo"
+        width={500}
+        style={{ display: 'block', margin: 'auto' }}
+      />
+      <ItemTab />
+
+      <NavBar/>
+
       <Components.Container>
         <Components.SignUpContainer signinIn={signIn}>
           <Components.Form>
@@ -49,6 +66,8 @@ export default function LoginPage() {
           </Components.Overlay>
         </Components.OverlayContainer>
       </Components.Container>
+      <Footer />
+
     </>
   );
 }

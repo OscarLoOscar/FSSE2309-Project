@@ -13,6 +13,7 @@ export default function UserStatus() {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -40,18 +41,14 @@ export default function UserStatus() {
           backgroundColor: 'transparent',
           cursor: 'pointer',
           '& .Mui-selected': {
-            // '&:hover': {
             '& .MuiBottomNavigationAction-label': {
-              fontSize: theme => theme.typography.caption,
-              //     transition: 'none',
+               fontSize: theme => theme.typography.caption,
               fontWeight: 'bold',
-              //      lineHeight: '20px',
               color: 'white'
             }
           }
         }}
         showLabels
-        value={value}
         onChange={handleChange}
       >
 
@@ -61,6 +58,7 @@ export default function UserStatus() {
           icon={<PersonIcon sx={{ color: 'white' }} />}
           onClick={navigateLoginPage}
           sx={{
+            width: 100,
             '&:hover': {
               backgroundColor: '#90caf9',
             }
@@ -72,32 +70,19 @@ export default function UserStatus() {
 
         <BottomNavigationAction
           label="Notifications"
-          value="Notifications"
           icon={<NotificationsIcon sx={{ color: 'white' }} />}
           sx={{
+            width: 100,
             '&:hover': {
               backgroundColor: '#90caf9',
             }
           }}
         />
-        {/* <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu> */}
         <BottomNavigationAction
           label="Favorites"
-          value="favorites"
           icon={<FavoriteIcon sx={{ color: 'white' }} />}
           sx={{
+            width: 100,
             '&:hover': {
               backgroundColor: '#90caf9'
             }
@@ -105,11 +90,10 @@ export default function UserStatus() {
         />
         <BottomNavigationAction
           label="ShoppingCart"
-          value="ShoppingCart"
           icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
           onClick={navigateShoppingCartPage}
-
           sx={{
+            width: 100,
             '&:hover': {
               backgroundColor: '#90caf9'
             }

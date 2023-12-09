@@ -9,7 +9,7 @@ import ImgDataJson from '../../data/ImgData.json';
 import NavBar from '../component/NavBar/NavBar';
 import MyComponent from '../component/NavBar/UserStatus/UserStatus';
 import { ProductListData } from '../../data/dto/ProductListData';
-import { Grid, Table, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Container, Grid, Table, TableContainer, TableHead, TableRow } from '@mui/material';
 import ProductListCard from '../component/ProductListCard/ProductListCard';
 import ProductListCardLoading from '../component/ProductListCard/ProductListCardLoading';
 import Footer from '../component/Footer/Footer';
@@ -258,17 +258,16 @@ const ShoppingSite = () => {
 
       <BottomWrapper />
       <MainWrapper imgs={photos} />
-
-      <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
-        <Grid container spacing={5} maxWidth={1200} sx={{ margin: '0 auto' }}>
-          {pData.map((data, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 4 }}>
-              <ProductListCard productData={data} key={index} />
-            </Grid>
-          ))
-          }
+        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
+          <Grid container spacing={5} maxWidth={1200} sx={{ margin: '0 auto' }}>
+            {pData.map((data, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 4 }}>
+                <ProductListCard productData={data} key={index} />
+              </Grid>
+            ))
+            }
+          </Grid>
         </Grid>
-      </Grid>
       {/*[if IE]>
 
 
