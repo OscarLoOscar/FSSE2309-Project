@@ -18,7 +18,7 @@ const router = createHashRouter([
     element: <LoginPage />
   },
   {
-    path: "/shoppingcart",
+    path: "/thankyoupage",
     // element: <ShoppingCartPage />
     element: <ThankyouPage />
   }

@@ -1,36 +1,66 @@
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { Box, Button, Card, CardActions, CardContent, Container, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import TopContainer from "../../component/TopContainer/TopContainer";
+import ItemTab from "../../component/ItemTab/ItemTab";
+import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
+import MainWrapper from "../../component/adv/MainWrapper";
+import NavBar from "../../component/NavBar/NavBar";
+import Footer from "../../component/Footer/Footer";
 
 export default function ThankyouPage() {
-    const [count, setCount] = useState<number>(5);
+    const [count, setCount] = useState<number>(15);
     const navigate = useNavigate()
 
     useEffect(() => {
         setTimeout(() => {
             setCount((state) => (state) - 1);
 
-            if(count === 0) {
+            if (count === 0) {
                 navigate("/");
             }
-        },1000)
-    },[count])
+        }, 1000)
+    }, [count])
 
     return (
         <>
-            <div className="vh-100">
-                <div className=" h-25 d-flex justify-content-center align-items-center h1">
-                    THANK YOU FOR YOUR PURCHASE!
-                </div>
-                <div className="d-flex justify-content-center align-items-center">
-                    <img src="https://media.tenor.com/cy4Ce99s0LEAAAAd/godzilla.gif"
-                         alt="Godzilla GIF"/>
-                </div>
-                <div>
-                    <div className=" h-25 d-flex justify-content-center align-items-center h1 mt-3">
-                        We will return to Home Page in {count} sec
-                    </div>
-                </div>
-            </div>
+            <title>Venturenix Lab React Project</title>
+            <TopContainer />
+            <img
+                alt="Logo"
+                src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
+                title="company_logo"
+                width={500}
+                style={{ display: 'block', margin: 'auto' }}
+            />
+            <ItemTab />
+
+            <NavBar />
+
+            <BottomWrapper />
+
+            <Container sx={{ width: 500}}>
+
+                <Card sx={{ textAlign: "center", justifyContent: "center" }}>
+                    <CardContent>
+                        <CheckCircleOutlineIcon sx={{ fontSize: 100, color: 'primary.main' }} />
+                        <Typography variant="h2" gutterBottom>
+                            Thank You!
+                        </Typography>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Your details have been successfully submitted. Thanks!
+                        </Typography>
+                    </CardContent>
+                    <CardActions style={{ justifyContent: 'center' }}>
+                        <Button variant="contained"
+                            color="success" href="/">
+                            Back to Home
+                        </Button>
+                    </CardActions>
+                </Card>
+            </Container>
+            <Footer />
         </>
-    )
+    );
 }
