@@ -37,7 +37,7 @@ export default function UserStatus() {
       {/** handleChange之後keep白色 */}
       <BottomNavigation
         sx={{
-          width: 500,
+          width: 300,
           backgroundColor: 'transparent',
           cursor: 'pointer',
           '& .Mui-selected': {

@@ -31,12 +31,8 @@
 
 [Styling BottomNavigation in React.js Material-UI](https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui)
 
----
-
-[Nested Menu , useful](https://mui-nested-menu.vercel.app/installation)
-`npm install mui-nested-menu`
-
----
+[Nested Menu ](https://medium.com/geekculture/creating-a-dropdown-with-nested-menu-items-using-react-mui-bb0c084226da)
+https://mdbootstrap.com/docs/react/extended/dropdown-multilevel/#
 
 ### Open src/index.js, add the following import statement in the file head:
 
