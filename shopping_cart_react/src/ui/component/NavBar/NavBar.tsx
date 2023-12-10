@@ -40,9 +40,9 @@ export default function NavBar() {
 
     <>
 
-      {/* <Box sx={{ flexGrow: 2}}> */}
-
-      <AppBar position="static">
+      <AppBar position="static"
+        style={{ width: '100%' }}
+      >
         <Toolbar>
 
           <ItemMenu />
@@ -63,7 +63,6 @@ export default function NavBar() {
           <UserStatus />
         </Toolbar>
       </AppBar>
-      {/* </Box > */}
     </>
   );
 }

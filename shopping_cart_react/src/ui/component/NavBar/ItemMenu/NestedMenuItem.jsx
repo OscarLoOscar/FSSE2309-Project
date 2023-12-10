@@ -7,7 +7,7 @@ const NestedMenuItem = React.forwardRef((props, ref) => {
     const {
         parentMenuOpen,
         label,
-        rightIcon = <ArrowRight style={{ fontSize: 16 }} />,
+        // rightIcon = <ArrowRight style={{ fontSize: 16 }} />,
         keepOpen,
         children,
         customTheme,
@@ -119,10 +119,11 @@ const NestedMenuItem = React.forwardRef((props, ref) => {
                 className={className}
                 ref={menuItemRef}
                 keepOpen={keepOpen}
+                sx={{ width: 140}}
             >
                 {label}
                 <div style={{ flexGrow: 1 }} />
-                {rightIcon}
+                {/* {rightIcon} */}
             </MenuItem>
             <Menu
                 hideBackdrop

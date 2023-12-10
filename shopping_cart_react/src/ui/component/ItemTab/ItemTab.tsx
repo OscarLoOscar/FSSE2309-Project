@@ -5,6 +5,22 @@ type Props = {
 
 }
 
+const ItemTabLAbel = [
+  {
+    menu: [
+      { label: "Bordeaux", hover: { backgroundColor: '#e1bee7', color: 'inherit' } },
+      { label: "Burgundy", hover: { backgroundColor: '#ff4081', color: 'white' } },
+      { label: "Loire Vally", hover: { backgroundColor: 'lightgreen', color: 'green' } },
+      { label: "South France", hover: { backgroundColor: 'orange', color: 'inherit' } },
+      { label: "Italy", hover: { backgroundColor: 'pink', color: 'white' } },
+      { label: "Spain", hover: { backgroundColor: '#ec407a', color: 'white' } },
+      { label: "Germany", hover: { backgroundColor: '#90caf9', color: 'white' } },
+      { label: "America", hover: { backgroundColor: '#f44336', color: 'white' } },
+      { label: "Argentina", hover: { backgroundColor: '#7e57c2', color: 'white' } },
+      { label: "Australia", hover: { backgroundColor: '#80cbc4', color: 'white' } },
+    ],
+  },
+]
 export default function ItemTab(props: Props) {
   const [value, setlabel] = React.useState('1');
 
@@ -15,8 +31,10 @@ export default function ItemTab(props: Props) {
   return (
     <>
       <Grid container justifyContent="center">
-        <Grid sx={{ width:'90%',
-        textAlign: { xs: 'center', md: 'center' } }}>
+        <Grid sx={{
+          width: '90%',
+          textAlign: { xs: 'center', md: 'center' }
+        }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -24,93 +42,22 @@ export default function ItemTab(props: Props) {
             scrollButtons={false}
             aria-label="scrollable prevent tabs example"
           >
-            <Tab label="Everuts"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  backgroundColor: 'white',
-                },
-              }} />
-            <Tab label="13Landmarks"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: 'black',
-                },
-              }}
-            />
-            < Tab label="超級市場"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'green',
-                  backgroundColor: 'lightgreen',
-                },
-              }}
-            />
-            <Tab label="護理保健"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  backgroundColor: 'orange',
-                },
-              }}
-            />
-            <Tab label="護膚化妝" sx={{
-              fontSize: '12px',
-              '&:hover': {
-                color: 'white',
-                backgroundColor: 'pink',
-              },
-            }}
-            />
-            <Tab label="直送澳門"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: '#ab003c',
-                },
-              }}
-            />
-            <Tab label="母嬰育兒"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: '#90caf9',
-                },
-              }}
-            />
-            <Tab label="寵物用品"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: '#f44336',
-                },
-              }}
-            />
-            <Tab label="大腦場"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: '#7e57c2',
-                },
-              }}
-            />
-            <Tab label="家居電器"
-              sx={{
-                fontSize: '12px',
-                '&:hover': {
-                  color: 'white',
-                  backgroundColor: '#80cbc4',
-                },
-              }}
-            />
-            <Tab label="家品傢俬"
+            {ItemTabLAbel[0].menu.map((item, index) => (
+              <Tab
+                key={index}
+                label={item.label}
+                sx={{
+                  fontSize: '12px',
+                  '&:hover': {
+                    backgroundColor: item.hover.backgroundColor,
+                    colour: item.hover.color
+                  },
+                }} />
+
+            ))}
+
+
+            {/* <Tab label="家品傢俬"
               sx={{
                 fontSize: '12px',
                 '&:hover': {
@@ -163,7 +110,7 @@ export default function ItemTab(props: Props) {
                   backgroundColor: '#ff7043',
                 },
               }}
-            />
+            /> */}
           </Tabs>
         </Grid>
       </Grid>

@@ -22,35 +22,77 @@ const Menu = styled('div')(({ theme }) => ({
 
 const menuItems = [
   {
-    label: "New",
+    label: "Red Wine",
     // rightIcon: <ArrowRight />,
     menu: [
-      { label: "Document", onClick: () => console.log("Document clicked") },
+      { label: "Bordeaux", onClick: () => console.log("Document clicked") },
+      { label: "Burgundy", onClick: () => console.log("Document clicked") },
+      { label: "Loire Vally", onClick: () => console.log("Document clicked") },
+      { label: "South France", onClick: () => console.log("Document clicked") },
       {
-        label: "From Markdown file",
+        label: "Italy",
         inputProps: { id: "mdInput", type: "file", accept: ".md" },
       },
       {
-        label: "From HTML file",
+        label: "Spain",
+        inputProps: { id: "htmlInput", type: "file", accept: ".html" },
+      },
+      {
+        label: "Germany",
+        inputProps: { id: "htmlInput", type: "file", accept: ".html" },
+      },
+      {
+        label: "America",
+        inputProps: { id: "htmlInput", type: "file", accept: ".html" },
+      },
+      {
+        label: "Argentina",
+        inputProps: { id: "htmlInput", type: "file", accept: ".html" },
+      },
+      {
+        label: "Australia",
         inputProps: { id: "htmlInput", type: "file", accept: ".html" },
       },
     ],
   },
   {
-    label: "Save as",
+    label: "White Wine",
     // rightIcon: <ArrowRight />,
     menu: [
-      { label: "Markdown", onClick: () => console.log("Markdown clicked") },
-      { label: "Plain HTML", onClick: () => console.log("Plain HTML clicked") },
-      { label: "Styled HTML", onClick: () => console.log("Styled HTML clicked") },
+      { label: "Bordeaux", onClick: () => console.log("Markdown clicked") },
+      { label: "Burgundy", onClick: () => console.log("Plain HTML clicked") },
+      { label: "Alsace", onClick: () => console.log("Styled HTML clicked") },
+      { label: "Loire Vally", onClick: () => console.log("Styled HTML clicked") },
+      { label: "Rhone", onClick: () => console.log("Styled HTML clicked") },
+      { label: "Piedmont", onClick: () => console.log("Styled HTML clicked") },
+
     ],
   },
   {
-    label: "Export",
+    label: "Sweet Wine",
     rightIcon: <ArrowRight />,
     menu: [
-      { label: "PDF", onClick: () => console.log("PDF clicked") },
-      { label: "Github Gist", onClick: () => console.log("Github Gist clicked") },
+      { label: "Bordeaux", onClick: () => console.log("PDF clicked") },
+      { label: "Germany", onClick: () => console.log("Github Gist clicked") },
+    ],
+  },
+  {
+    label: "Sparkling Wine",
+    rightIcon: <ArrowRight />,
+    menu: [
+      { label: "Champagne", onClick: () => console.log("PDF clicked") },
+      { label: "BUrgundy", onClick: () => console.log("Github Gist clicked") },
+    ],
+  },
+  {
+    label: "Sake",
+    rightIcon: <ArrowRight />,
+    menu: [
+      { label: "Junmai Daiginjo / 純米大吟醸", onClick: () => console.log("PDF clicked") },
+      { label: "Junmai Ginjo / 純米吟醸", onClick: () => console.log("Github Gist clicked") },
+      { label: "Tokubetsu Junmai / 特別純米", onClick: () => console.log("Github Gist clicked") },
+      { label: "Tokubetsu Honjozo / 特別本醸造", onClick: () => console.log("Github Gist clicked") },
+
     ],
   },
 ];
@@ -69,7 +111,7 @@ export default function ItemMenu() {
             }
             menu={menuItems.map((item, index) => (
               <DropdownNestedMenuItem
-                key={index  }
+                key={index}
                 label={item.label}
                 // rightIcon={item.rightIcon}
                 sx={{
