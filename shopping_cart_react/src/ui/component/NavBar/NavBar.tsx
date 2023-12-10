@@ -2,7 +2,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { Grid, Stack } from '@mui/material';
+import { Container, Grid, Stack } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
 import UserStatus from './UserStatus/UserStatus';
 import ItemMenu from './ItemMenu/ItemMenu';
@@ -39,7 +39,6 @@ export default function NavBar() {
   return (
 
     <>
-
       <AppBar position="static"
         style={{ width: '100%' }}
       >

@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Container, Grid, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { ProductListData } from "../../../data/dto/ProductListData";
 import almaviva from "../../../assets/wine/almaviva.png";
 import borgogno_no_name from "../../../assets/wine/borgogno_no_name.png";
@@ -15,6 +15,9 @@ import les_griffons_de_pichon_baron_1 from "../../../assets/wine/les_griffons_de
 import luce_della_vite_brunello_di_montalcino_1 from "../../../assets/wine/luce_della_vite_brunello_di_montalcino_1.png";
 import mouton_2004 from "../../../assets/wine/mouton_2004.png";
 import quintessa from "../../../assets/wine/quintessa.png";
+import { useState } from "react";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShareIcon from '@mui/icons-material/Share';
 
 const productPhotoMapping: { [key: number]: string } = {
   1: almaviva,
@@ -40,6 +43,14 @@ type Props = {
 }
 
 export default function ProductListCard2({ productData }: Props) {
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShowOptions(true);
+  };
+  const handleMouseLeave = () => {
+    setShowOptions(false);
+  };
   return (
     <>
       <Card sx={{ maxWidth: 1000 }}>
@@ -57,18 +68,26 @@ export default function ProductListCard2({ productData }: Props) {
             <Typography gutterBottom variant="h6" component="div">
               {`HK$${productData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              paragraph
-            </Typography>
             <div style={{ fontSize: "12px", fontWeight: "bolder", color: "black", textAlign: "right" }}>
               {productData.has_stock ? "In-Stock" : "Out of Stock"}
             </div>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
+          <Grid item xs={6} textAlign="left">
+            <Button size="small" color="primary" endIcon={<ShareIcon />}>
+              Share
+            </Button>
+          </Grid>
+          <Grid item xs={8} textAlign="right">
+            <Button size="small"
+              color="primary"
+              href="#"
+              endIcon={<AddShoppingCartIcon />}
+            >
+              Add To Cart
+            </Button>
+          </Grid>
         </CardActions>
       </Card>
 

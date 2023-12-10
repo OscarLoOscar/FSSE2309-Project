@@ -13,6 +13,7 @@ import { Container, Grid, Table, TableContainer, TableHead, TableRow } from '@mu
 import ProductListCard from '../component/ProductListCard/ProductListCard';
 import ProductListCardLoading from '../component/ProductListCard/ProductListCardLoading';
 import Footer from '../component/Footer/Footer';
+import { Grid4x4 } from '@mui/icons-material';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -257,17 +258,23 @@ const ShoppingSite = () => {
       <NavBar />
 
       <BottomWrapper />
-      <MainWrapper imgs={photos} />
-        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ marginTop: 30 }}>
-          <Grid container spacing={5} maxWidth={1200} sx={{ margin: '0 auto' }}>
-            {pData.map((data, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 4 }}>
-                <ProductListCard productData={data} key={index} />
-              </Grid>
-            ))
-            }
-          </Grid>
+      <Container >
+        <MainWrapper imgs={photos} />
+        <Grid
+          container
+          spacing={5}
+          justifyContent="center"
+          alignItems="top"
+          style={{ marginTop: 10 }}
+        >
+          {pData.map((data, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 7 }}>
+              <ProductListCard productData={data} key={index} />
+            </Grid>
+          ))
+          }
         </Grid>
+      </Container>
       {/*[if IE]>
 
 
