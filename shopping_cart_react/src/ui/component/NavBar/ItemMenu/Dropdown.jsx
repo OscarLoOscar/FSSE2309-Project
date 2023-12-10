@@ -93,13 +93,14 @@ export const Dropdown = React.forwardRef(
                 })}
 
                 <Menu
+                    margin-bottom='-20.25'
                     PaperProps={{ sx: { minWidth: minWidth ?? 0 } }}
                     anchorEl={isOpen}
                     open={!!isOpen}
                     onClose={handleClose}
                 >
                     {React.Children.map(menu, renderMenu)}
-                </Menu>
+                </Menu >
             </>
         );
     }
@@ -108,16 +109,21 @@ export const Dropdown = React.forwardRef(
 export const DropdownMenuItem = styled(MenuItem)`
   display: flex;
   justify-content: space-between !important;
-
+  background-color:lightgrey;
   & > svg {
-    margin-left: 32px;
+    margin-left: 32px;  
   }
 `;
 
 export const DropdownNestedMenuItem = styled(NestedMenuItem)`
   display: flex;
   justify-content: space-between !important;
-
+  background-color:lightgrey;
+  border-left: 4px transparent solid; /* Set border-left to transparent by default */
+//   transition: border-left 0.3s ease; /* Add a transition for smooth effect */
+    &:hover {
+    border-left: 4px #0D3966 solid;
+  }
   & > svg {
     margin-left: 32px;
   }

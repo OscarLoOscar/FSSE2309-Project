@@ -46,10 +46,7 @@ export default function NavBar() {
         <Toolbar>
 
           <ItemMenu />
-
-
           <SearchBox />
-
           <Stack spacing={2}
             sx={{
               width: 800,
@@ -60,7 +57,6 @@ export default function NavBar() {
             }}
           >
           </Stack >
-
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           </Box>
