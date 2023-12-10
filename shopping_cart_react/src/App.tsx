@@ -5,8 +5,8 @@ import ShoppingSite from './ui/page/ShoppingSite';
 import LoginPage from './ui/page/LoginPage/LoginPage';
 import { createContext, useEffect, useState } from "react";
 import { UserData } from './data/UserData';
-import ShoppingCartPage from './ui/page/ShoppingCartPage/ShoppingCartPage';
 import ThankyouPage from './ui/page/ThankyouPage/ThankyouPage';
+import ErrorPage from './ui/page/ErrorPage/ErrorPage';
 
 const router = createHashRouter([
   {
@@ -21,7 +21,13 @@ const router = createHashRouter([
     path: "/thankyoupage",
     // element: <ShoppingCartPage />
     element: <ThankyouPage />
-  }
+  },
+  {
+    path: "/shoppingcart",
+    // element: <ShoppingCartPage />
+    // element: <ErrorPage />
+  },
+  
 ])
 export const loginUserContext = createContext<UserData | null | undefined>(undefined);
 
@@ -35,9 +41,9 @@ function App() {
   return (
     <>
       {/* <ShoppingSite /> */}
-      <loginUserContext.Provider value={loginUser}>
+      {/* <loginUserContext.Provider value={loginUser}> */}
         <RouterProvider router={router} />
-      </loginUserContext.Provider >
+      {/* </loginUserContext.Provider > */}
     </>
   );
 }

@@ -29,8 +29,11 @@ export default function UserStatus() {
     navigate("/login")
   }
 
-  const navigateShoppingCartPage = () => {
+  const navigateThankyouPage = () => {
     navigate("/thankyoupage")
+  }
+  const navigateShoppingCartPage = () => {
+    navigate("/shoppingcart")
   }
   return (
     <>
