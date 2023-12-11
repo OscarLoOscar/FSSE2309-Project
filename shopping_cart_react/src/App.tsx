@@ -7,6 +7,7 @@ import { createContext, useEffect, useState } from "react";
 import { UserData } from './data/UserData';
 import ThankyouPage from './ui/page/ThankyouPage/ThankyouPage';
 import ErrorPage from './ui/page/ErrorPage/ErrorPage';
+import CartPage from './ui/page/ShoppingCartPage/CartPage';
 
 const router = createHashRouter([
   {
@@ -24,10 +25,10 @@ const router = createHashRouter([
   },
   {
     path: "/shoppingcart",
-    // element: <ShoppingCartPage />
+    element: <CartPage />
     // element: <ErrorPage />
   },
-  
+
 ])
 export const loginUserContext = createContext<UserData | null | undefined>(undefined);
 
@@ -42,7 +43,7 @@ function App() {
     <>
       {/* <ShoppingSite /> */}
       {/* <loginUserContext.Provider value={loginUser}> */}
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
       {/* </loginUserContext.Provider > */}
     </>
   );

@@ -1,8 +1,8 @@
-import {Alert, Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import React, {useEffect, useState} from "react";
-import {GetCartItemData} from "../../../data/dto/GetCartItemData";
+import { Alert, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import { GetCartItemData } from "../../../data/dto/GetCartItemData";
 import almaviva from "../../../assets/wine/almaviva.png";
 import borgogno_no_name from "../../../assets/wine/borgogno_no_name.png";
 import branaire_ducru from "../../../assets/wine/branaire_ducru.png";
@@ -19,9 +19,9 @@ import luce_della_vite_brunello_di_montalcino_1 from "../../../assets/wine/luce_
 import mouton_2004 from "../../../assets/wine/mouton_2004.png";
 import quintessa from "../../../assets/wine/quintessa.png";
 import * as CartItemApi from "../../../api/CartItemApi"
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const productPhotoMapping: {[key: number]: string} = {
+const productPhotoMapping: { [key: number]: string } = {
     1: almaviva,
     2: borgogno_no_name,
     3: branaire_ducru,
@@ -37,22 +37,22 @@ const productPhotoMapping: {[key: number]: string} = {
     13: luce_della_vite_brunello_di_montalcino_1,
     14: mouton_2004,
     15: quintessa
-  }
+}
 
 type Props = {
     cartItem: GetCartItemData | undefined
     cartItemList: GetCartItemData[]
-    setCartItemList:  React.Dispatch<React.SetStateAction<GetCartItemData[] | undefined>>
+    setCartItemList: React.Dispatch<React.SetStateAction<GetCartItemData[] | undefined>>
 }
 
-export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemList}: Props) {
-    const [cartItemState, setCartItemState]= useState<GetCartItemData | undefined>(cartItem)
+export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemList }: Props) {
+    const [cartItemState, setCartItemState] = useState<GetCartItemData | undefined>(cartItem)
     const [quantity, setQuantity] = useState<number | undefined>(cartItem?.cart_quantity)
     const [warningText, setWarningText] = useState<string>("")
     const navigate = useNavigate();
 
     const handlePlusButton = async () => {
-        if(cartItem && quantity && quantity + 1 <= cartItem.stock) {
+        if (cartItem && quantity && quantity + 1 <= cartItem.stock) {
             try {
                 cartItem = await CartItemApi.patchCartItem(cartItem.pid, quantity + 1);
                 setQuantity((state) => (state && state + 1));
@@ -68,7 +68,7 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
     }
 
     const handleMinusButton = async () => {
-        if(cartItem && quantity && quantity - 1 > 0) {
+        if (cartItem && quantity && quantity - 1 > 0) {
             try {
                 cartItem = await CartItemApi.patchCartItem(cartItem.pid, quantity - 1)
                 setWarningText("")
@@ -78,7 +78,7 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
                 navigate("/error");
             }
         }
-        else  {
+        else {
             try {
                 await CartItemApi.deleteCartItem(cartItem?.pid);
                 setCartItemState(undefined);
@@ -101,8 +101,8 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
         }
     }
 
-    const renderCartItem =() => {
-        if(cartItemState) {
+    const renderCartItem = () => {
+        if (cartItemState) {
             return <>
                 <div className="card mb-4 border-top-0 border-start-0 border-end-0 border-2 border-secondary">
                     <div className="card-body p-4 bg-white">
@@ -111,7 +111,7 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
                             <div className="col-md-2 bg-white">
                                 <img
                                     src={cartItem && productPhotoMapping[cartItem.pid]}
-                                    className="img-fluid bg-white" alt="Generic placeholder image"/>
+                                    className="img-fluid bg-white" alt="Generic placeholder image" />
                             </div>
 
                             <div className="col-md-2 d-flex justify-content-center bg-white">
@@ -142,14 +142,14 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
                             <div className="col-md-2 d-flex justify-content-center bg-white">
                                 <div className="bg-white">
                                     <p className="small text-muted mb-4 pb-2 bg-white">Price</p>
-                                    <p className="lead fw-normal mb-0 bg-white">{cartItem?.price.toLocaleString(undefined,{style: "currency", currency: "HKD"})}</p>
+                                    <p className="lead fw-normal mb-0 bg-white">{cartItem?.price.toLocaleString(undefined, { style: "currency", currency: "HKD" })}</p>
                                 </div>
                             </div>
 
                             <div className="col-md-2 d-flex justify-content-center bg-white">
                                 <div className="bg-white">
                                     <p className="small text-muted mb-4 pb-2 bg-white">Sub-Total</p>
-                                    <p className="lead fw-normal mb-0 bg-white">{cartItem && quantity && (cartItem.price * quantity).toLocaleString(undefined,{style: "currency", currency: "HKD"})}</p>
+                                    <p className="lead fw-normal mb-0 bg-white">{cartItem && quantity && (cartItem.price * quantity).toLocaleString(undefined, { style: "currency", currency: "HKD" })}</p>
                                 </div>
                             </div>
 
@@ -158,8 +158,8 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
                                     <FontAwesomeIcon
                                         className="trash-bin bg-white"
                                         icon={faTrash} size="xl"
-                                        style={{color: "#ff0000"}}
-                                        onClick={handleDeleteButton}/>
+                                        style={{ color: "#ff0000" }}
+                                        onClick={handleDeleteButton} />
                                 </div>
                             </div>
 
@@ -179,9 +179,9 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
     }
 
     const handleCartItemListUpdate = () => {
-        if(cartItem) {
+        if (cartItem) {
             const updatedCartItemList = cartItemList.map((value) => {
-                if(value.pid === cartItem?.pid && cartItem) {
+                if (value.pid === cartItem?.pid && cartItem) {
                     return {
                         ...value,
                         cart_quantity: quantity
@@ -197,7 +197,7 @@ export default function ShoppingCartItem ({cartItem, cartItemList, setCartItemLi
 
     useEffect(() => {
         handleCartItemListUpdate()
-    },[quantity, cartItemState])
+    }, [quantity, cartItemState])
 
     return (
         <>

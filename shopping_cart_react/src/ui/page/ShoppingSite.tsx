@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import TopContainer from '../component/TopContainer/TopContainer';
-import TopContainerLeft from '../component/TopContainer/TopContainer';
 import BottomWrapper from '../component/BottomWrapper/BottomWrapper';
 import ItemTab from '../component/ItemTab/ItemTab';
 import MainWrapper from '../component/adv/MainWrapper';
 import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
 import NavBar from '../component/NavBar/NavBar';
-import MyComponent from '../component/NavBar/UserStatus/UserStatus';
 import { ProductListData } from '../../data/dto/ProductListData';
-import { Container, Grid, Table, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import ProductListCard from '../component/ProductListCard/ProductListCard';
-import ProductListCardLoading from '../component/ProductListCard/ProductListCardLoading';
 import Footer from '../component/Footer/Footer';
-import { Grid4x4 } from '@mui/icons-material';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -269,7 +265,9 @@ const ShoppingSite = () => {
         >
           {pData.map((data, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 7 }}>
-              <ProductListCard productData={data} key={index} />
+              <ProductListCard
+                productData={data}
+                key={index} />
             </Grid>
           ))
           }
