@@ -270,7 +270,7 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                         image={productPhotoMapping[cartItem.pid]}
                         alt={cartItem.name}
                     />
-                    <CardContent sx={{ flex: 1 }}>
+                    <CardContent sx={{ flex: 1, maxWidth: 140 }}>
                         <Typography variant="h6">{cartItem.name}</Typography>
                         <Typography gutterBottom variant="subtitle1">
                             Quantity: {quantity}
@@ -297,7 +297,7 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                     </CardActions>
                 </Card>
             )}
-            {warningText && (
+            {/* {warningText && (
                 <div className={"d-flex justify-content-end bg-white me-5"}>
                     <Alert
                         variant={"danger"}
@@ -306,7 +306,7 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                         {warningText}
                     </Alert>
                 </div>
-            )}
+            )} */}
         </>
     );
 }

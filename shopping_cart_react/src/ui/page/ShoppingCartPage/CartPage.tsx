@@ -3,12 +3,11 @@ import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
-import { Grid, Card, CardMedia, CardActionArea } from "@mui/material";
+import { Grid } from "@mui/material";
 import ShoppingCartItem from "../../component/ShoppingCartItem/ShoppingCartItem";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetCartItemData } from "../../../data/dto/GetCartItemData";
 import Footer from "../../component/Footer/Footer";
-import { ProductListData } from "../../../data/dto/ProductListData";
 import { ImgData } from "../../../data/ImgData";
 import ImgDataJson from '../../../data/ImgData.json';
 import { ProductData } from "../../../data/ProductData"
