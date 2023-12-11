@@ -3,7 +3,7 @@ import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
-import { Grid } from "@mui/material";
+import { Grid, Card, CardMedia, CardActionArea } from "@mui/material";
 import ShoppingCartItem from "../../component/ShoppingCartItem/ShoppingCartItem";
 import { SetStateAction, useEffect, useState } from "react";
 import { GetCartItemData } from "../../../data/dto/GetCartItemData";
@@ -11,117 +11,140 @@ import Footer from "../../component/Footer/Footer";
 import { ProductListData } from "../../../data/dto/ProductListData";
 import { ImgData } from "../../../data/ImgData";
 import ImgDataJson from '../../../data/ImgData.json';
+import { ProductData } from "../../../data/ProductData"
+import ProductDataJson from "../../../data/ProductData.json"
 
-const pData: ProductListData[] =
-  [{
-    "pid": 1,
-    "name": "anguirus",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 2,
-    "name": "baragon",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 3,
-    "name": "destoroyah",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 4,
-    "name": "godzilla2016",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 5,
-    "name": "godzilla1",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 6,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 7,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 8,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 9,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 10,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 11,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 12,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 13,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 14,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 15,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  },
-  {
-    "pid": 16,
-    "name": "godzilla2",
-    "price": 123,
-    "has_stock": true,
-  }
-  ]
-  ;
+
+// const pData: GetCartItemData[] =
+//   [{
+//     "pid": 1,
+//     "name": "Almaviva",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 2,
+//     "name": "Borgogno No Name",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 3,
+//     "name": "Chateau Branine-Ducru",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 4,
+//     "name": "Chateau Cantemerle",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 5,
+//     "name": "Chateau D'ISSAN",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 6,
+//     "name": "Borgrigne",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 7,
+//     "name": "NSG",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 8,
+//     "name": "Napanook",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 9,
+//     "name": "Chateau Lafite",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 10,
+//     "name": "Chateau Lascome",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 11,
+//     "name": "Chateau Leoville Las Cast",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 12,
+//     "name": "Chateau Pichon Baron Les Friffons",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 13,
+//     "name": "Luce",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 14,
+//     "name": "Chateau Mouton",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 15,
+//     "name": "Quintessa",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   },
+//   {
+//     "pid": 16,
+//     "name": "null",
+//     "price": 123,
+//     "cart_quantity": 1,
+//     "stock": 10
+//   }
+//   ]
+//   ;
 
 
 type Props = {
-
 }
 
 export default function CartPage() {
   const [data, setData] = useState<ImgData | undefined>(undefined);
+  const [pData, setPData] = useState<ProductData | undefined>(undefined);
+  const [cartItemList, setCartItemList] = useState<GetCartItemData[]>([]);
 
   const fetchImgData = async () => {
-    const imgDataArray: { position: number; data: { href: string; src: string; alt: string; }; }[] | undefined = await ImgDataJson;
+    const imgDataArray: {
+      position: number;
+      data: { href: string; src: string; alt: string; };
+    }[] | undefined = await ImgDataJson;
 
     // Assuming you want the first item in the array
     const imgData: ImgData | undefined = imgDataArray && imgDataArray.length > 0
@@ -130,8 +153,26 @@ export default function CartPage() {
 
     setData(imgData);
   }
+
+  const fetchProductData = async () => {
+    const productDataArray: {
+      pid: number;
+      name: string;
+      price: number;
+      stock: number;
+    }[] | undefined = await ProductDataJson;
+
+    // Assuming you want the first item in the array
+    const proData: ProductData | undefined =
+      productDataArray && productDataArray.length > 0
+        ? { products: productDataArray }
+        : undefined;
+
+    setPData(proData);
+  }
   useEffect(() => {
     fetchImgData();
+    fetchProductData();
   }, [])
 
   return (
@@ -158,14 +199,14 @@ export default function CartPage() {
           alignItems="top"
           style={{ marginTop: 10 }}
         >
-          {/* {pData.map((data, index) => (
+          {pData?.products?.map((data2, index) => (
             <ShoppingCartItem
               key={index}
-              cartItem={data}
-              cartItemList={[]}
-              setCartItemList={ }
+              cartItem={data2}
+              cartItemList={cartItemList}
+              setCartItemList={setCartItemList}
             />
-          ))}; */}
+          ))};
         </Grid>
       </Container>
       <Footer />

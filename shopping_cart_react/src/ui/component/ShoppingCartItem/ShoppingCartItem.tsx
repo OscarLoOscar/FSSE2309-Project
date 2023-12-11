@@ -1,4 +1,4 @@
-import { Alert, Button } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
@@ -20,6 +20,8 @@ import mouton_2004 from "../../../assets/wine/mouton_2004.png";
 import quintessa from "../../../assets/wine/quintessa.png";
 import * as CartItemApi from "../../../api/CartItemApi"
 import { useNavigate } from "react-router-dom";
+import { Card, CardActions, CardContent, CardMedia, Typography, Button } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const productPhotoMapping: { [key: number]: string } = {
     1: almaviva,
@@ -42,166 +44,269 @@ const productPhotoMapping: { [key: number]: string } = {
 type Props = {
     cartItem: GetCartItemData | undefined
     cartItemList: GetCartItemData[]
-    setCartItemList: React.Dispatch<React.SetStateAction<GetCartItemData[] | undefined>>
+    setCartItemList: React.Dispatch<React.SetStateAction<GetCartItemData[]>>
 }
 
+// export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemList }: Props) {
+//     const [cartItemState, setCartItemState] = useState<GetCartItemData | undefined>(cartItem)
+//     const [quantity, setQuantity] = useState<number | undefined>(cartItem?.cart_quantity)
+//     const [warningText, setWarningText] = useState<string>("")
+//     const navigate = useNavigate();
+
+//     const handlePlusButton = async () => {
+//         if (cartItem && quantity && quantity + 1 <= cartItem.stock) {
+//             try {
+//                 cartItem = await CartItemApi.patchCartItem(cartItem.pid, quantity + 1);
+//                 setQuantity((state) => (state && state + 1));
+//             }
+//             catch (error) {
+//                 navigate("/error");
+//             }
+//         }
+//         else {
+//             setWarningText("Stock Not Available");
+//             setTimeout(() => (setWarningText("")), 2000)
+//         }
+//     }
+
+//     const handleMinusButton = async () => {
+//         if (cartItem && quantity && quantity - 1 > 0) {
+//             try {
+//                 cartItem = await CartItemApi.patchCartItem(cartItem.pid, quantity - 1)
+//                 setWarningText("")
+//                 setQuantity((state) => (state && state - 1))
+//             }
+//             catch (error) {
+//                 navigate("/error");
+//             }
+//         }
+//         else {
+//             try {
+//                 await CartItemApi.deleteCartItem(cartItem?.pid);
+//                 setCartItemState(undefined);
+//                 setQuantity((state) => (state && state - 1))
+//             }
+//             catch (error) {
+//                 navigate("/error")
+//             }
+//         }
+//     }
+
+//     const handleDeleteButton = async () => {
+//         try {
+//             await CartItemApi.deleteCartItem(cartItem?.pid);
+//             setCartItemState(cartItemList.filter((item) => item.pid !== cartItemList?.pid));
+//             setQuantity(0)
+//         }
+//         catch (error) {
+//             navigate("/error")
+//         }
+//     };
+
+//     useEffect(() => {
+//         if (cartItem) {
+//             const updatedCartItemList = cartItemList.map((value) => {
+//                 if (value.pid === cartItem?.pid) {
+//                     return {
+//                         ...value,
+//                         cart_quantity: quantity,
+//                     };
+//                 } else {
+//                     return value;
+//                 }
+//             });
+//             setCartItemList(updatedCartItemList);
+//         }
+//     }, [quantity, cartItem, cartItemList, setCartItemList]);
+
+//     const renderCartItem = () => {
+//         if (cartItemState) {
+//             return <>
+
+//                 <Card sx={{ maxWidth: 345 }}>
+//                     <CardMedia
+//                         sx={{ height: 140 }}
+//                         image={cartItem && productPhotoMapping[cartItem.pid]}
+//                         title="green iguana"
+//                     />
+//                     <CardContent>
+//                         <Typography gutterBottom sx={{ fontSize: 13 }} component="div">
+//                             {cartItem?.name}
+//                         </Typography>
+//                         <Typography gutterBottom sx={{ fontSize: 13 }} component="div">
+//                             Quantity
+//                         </Typography>
+//                         <Typography gutterBottom sx={{ fontSize: 13 }} component="div">
+//                             Price<p> {cartItem?.price.toLocaleString(undefined, { style: "currency", currency: "HKD" })}</p>
+//                         </Typography>
+
+//                         <Typography gutterBottom sx={{ fontSize: 13 }} component="div">
+//                             Sub-Total<p> {cartItem && quantity && (cartItem.price * quantity).toLocaleString(undefined, { style: "currency", currency: "HKD" })}</p>
+//                         </Typography>
+
+//                         <Typography variant="body2" color="text.secondary">
+//                             text
+//                         </Typography>
+//                     </CardContent>
+//                     <CardActions>
+//                         <Button size="small" onClick={handlePlusButton}>+</Button>
+//                         {quantity}
+//                         <Button size="small" onClick={handleMinusButton}>-</Button>
+//                         <Button endIcon={<DeleteIcon />} onClick={handleDeleteButton}></Button>
+
+//                     </CardActions>
+//                 </Card>
+//                 {warningText
+//                     && <div className={"d-flex justify-content-end bg-white me-5"}>
+//                         <Alert
+//                             variant={"danger"} className={"mt-3 w-25 d-flex justify-content-center align-items-center-center"}>
+//                             {warningText}
+//                         </Alert>
+//                     </div>}
+//             </>
+//         }
+//     }
+
+//     const handleCartItemListUpdate = () => {
+//         if (cartItem) {
+//             const updatedCartItemList = cartItemList.map((value) => {
+//                 if (value.pid === cartItem?.pid && cartItem) {
+//                     return {
+//                         ...value,
+//                         cart_quantity: quantity
+//                     }
+//                 }
+//                 else {
+//                     return value;
+//                 }
+//             })
+//             setCartItemList(updatedCartItemList);
+//         }
+//     }
+
+//     useEffect(() => {
+//         handleCartItemListUpdate()
+//     }, [quantity, cartItemState])
+
+//     return (
+//         <>
+//             {renderCartItem()}
+//         </>
+//     )
+// }
+
+
 export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemList }: Props) {
-    const [cartItemState, setCartItemState] = useState<GetCartItemData | undefined>(cartItem)
-    const [quantity, setQuantity] = useState<number | undefined>(cartItem?.cart_quantity)
-    const [warningText, setWarningText] = useState<string>("")
+    const [quantity, setQuantity] = useState<number | undefined>(cartItem?.cart_quantity);
+    const [warningText, setWarningText] = useState<string>("");
     const navigate = useNavigate();
 
     const handlePlusButton = async () => {
         if (cartItem && quantity && quantity + 1 <= cartItem.stock) {
             try {
-                cartItem = await CartItemApi.patchCartItem(cartItem.pid, quantity + 1);
+                await CartItemApi.patchCartItem(cartItem.pid, quantity + 1);
                 setQuantity((state) => (state && state + 1));
-            }
-            catch (error) {
+            } catch (error) {
                 navigate("/error");
             }
-        }
-        else {
+        } else {
             setWarningText("Stock Not Available");
-            setTimeout(() => (setWarningText("")), 2000)
+            setTimeout(() => setWarningText(""), 2000);
         }
-    }
+    };
 
     const handleMinusButton = async () => {
         if (cartItem && quantity && quantity - 1 > 0) {
             try {
-                cartItem = await CartItemApi.patchCartItem(cartItem.pid, quantity - 1)
-                setWarningText("")
-                setQuantity((state) => (state && state - 1))
+                await CartItemApi.patchCartItem(cartItem.pid, quantity - 1);
+                setWarningText("");
+                setQuantity((state) => (state && state - 1));
+            } catch (error) {
+                navigate("/error");
             }
-            catch (error) {
+        } else {
+            try {
+                await CartItemApi.deleteCartItem(cartItem?.pid);
+                setQuantity((state) => (state && state - 1));
+            } catch (error) {
                 navigate("/error");
             }
         }
-        else {
-            try {
-                await CartItemApi.deleteCartItem(cartItem?.pid);
-                setCartItemState(undefined);
-                setQuantity((state) => (state && state - 1))
-            }
-            catch (error) {
-                navigate("/error")
-            }
-        }
-    }
+    };
 
     const handleDeleteButton = async () => {
         try {
             await CartItemApi.deleteCartItem(cartItem?.pid);
-            setCartItemState(undefined);
-            setQuantity(0)
+            setQuantity(0);
+            setCartItemList(cartItemList.filter((item) => item.pid !== cartItem?.pid));
+        } catch (error) {
+            navigate("/error");
         }
-        catch (error) {
-            navigate("/error")
-        }
-    }
-
-    const renderCartItem = () => {
-        if (cartItemState) {
-            return <>
-                <div className="card mb-4 border-top-0 border-start-0 border-end-0 border-2 border-secondary">
-                    <div className="card-body p-4 bg-white">
-
-                        <div className="row align-items-center bg-white">
-                            <div className="col-md-2 bg-white">
-                                <img
-                                    src={cartItem && productPhotoMapping[cartItem.pid]}
-                                    className="img-fluid bg-white" alt="Generic placeholder image" />
-                            </div>
-
-                            <div className="col-md-2 d-flex justify-content-center bg-white">
-                                <div className="bg-white">
-                                    <p className="small text-muted mb-4 pb-2 bg-white">Name</p>
-                                    <p className="lead fw-normal mb-0 bg-white">{cartItem?.name}</p>
-                                </div>
-                            </div>
-
-                            <div className="col-md-2 d-flex justify-content-center bg-white">
-                                <div className="bg-white">
-                                    <p className="small text-muted mb-3 pb-2 bg-white">Quantity</p>
-                                    <div className="d-flex justify-content-center align-items-center bg-white">
-                                        <Button
-                                            className="border-0 p-2 fw-bold"
-                                            variant="outline-secondary"
-                                            onClick={handleMinusButton}>-</Button>
-                                        <p className="lead fw-normal mb-0 ms-2 me-2 bg-white">{quantity}</p>
-                                        <Button
-                                            className="border-0 p-2 fw-bold"
-                                            variant="outline-secondary"
-                                            onClick={handlePlusButton}>+</Button>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div className="col-md-2 d-flex justify-content-center bg-white">
-                                <div className="bg-white">
-                                    <p className="small text-muted mb-4 pb-2 bg-white">Price</p>
-                                    <p className="lead fw-normal mb-0 bg-white">{cartItem?.price.toLocaleString(undefined, { style: "currency", currency: "HKD" })}</p>
-                                </div>
-                            </div>
-
-                            <div className="col-md-2 d-flex justify-content-center bg-white">
-                                <div className="bg-white">
-                                    <p className="small text-muted mb-4 pb-2 bg-white">Sub-Total</p>
-                                    <p className="lead fw-normal mb-0 bg-white">{cartItem && quantity && (cartItem.price * quantity).toLocaleString(undefined, { style: "currency", currency: "HKD" })}</p>
-                                </div>
-                            </div>
-
-                            <div className="col-md-2 d-flex justify-content-center bg-white">
-                                <div className="bg-white mt-5">
-                                    <FontAwesomeIcon
-                                        className="trash-bin bg-white"
-                                        icon={faTrash} size="xl"
-                                        style={{ color: "#ff0000" }}
-                                        onClick={handleDeleteButton} />
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-                {warningText
-                    && <div className={"d-flex justify-content-end bg-white me-5"}>
-                        <Alert
-                            variant={"danger"} className={"mt-3 w-25 d-flex justify-content-center align-items-center-center"}>
-                            {warningText}
-                        </Alert>
-                    </div>}
-            </>
-        }
-    }
-
-    const handleCartItemListUpdate = () => {
-        if (cartItem) {
-            const updatedCartItemList = cartItemList.map((value) => {
-                if (value.pid === cartItem?.pid && cartItem) {
-                    return {
-                        ...value,
-                        cart_quantity: quantity
-                    }
-                }
-                else {
-                    return value;
-                }
-            })
-            setCartItemList(updatedCartItemList);
-        }
-    }
+    };
 
     useEffect(() => {
-        handleCartItemListUpdate()
-    }, [quantity, cartItemState])
+        if (cartItem) {
+            const updatedCartItemList = cartItemList.map((value) => {
+                if (value.pid === cartItem?.pid) {
+                    return {
+                        ...value,
+                        cart_quantity: quantity,
+                    };
+                } else {
+                    return value;
+                }
+            });
+            setCartItemList(updatedCartItemList);
+        }
+    }, [quantity, cartItem, cartItemList, setCartItemList]);
 
     return (
         <>
-            {renderCartItem()}
+            {cartItem && (
+                <Card sx={{ display: "flex" }}>
+                    <CardMedia
+                        component="img"
+                        sx={{ width: 140, objectFit: "cover" }}
+                        image={productPhotoMapping[cartItem.pid]}
+                        alt={cartItem.name}
+                    />
+                    <CardContent sx={{ flex: 1 }}>
+                        <Typography variant="h6">{cartItem.name}</Typography>
+                        <Typography gutterBottom variant="subtitle1">
+                            Quantity: {quantity}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Price: {cartItem.price.toLocaleString(undefined, { style: "currency", currency: "HKD" })}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Sub-Total: {(cartItem.price * (quantity || 0)).toLocaleString(undefined, { style: "currency", currency: "HKD" })}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" onClick={handlePlusButton}>
+                            +
+                        </Button>
+                        <Button size="small" onClick={handleMinusButton}>
+                            -
+                        </Button>
+                        <Button
+                            size="small"
+                            onClick={handleDeleteButton}
+                            endIcon={<DeleteIcon />}
+                        ></Button>
+                    </CardActions>
+                </Card>
+            )}
+            {warningText && (
+                <div className={"d-flex justify-content-end bg-white me-5"}>
+                    <Alert
+                        variant={"danger"}
+                        className={"mt-3 w-25 d-flex justify-content-center align-items-center-center"}
+                    >
+                        {warningText}
+                    </Alert>
+                </div>
+            )}
         </>
-    )
+    );
 }
