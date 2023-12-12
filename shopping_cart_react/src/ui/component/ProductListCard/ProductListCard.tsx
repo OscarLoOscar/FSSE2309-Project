@@ -15,9 +15,10 @@ import les_griffons_de_pichon_baron_1 from "../../../assets/wine/les_griffons_de
 import luce_della_vite_brunello_di_montalcino_1 from "../../../assets/wine/luce_della_vite_brunello_di_montalcino_1.png";
 import mouton_2004 from "../../../assets/wine/mouton_2004.png";
 import quintessa from "../../../assets/wine/quintessa.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
+import { CartDispatchContext, addToCart } from "../ShoppingCartItem/contexts/cart";
 
 const productPhotoMapping: { [key: number]: string } = {
   1: almaviva,
@@ -38,11 +39,11 @@ const productPhotoMapping: { [key: number]: string } = {
 }
 
 
-type Props = {
+type State = {
   productData: ProductListData
 }
 
-export default function ProductListCard2({ productData }: Props) {
+export default function ProductListCard({ productData }: State) {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleMouseEnter = () => {
@@ -50,6 +51,24 @@ export default function ProductListCard2({ productData }: Props) {
   };
   const handleMouseLeave = () => {
     setShowOptions(false);
+  };
+
+  // const ProductCard = ({ productData }: State) => {
+  const [isAdded, setIsAdded] = useState(false);
+  const dispatch = useContext(CartDispatchContext);
+  // const { pid, name, price, has_stock } = productData;
+
+  const handleAddToCart = () => {
+    const product = {
+      ...productData,
+      quantity: 1,
+      id: productData.pid
+    };
+    addToCart(dispatch, product);
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 3500);
   };
   return (
     <>
@@ -83,9 +102,10 @@ export default function ProductListCard2({ productData }: Props) {
             <Button size="small"
               color="primary"
               href="#"
+              onClick={handleAddToCart}
               endIcon={<AddShoppingCartIcon />}
             >
-              Add To Cart
+              {!isAdded ? "ADD TO CART" : "✔ ADDED"}
             </Button>
           </Grid>
         </CardActions>
@@ -93,4 +113,5 @@ export default function ProductListCard2({ productData }: Props) {
 
     </>
   );
+  // }
 }
