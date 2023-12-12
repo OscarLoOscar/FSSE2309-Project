@@ -1,4 +1,5 @@
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
+import Footer from "../../component/Footer/Footer";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
@@ -20,5 +21,7 @@ export default function Checkout() {
 
         <BottomWrapper />
         <TransactionDetail />
+        <Footer />
+
     </>
 }

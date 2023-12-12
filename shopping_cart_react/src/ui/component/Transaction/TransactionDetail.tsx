@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Backdrop, CircularProgress, FormLabel, Input, Stack } from "@mui/material";
+import { Backdrop, CircularProgress, Container, FormLabel, Input, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -10,11 +10,11 @@ import * as TransApi from "../../../api/TransactionApi"
 //import { getTransApiTest } from "../../../api/TransactionApi";
 import TransItemCard from "./TransItemCard";
 import Loading from "../Utility/Loading";
+import PaymentForm from "./PaymentForm";
 
 type Params = {
     transactionId: string
 }
-
 export default function TransactionDetail() {
     const [transData, setTransData] = React.useState<GetTransDto | undefined>(undefined);
     const [cardNo, setCardNo] = React.useState<number | undefined>(undefined)
@@ -24,6 +24,10 @@ export default function TransactionDetail() {
     const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
     const navigate = useNavigate();
     const { transactionId } = useParams<Params>();
+    const cardNumberRef = useRef<HTMLInputElement>(null);
+    const cardHolderRef = useRef<HTMLInputElement>(null);
+    const cardDateRef = useRef<HTMLInputElement>(null);
+
 
     const fetchTransData = async () => {
         try {
@@ -159,7 +163,7 @@ export default function TransactionDetail() {
                 alignItems: 'center'
             }}>
                 {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-                <form id="login" onSubmit={handleSubmitPayment}>
+                {/* <form id="login" onSubmit={handleSubmitPayment}>
                     <FormLabel>
                         <Typography>
                             Credit Card Number
@@ -198,15 +202,20 @@ export default function TransactionDetail() {
                         onChange={handleCVVInput}
                     />
                     <Button type="submit">Submit</Button>
-                </form>
+                </form> */}
             </Box>
         </>
 
     }
 
     return <>
-        <Box height="70px"></Box>
 
+    <Container>
+        <PaymentForm
+        />
+        </Container>
+        <Box height="70px"></Box>
+        
         <Stack maxWidth={900} margin="auto" key="CartItemStack">
             <Box maxWidth={900} margin="auto">
                 <h1>Transaction</h1>
@@ -221,5 +230,93 @@ export default function TransactionDetail() {
         >
             <CircularProgress color="inherit" />
         </Backdrop>
+        
     </>
 }
+
+
+// import React, { useEffect, useRef } from "react";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { Backdrop, CircularProgress, FormLabel, Input, Stack } from "@mui/material";
+// import Box from "@mui/material/Box";
+// import Button from "@mui/material/Button";
+// import Typography from "@mui/material/Typography";
+// import { GetTransDto } from "../../../data/Trans/GetTransDto";
+// import { getAccessToken } from "../../../authService/FirebaseAuthService";
+// import * as TransApi from "../../../api/TransactionApi";
+// import TransItemCard from "./TransItemCard";
+// import Loading from "../Utility/Loading";
+
+// type Params = {
+//     transactionId: string;
+// };
+
+// export default function TransactionDetail() {
+//     const [transData, setTransData] = React.useState<GetTransDto | undefined>(undefined);
+//     const [cardNo, setCardNo] = React.useState<number | undefined>(undefined);
+//     const [expDate, setExpDate] = React.useState<Date | undefined>(undefined);
+//     const [payStatus, setPayStatus] = React.useState<string | undefined>(undefined);
+//     const [cvv, setCvv] = React.useState<number | undefined>(undefined);
+//     const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
+//     const navigate = useNavigate();
+//     const { transactionId } = useParams<Params>();
+
+//     // Refs using useRef
+//     const cardNumberRef = useRef<HTMLInputElement>(null);
+//     const cardHolderRef = useRef<HTMLInputElement>(null);
+//     const cardDateRef = useRef<HTMLInputElement>(null);
+
+//     const fetchTransData = async () => {
+//         try {
+//             if (transactionId) {
+//                 setTransData(await TransApi.getTransApiTest(transactionId));
+//             }
+//         } catch (e) {
+//             navigate("/error");
+//         }
+//     };
+
+//     const transFooter = () => {
+//         return (
+//             <>
+//                 <Box height="200px"></Box>
+//                 <Box
+//                     sx={{
+//                         margin: "auto",
+//                         width: 800,
+//                         display: "flex",
+//                         flexDirection: "column",
+//                         alignItems: "center",
+//                     }}
+//                 >
+
+//                 </Box>
+//             </>
+//         );
+//     };
+
+//     useEffect(() => {
+//         setTransData(undefined);
+//         void fetchTransData();
+//     }, []);
+
+//     return (
+//         <>
+//             <Box height="70px"></Box>
+
+//             <Stack maxWidth={900} margin="auto" key="CartItemStack">
+//                 <Box maxWidth={900} margin="auto">
+//                     <h1>Transaction</h1>
+//                 </Box>
+//                 {transFooter()}
+//             </Stack>
+//             <Backdrop
+//                 sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+//                 open={loadingBackdrop}
+//             >
+//                 <CircularProgress color="inherit" />
+//             </Backdrop>
+            
+//         </>
+//     );
+// }

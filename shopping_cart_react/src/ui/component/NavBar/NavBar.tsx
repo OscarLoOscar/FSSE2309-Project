@@ -45,7 +45,7 @@ export default function NavBar() {
           <SearchBox />
           <Stack spacing={2}
             sx={{
-              width: 800,
+              width: 700,
               // margin: 'flex', // Center the Stack horizontally
               marginLeft: 5,
               // display: 'flex', // Make it a flex container
