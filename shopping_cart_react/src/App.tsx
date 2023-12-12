@@ -26,6 +26,10 @@ const router = createHashRouter([
     path: "/shoppingcart",
     element: <CartPage />
   },
+  {
+    path: "/error",
+    element: <ErrorPage />
+  }
 
 ])
 export const loginUserContext = createContext<UserData | null | undefined>(undefined);

@@ -1,27 +1,24 @@
+import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import Footer from "../../component/Footer/Footer";
+import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import Button from 'react-bootstrap/Button';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import NotFound from "../../component/NotFound/NotFound";
 
-export default function ErrorPage () {
+export default function ErrorPage() {
     return (
         <>
-            <NavBar/>
+            <ItemTab />
 
-            <div className="vh-100 d-flex justify-content-center align-items-center h1">
-                <div>
-                    Please return to previous page<br/>
-                    <Link to="/">
-                        <Button variant="warning">Back</Button>
-                    </Link>
-                </div>
+            <NavBar />
 
-                <img src="https://static.wikia.nocookie.net/73b98331-b95b-42a5-9025-b7b4519943d4/scale-to-width/370"
-                     alt="Godzilla Gif" className="w-25"/>
-            </div>
+            <BottomWrapper />
 
+            <NotFound title="OOps! "
+                subtitle="GOTO HOMEPAGE  404 - PAGE NOT FOUND" />
 
-            <Footer/>
+            <Footer />
         </>
     )
 }

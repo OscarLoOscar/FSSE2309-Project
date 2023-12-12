@@ -1,13 +1,14 @@
-import {initializeApp} from "firebase/app";
-import {firebaseConfig} from "./FirebaseConfig";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "./FirebaseConfig";
 import {
     getAuth,
     GoogleAuthProvider,
     onAuthStateChanged,
     signInWithEmailAndPassword,
-    signInWithPopup, signOut
+    signInWithPopup,
+    signOut
 } from "firebase/auth";
-import {UserData} from "../data/UserData";
+import { UserData } from "../data/UserData";
 
 export const serviceInit = () => {
     //Make sure run it before web opening

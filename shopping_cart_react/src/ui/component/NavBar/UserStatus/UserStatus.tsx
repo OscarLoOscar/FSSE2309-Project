@@ -7,7 +7,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import { Container, Drawer } from '@mui/material';
-import ShoppingCartItem from '../../ShoppingCartItem/ShoppingCartItem';
+import ShoppingCartItem from '../../ShoppingCartItem/CartPreview';
 import { GetCartItemData } from '../../../../data/dto/GetCartItemData';
 
 
@@ -34,6 +34,9 @@ export default function UserStatus() {
 
   const navigateThankyouPage = () => {
     navigate("/thankyoupage")
+  }
+  const navigateErrorPage = () => {
+    navigate("/error")
   }
   const navigateShoppingCartPage = () => {
     navigate("/shoppingcart")
@@ -89,6 +92,7 @@ export default function UserStatus() {
         <BottomNavigationAction
           label="Notifications"
           icon={<NotificationsIcon sx={{ color: 'white' }} />}
+          onClick={navigateThankyouPage}
           sx={{
             width: 100,
             '&:hover': {
@@ -99,6 +103,7 @@ export default function UserStatus() {
         <BottomNavigationAction
           label="Favorites"
           icon={<FavoriteIcon sx={{ color: 'white' }} />}
+          onClick={navigateErrorPage}
           sx={{
             width: 100,
             '&:hover': {

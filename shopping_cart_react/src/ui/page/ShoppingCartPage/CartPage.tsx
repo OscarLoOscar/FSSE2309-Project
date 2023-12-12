@@ -4,7 +4,7 @@ import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
 import { Grid } from "@mui/material";
-import ShoppingCartItem from "../../component/ShoppingCartItem/ShoppingCartItem";
+import ShoppingCartItem from "../../component/ShoppingCartItem/CartPreview";
 import { useEffect, useState } from "react";
 import { GetCartItemData } from "../../../data/dto/GetCartItemData";
 import Footer from "../../component/Footer/Footer";
@@ -197,12 +197,12 @@ export default function CartPage() {
             alignItems="top"
             style={{ marginTop: 10 }}
           >
-            <ShoppingCartItem
+            {/* <ShoppingCartItem
               key={index}
               cartItem={data2}
               cartItemList={cartItemList}
               setCartItemList={setCartItemList}
-            />
+            /> */}
           </Grid>
         ))};
       </Container>
