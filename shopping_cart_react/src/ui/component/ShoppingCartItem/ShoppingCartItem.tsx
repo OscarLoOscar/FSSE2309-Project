@@ -270,7 +270,7 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                         image={productPhotoMapping[cartItem.pid]}
                         alt={cartItem.name}
                     />
-                    <CardContent sx={{ flex: 1, maxWidth: 140 }}>
+                    <CardContent sx={{ flex: 1, maxWidth: 240 }}>
                         <Typography variant="h6">{cartItem.name}</Typography>
                         <Typography gutterBottom variant="subtitle1">
                             Quantity: {quantity}
@@ -281,20 +281,21 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                         <Typography variant="body2" color="text.secondary">
                             Sub-Total: {(cartItem.price * (quantity || 0)).toLocaleString(undefined, { style: "currency", currency: "HKD" })}
                         </Typography>
+
+                        <CardActions>
+                            <Button size="small" onClick={handlePlusButton}>
+                                +
+                            </Button>
+                            <Button size="small" onClick={handleMinusButton}>
+                                -
+                            </Button>
+                            <Button
+                                size="small"
+                                onClick={handleDeleteButton}
+                                endIcon={<DeleteIcon />}
+                            ></Button>
+                        </CardActions>
                     </CardContent>
-                    <CardActions>
-                        <Button size="small" onClick={handlePlusButton}>
-                            +
-                        </Button>
-                        <Button size="small" onClick={handleMinusButton}>
-                            -
-                        </Button>
-                        <Button
-                            size="small"
-                            onClick={handleDeleteButton}
-                            endIcon={<DeleteIcon />}
-                        ></Button>
-                    </CardActions>
                 </Card>
             )}
             {/* {warningText && (

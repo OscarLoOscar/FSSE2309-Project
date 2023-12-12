@@ -191,22 +191,22 @@ export default function CartPage() {
 
       <BottomWrapper />
       <Container >
-        <Grid
-          container
-          spacing={5}
-          justifyContent="center"
-          alignItems="top"
-          style={{ marginTop: 10 }}
-        >
-          {pData?.products?.map((data2, index) => (
+        {pData?.products?.map((data2, index) => (
+          <Grid
+            container
+            spacing={5}
+            justifyContent="center"
+            alignItems="top"
+            style={{ marginTop: 10 }}
+          >
             <ShoppingCartItem
               key={index}
               cartItem={data2}
               cartItemList={cartItemList}
               setCartItemList={setCartItemList}
             />
-          ))};
-        </Grid>
+          </Grid>
+        ))};
       </Container>
       <Footer />
 

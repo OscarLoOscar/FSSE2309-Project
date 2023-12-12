@@ -15,10 +15,11 @@ import les_griffons_de_pichon_baron_1 from "../../../assets/wine/les_griffons_de
 import luce_della_vite_brunello_di_montalcino_1 from "../../../assets/wine/luce_della_vite_brunello_di_montalcino_1.png";
 import mouton_2004 from "../../../assets/wine/mouton_2004.png";
 import quintessa from "../../../assets/wine/quintessa.png";
-import { useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { CartDispatchContext, addToCart } from "../ShoppingCartItem/contexts/cart";
+import { useNavigate } from "react-router-dom";
 
 const productPhotoMapping: { [key: number]: string } = {
   1: almaviva,
@@ -42,7 +43,6 @@ const productPhotoMapping: { [key: number]: string } = {
 type State = {
   productData: ProductListData
 }
-
 export default function ProductListCard({ productData }: State) {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -52,7 +52,12 @@ export default function ProductListCard({ productData }: State) {
   const handleMouseLeave = () => {
     setShowOptions(false);
   };
+  const navigate = useNavigate();
 
+
+  const navigateShoppingCartPage = () => {
+    navigate("/shoppingcart")
+  }
   // const ProductCard = ({ productData }: State) => {
   const [isAdded, setIsAdded] = useState(false);
   const dispatch = useContext(CartDispatchContext);
@@ -102,7 +107,8 @@ export default function ProductListCard({ productData }: State) {
             <Button size="small"
               color="primary"
               href="#"
-              onClick={handleAddToCart}
+              // onClick={handleAddToCart}
+              onClick={navigateShoppingCartPage}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}
