@@ -6,6 +6,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
+import { Container, Drawer } from '@mui/material';
+import ShoppingCartItem from '../../ShoppingCartItem/ShoppingCartItem';
+import { GetCartItemData } from '../../../../data/dto/GetCartItemData';
+
 
 export default function UserStatus() {
   const [value, setValue] = React.useState('Login');
@@ -34,6 +38,18 @@ export default function UserStatus() {
   const navigateShoppingCartPage = () => {
     navigate("/shoppingcart")
   }
+
+  // Dummy data for illustration, replace it with your actual cart data
+  const dummyCartItem: GetCartItemData = {
+    pid: 1,
+    name: 'Dummy Product',
+    price: 50.00,
+    cart_quantity: 2,
+    stock: 10, // Make sure to include the stock property or adjust as needed
+  };
+
+  const [cartItemList, setCartItemList] = React.useState([dummyCartItem]);
+
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -44,7 +60,7 @@ export default function UserStatus() {
           cursor: 'pointer',
           '& .Mui-selected': {
             '& .MuiBottomNavigationAction-label': {
-               fontSize: theme => theme.typography.caption,
+              fontSize: theme => theme.typography.caption,
               fontWeight: 'bold',
               color: 'white'
             }
@@ -91,7 +107,7 @@ export default function UserStatus() {
           }}
         />
         <BottomNavigationAction
-          label="ShoppingCart"
+          label="Shopping Cart"
           icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
           onClick={navigateShoppingCartPage}
           sx={{

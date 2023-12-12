@@ -8,8 +8,8 @@ import ImgDataJson from '../../data/ImgData.json';
 import NavBar from '../component/NavBar/NavBar';
 import { ProductListData } from '../../data/dto/ProductListData';
 import { Container, Grid } from '@mui/material';
-import ProductListCard from '../component/ProductListCard/ProductListCard';
 import Footer from '../component/Footer/Footer';
+import ProductListCard from '../component/ProductListCard/ProductListCard';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -122,6 +122,10 @@ const pData: ProductListData[] =
 
 // define一個ShoppingSite组件
 const ShoppingSite = () => {
+  
+const handleAddToCartInShoppingCartItem = async () => {
+
+}
 
   const [data, setData] = useState<ImgData | undefined>(undefined);
 
@@ -267,7 +271,9 @@ const ShoppingSite = () => {
             <Grid item xs={12} sm={6} md={4} lg={3} key={index} sx={{ marginBottom: 7 }}>
               <ProductListCard
                 productData={data}
-                key={index} />
+                key={index}
+                onAddToCart={handleAddToCartInShoppingCartItem}
+              />
             </Grid>
           ))
           }

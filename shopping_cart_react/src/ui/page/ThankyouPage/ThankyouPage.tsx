@@ -8,6 +8,8 @@ import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import MainWrapper from "../../component/adv/MainWrapper";
 import NavBar from "../../component/NavBar/NavBar";
 import Footer from "../../component/Footer/Footer";
+import { Item } from '../../../data/dto/TransactionDetailData';
+
 
 export default function ThankyouPage() {
     const [count, setCount] = useState<number>(15);
@@ -40,7 +42,7 @@ export default function ThankyouPage() {
 
             <BottomWrapper />
 
-            <Container sx={{ width: 500}}>
+            <Container sx={{ width: 500 }}>
 
                 <Card sx={{ textAlign: "center", justifyContent: "center" }}>
                     <CardContent>

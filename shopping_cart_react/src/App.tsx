@@ -20,13 +20,11 @@ const router = createHashRouter([
   },
   {
     path: "/thankyoupage",
-    // element: <ShoppingCartPage />
     element: <ThankyouPage />
   },
   {
     path: "/shoppingcart",
     element: <CartPage />
-    // element: <ErrorPage />
   },
 
 ])

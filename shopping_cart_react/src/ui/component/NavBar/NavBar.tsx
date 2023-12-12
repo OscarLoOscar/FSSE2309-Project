@@ -6,10 +6,8 @@ import { Container, Grid, Stack } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
 import UserStatus from './UserStatus/UserStatus';
 import ItemMenu from './ItemMenu/ItemMenu';
+import { Item } from '../../../data/dto/TransactionDetailData';
 
-type Props = {
-
-}
 
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

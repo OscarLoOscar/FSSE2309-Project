@@ -195,7 +195,6 @@ type Props = {
 //     )
 // }
 
-
 export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemList }: Props) {
     const [quantity, setQuantity] = useState<number | undefined>(cartItem?.cart_quantity);
     const [warningText, setWarningText] = useState<string>("");
@@ -234,6 +233,10 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
         }
     };
 
+    const handleProceedCheckout = () => {
+        navigate("/checkout");
+    };
+
     const handleDeleteButton = async () => {
         try {
             await CartItemApi.deleteCartItem(cartItem?.pid);
@@ -248,9 +251,10 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
         if (cartItem) {
             const updatedCartItemList = cartItemList.map((value) => {
                 if (value.pid === cartItem?.pid) {
+                    const newQuantity = quantity !== undefined ? quantity : value.cart_quantity || 1;
                     return {
                         ...value,
-                        cart_quantity: quantity,
+                        cart_quantity: newQuantity,
                     };
                 } else {
                     return value;
@@ -273,7 +277,7 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                     <CardContent sx={{ flex: 1, maxWidth: 240 }}>
                         <Typography variant="h6">{cartItem.name}</Typography>
                         <Typography gutterBottom variant="subtitle1">
-                            Quantity: {quantity}
+                            Quantity: {`${quantity}`}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Price: {cartItem.price.toLocaleString(undefined, { style: "currency", currency: "HKD" })}
@@ -298,16 +302,6 @@ export default function ShoppingCartItem({ cartItem, cartItemList, setCartItemLi
                     </CardContent>
                 </Card>
             )}
-            {/* {warningText && (
-                <div className={"d-flex justify-content-end bg-white me-5"}>
-                    <Alert
-                        variant={"danger"}
-                        className={"mt-3 w-25 d-flex justify-content-center align-items-center-center"}
-                    >
-                        {warningText}
-                    </Alert>
-                </div>
-            )} */}
         </>
     );
 }

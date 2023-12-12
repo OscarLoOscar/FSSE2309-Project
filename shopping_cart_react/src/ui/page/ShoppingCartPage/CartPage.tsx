@@ -131,8 +131,6 @@ import ProductDataJson from "../../../data/ProductData.json"
 //   ;
 
 
-type Props = {
-}
 
 export default function CartPage() {
   const [data, setData] = useState<ImgData | undefined>(undefined);

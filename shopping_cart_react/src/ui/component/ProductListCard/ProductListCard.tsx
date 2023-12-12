@@ -18,7 +18,6 @@ import quintessa from "../../../assets/wine/quintessa.png";
 import { createContext, useContext, useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
-import { CartDispatchContext, addToCart } from "../ShoppingCartItem/contexts/cart";
 import { useNavigate } from "react-router-dom";
 
 const productPhotoMapping: { [key: number]: string } = {
@@ -40,10 +39,11 @@ const productPhotoMapping: { [key: number]: string } = {
 }
 
 
-type State = {
-  productData: ProductListData
+type Props = {
+  productData: ProductListData;
+  onAddToCart: () => void;
 }
-export default function ProductListCard({ productData }: State) {
+export default function ProductListCard({ productData, onAddToCart }: Props) {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleMouseEnter = () => {
@@ -52,29 +52,26 @@ export default function ProductListCard({ productData }: State) {
   const handleMouseLeave = () => {
     setShowOptions(false);
   };
-  const navigate = useNavigate();
 
-
-  const navigateShoppingCartPage = () => {
-    navigate("/shoppingcart")
-  }
   // const ProductCard = ({ productData }: State) => {
   const [isAdded, setIsAdded] = useState(false);
-  const dispatch = useContext(CartDispatchContext);
-  // const { pid, name, price, has_stock } = productData;
+  // const dispatch = useContext(CartDispatchContext);
+  // // const { pid, name, price, has_stock } = productData;
 
-  const handleAddToCart = () => {
-    const product = {
-      ...productData,
-      quantity: 1,
-      id: productData.pid
-    };
-    addToCart(dispatch, product);
-    setIsAdded(true);
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 3500);
-  };
+  // const handleAddToCart = () => {
+  //   const product = {
+  //     ...productData,
+  //     quantity: 1,
+  //     id: productData.pid
+  //   };
+  //   addToCart(dispatch, product);
+  //   setIsAdded(true);
+  //   setTimeout(() => {
+  //     setIsAdded(false);
+  //   }, 3500);
+  //   onAddToCart();
+  // };
+
   return (
     <>
       <Card sx={{ maxWidth: 1000 }}>
@@ -107,8 +104,7 @@ export default function ProductListCard({ productData }: State) {
             <Button size="small"
               color="primary"
               href="#"
-              // onClick={handleAddToCart}
-              onClick={navigateShoppingCartPage}
+      //        onClick={handleAddToCart}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}
