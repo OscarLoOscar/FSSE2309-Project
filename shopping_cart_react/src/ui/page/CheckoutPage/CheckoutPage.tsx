@@ -1,48 +1,24 @@
-import Footer from "../../component/Footer/Footer";
-import CheckoutTable from "../../component/CheckoutTable/CheckoutTable";
-import PaymentTable from "../../component/PaymentTable/PaymentTable";
-import {useEffect, useState} from "react";
-import {TransactionDetailData} from "../../../data/dto/TransactionDetailData";
-import * as TransactionApi from "../../../api/TransactionApi";
-import {useParams} from "react-router-dom";
+import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
+import ItemTab from "../../component/ItemTab/ItemTab";
+import NavBar from "../../component/NavBar/NavBar";
+import TopContainer from "../../component/TopContainer/TopContainer";
+import TransactionDetail from "../../component/Transaction/TransactionDetail";
 
+export default function Checkout() {
+    return <>
+        <TopContainer />
+        <img
+            alt="Logo"
+            src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
+            title="company_logo"
+            width={500}
+            style={{ display: 'block', margin: 'auto' }}
+        />
+        <ItemTab />
 
-export default function CheckoutPage() {
-    const [transactionDetailData, setTransactionDetailData] = useState<TransactionDetailData | undefined>(undefined);
-    const {transactionId} = useParams();
+        <NavBar />
 
-    const fetchTransactionDetailData = async () => {
-        setTransactionDetailData(undefined);
-        const responseData = await TransactionApi.getTransaction(transactionId);
-        setTransactionDetailData(responseData);
-    }
-
-    useEffect(() => {
-        setTimeout(() => {
-            fetchTransactionDetailData()
-        },3000)
-    },[])
-
-    return (
-        <>
-            <section className="h-100 h-custom">
-                <div className="container h-100 py-5">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col bg-white p-5 rounded-5">
-
-                            <div className="table-responsive bg-white">
-                                <table className="table">
-                                    <CheckoutTable
-                                        transactionDetailData={transactionDetailData}/>
-                                </table>
-                            </div>
-                            <PaymentTable
-                                transactionDetailData={transactionDetailData}/>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <Footer/>
-        </>
-    )
+        <BottomWrapper />
+        <TransactionDetail />
+    </>
 }

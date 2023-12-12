@@ -31,10 +31,12 @@ export default function ItemTab(props: Props) {
   return (
     <>
       <Grid container justifyContent="center">
-        <Grid sx={{
-          width: '90%',
-          textAlign: { xs: 'center', md: 'center' }
-        }}>
+        <Grid
+          style={{ display: 'block', margin: 'auto' }}
+          sx={{
+            width: '90%',
+            textAlign: { xs: 'center', md: 'center' }
+          }}>
           <Tabs
             value={value}
             onChange={handleChange}

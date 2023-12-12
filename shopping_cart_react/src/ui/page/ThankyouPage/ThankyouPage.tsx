@@ -5,10 +5,8 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import TopContainer from "../../component/TopContainer/TopContainer";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
-import MainWrapper from "../../component/adv/MainWrapper";
 import NavBar from "../../component/NavBar/NavBar";
 import Footer from "../../component/Footer/Footer";
-import { Item } from '../../../data/dto/TransactionDetailData';
 
 
 export default function ThankyouPage() {

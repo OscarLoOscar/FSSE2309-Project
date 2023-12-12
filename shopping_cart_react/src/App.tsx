@@ -4,10 +4,11 @@ import './App.css';
 import ShoppingSite from './ui/page/ShoppingSite';
 import LoginPage from './ui/page/LoginPage/LoginPage';
 import { createContext, useEffect, useState } from "react";
-import { UserData } from './data/UserData';
 import ThankyouPage from './ui/page/ThankyouPage/ThankyouPage';
 import ErrorPage from './ui/page/ErrorPage/ErrorPage';
 import CartPage from './ui/page/ShoppingCartPage/CartPage';
+import { UserData } from './data/User/UserData';
+import Checkout from './ui/page/CheckoutPage/CheckoutPage';
 
 const router = createHashRouter([
   {
@@ -24,7 +25,7 @@ const router = createHashRouter([
   },
   {
     path: "/shoppingcart",
-    element: <CartPage />
+    element: <Checkout />
   },
   {
     path: "/error",

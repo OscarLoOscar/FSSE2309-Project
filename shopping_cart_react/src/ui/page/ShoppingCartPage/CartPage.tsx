@@ -4,17 +4,16 @@ import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
 import { Grid } from "@mui/material";
-import ShoppingCartItem from "../../component/ShoppingCartItem/CartPreview";
 import { useEffect, useState } from "react";
-import { GetCartItemData } from "../../../data/dto/GetCartItemData";
 import Footer from "../../component/Footer/Footer";
 import { ImgData } from "../../../data/ImgData";
 import ImgDataJson from '../../../data/ImgData.json';
 import { ProductData } from "../../../data/ProductData"
 import ProductDataJson from "../../../data/ProductData.json"
+import { ProductDetailsDto } from "../../../data/Product/ProductDetailsDto";
 
 
-// const pData: GetCartItemData[] =
+// const pData: ProductDetailsDto[] =
 //   [{
 //     "pid": 1,
 //     "name": "Almaviva",
@@ -135,7 +134,7 @@ import ProductDataJson from "../../../data/ProductData.json"
 export default function CartPage() {
   const [data, setData] = useState<ImgData | undefined>(undefined);
   const [pData, setPData] = useState<ProductData | undefined>(undefined);
-  const [cartItemList, setCartItemList] = useState<GetCartItemData[]>([]);
+  const [cartItemList, setCartItemList] = useState<ProductDetailsDto[]>([]);
 
   const fetchImgData = async () => {
     const imgDataArray: {

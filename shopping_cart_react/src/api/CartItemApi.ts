@@ -1,67 +1,89 @@
 import axios from "axios";
 import getEnvConfig from "../Config/EnvConfig";
-import { AddCartItemData } from "../data/dto/AddCartItemData";
-import { GetCartItemData } from "../data/dto/GetCartItemData";
-import * as FirebaseAuthService from "../authService/FirebaseAuthService"
+import { AddCartItemDto } from "../data/CartItem/AddCartItemDto";
+import { CartItemListDto } from "../data/CartItem/CartItemListDto";
 
 const baseUrl = getEnvConfig().baseUrl;
 
-export const addCartItem = async (productId: number, quantity: number) => {
+export const addCartItemApi = async (token: string, productId: string, productQty: string) => {
   try {
-    const accessToken = await FirebaseAuthService.getAccessToken();
-
-    if (accessToken) {
-      const response = await axios.put<AddCartItemData>(`${baseUrl}/cart/${productId}/${quantity}`, {}, { headers: { "Authorization": `Bearer${accessToken}` } });
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    if (productId) {
+      const apiUrl = baseUrl + `/cart/` + productId + `/` + productQty
+      const response = await axios.put<AddCartItemDto>(apiUrl, '', config)
       return response.data;
     }
   }
-  catch (error) {
-    console.error(error);
-    throw error;
+  catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+export const addCartItemApiTest = async (productId: string, productQty: string) => {
+  try {
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}` }
+    // };
+    if (productId) {
+      const apiUrl = baseUrl + `/cart/` + productId + `/` + productQty
+      const response = await axios.put<AddCartItemDto>(apiUrl)
+      return response.data;
+    }
+  }
+  catch (e) {
+    console.error(e);
+    throw e;
   }
 }
 
-export const getCartItem = async () => {
-  try {
-    const accessToken = await FirebaseAuthService.getAccessToken()
 
-    if (accessToken) {
-      const response = await axios.get<GetCartItemData[]>(`${baseUrl}/cart`, { headers: { "Authorization": `Bearer ${accessToken}` } });
+export const deleteCartItemApi = async (token: string, productId: string) => {
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    if (productId) {
+      const apiUrl = baseUrl + `/cart/` + productId
+      const response = await axios.delete<CartItemListDto>(apiUrl, config)
       return response.data;
     }
   }
-  catch (error) {
-    console.error(error);
-    throw error;
+  catch (e) {
+    console.error(e);
+    throw e;
   }
 }
 
-export const patchCartItem = async (productId: number, quantity: number) => {
+export const getCartItemListApi = async (token: string) => {
   try {
-    const accessToken = await FirebaseAuthService.getAccessToken()
-
-    if (accessToken) {
-      const response = await axios.patch<GetCartItemData>(`${baseUrl}/cart/${productId}/${quantity}`, {}, { headers: { "Authorization": `Bearer ${accessToken}` } });
-      return response.data;
-    }
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    const apiUrl = baseUrl + `/cart`
+    const response = await axios.get<CartItemListDto[]>(apiUrl, config)
+    return response.data;
   }
-  catch (error) {
-    console.error(error);
-    throw error;
+  catch (e) {
+    console.error(e);
+    throw e;
   }
 }
 
-export const deleteCartItem = async (productId: number | undefined) => {
+export const updateCartItemApi = async (token: string, productId: string, productQty: string) => {
   try {
-    const accessToken = await FirebaseAuthService.getAccessToken()
-
-    if (accessToken) {
-      const response = await axios.delete<GetCartItemData>(`${baseUrl}/cart/${productId}`, { headers: { "Authorization": `Bearer ${accessToken}` } });
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    if (productId) {
+      const apiUrl = baseUrl + `/cart/` + productId + `/` + productQty
+      const response = await axios.patch<CartItemListDto>(apiUrl, '', config)
       return response.data;
     }
   }
-  catch (error) {
-    console.error(error);
-    throw error;
+  catch (e) {
+    console.error(e);
+    throw e;
   }
 }

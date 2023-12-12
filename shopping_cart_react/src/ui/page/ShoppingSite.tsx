@@ -6,10 +6,10 @@ import MainWrapper from '../component/adv/MainWrapper';
 import { ImgData } from '../../data/ImgData';
 import ImgDataJson from '../../data/ImgData.json';
 import NavBar from '../component/NavBar/NavBar';
-import { ProductListData } from '../../data/dto/ProductListData';
 import { Container, Grid } from '@mui/material';
 import Footer from '../component/Footer/Footer';
-import ProductListCard from '../component/ProductListCard/ProductListCard';
+import ProductListCard from '../component/Product/ProductListCard';
+import { ProductListDto } from '../../data/Product/ProductListDto';
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -20,7 +20,7 @@ const photos = [
 
 ];
 
-const pData: ProductListData[] =
+const pData: ProductListDto[] =
   [{
     "pid": 1,
     "name": "Almaviva",

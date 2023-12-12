@@ -1,68 +1,81 @@
-import * as FirebaseAuthService from "../authService/FirebaseAuthService"
 import axios from "axios";
-import {TransactionDetailData} from "../data/dto/TransactionDetailData";
-import {TransactionStatus} from "../data/dto/TransactionStatus";
 import getEnvConfig from "../Config/EnvConfig";
+import { PrepTransDto } from "../data/Trans/PrepTransDto";
+import { PayTransDto } from "../data/Trans/PayTransDto";
+import { GetTransDto } from "../data/Trans/GetTransDto";
+import { FinishTransDto } from "../data/Trans/FinishTransDto";
 
 const baseUrl = getEnvConfig().baseUrl;
-
-export const createTransaction = async () => {
+export const prepTransApi = async (token: string) => {
     try {
-        const accessToken = await FirebaseAuthService.getAccessToken();
-
-        if(accessToken) {
-            const response = await axios.post<TransactionDetailData>(`${baseUrl}/transaction/prepare`, {}, { headers: {"Authorization" : `Bearer ${accessToken}`} });
-            return response.data;
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        const apiUrl = baseUrl + `/transaction/prepare`
+        const response = await axios.post<PrepTransDto>(apiUrl, '', config)
+        return response.data;
     }
-    catch (error) {
-        console.error(error);
-        throw error;
+    catch (e) {
+        console.error(e);
+        throw e;
     }
 }
 
-export const getTransaction = async (transactionId: string | undefined) => {
+export const payTransApi = async (token: string, tid: string) => {
     try {
-        const accessToken = await FirebaseAuthService.getAccessToken();
-
-        if(accessToken && transactionId) {
-            const response = await axios.get<TransactionDetailData>(`${baseUrl}/transaction/${transactionId}`,{headers: {"Authorization" : `Bearer ${accessToken}`}})
-            return response.data
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        const apiUrl = baseUrl + `/transaction/` + tid + `/pay`
+        const response = await axios.patch<PayTransDto>(apiUrl, '', config)
+        return response.data;
     }
-    catch (error) {
-        console.error(error);
-        throw error;
+    catch (e) {
+        console.error(e);
+        throw e;
     }
 }
 
-export const updateTransaction = async (transactionId: string | undefined) => {
+export const getTransApi = async (token: string, tid: string) => {
     try {
-        const accessToken = await FirebaseAuthService.getAccessToken();
-
-        if(accessToken && transactionId) {
-            const response = await axios.patch<TransactionStatus>(`${baseUrl}/transaction/${transactionId}/pay`, {}, { headers: {"Authorization" : `Bearer ${accessToken}`} });
-            return response.data;
-        }
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        const apiUrl = baseUrl + `/transaction/` + tid
+        const response = await axios.get<GetTransDto>(apiUrl, config)
+        return response.data;
     }
-    catch (error) {
-        console.error(error);
-        throw error;
+    catch (e) {
+        console.error(e);
+        throw e;
     }
 }
 
-export const completeTransaction = async (transactionId: string | undefined) => {
+export const getTransApiTest = async (tid: string) => {
     try {
-        const accessToken = await FirebaseAuthService.getAccessToken();
-
-        if(accessToken && transactionId) {
-            const response = await axios.patch<TransactionDetailData>(`${baseUrl}/transaction/${transactionId}/finish`, {}, { headers: {"Authorization" : `Bearer ${accessToken}`} });
-            return response.data;
-        }
+    
+        const apiUrl = baseUrl + `/transaction/` + tid
+        const response = await axios.get<GetTransDto>(apiUrl)
+        return response.data;
     }
-    catch (error) {
-        console.error(error);
-        throw error;
+    catch (e) {
+        console.error(e);
+        throw e;
     }
 }
 
+
+export const finishTransApi = async (token: string, tid: string) => {
+    try {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        const apiUrl = baseUrl + `/transaction/` + tid + `/finish`
+        const response = await axios.patch<FinishTransDto>(apiUrl, '', config)
+        return response.data;
+    }
+    catch (e) {
+        console.error(e);
+        throw e;
+    }
+}

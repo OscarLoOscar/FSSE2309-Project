@@ -1,4 +1,4 @@
-export type ProductListData = {
+export interface ProductListDto {
     pid:       number;
     name:      string;
     price:     number;

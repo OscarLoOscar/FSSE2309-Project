@@ -8,7 +8,7 @@ import {
     signInWithPopup,
     signOut
 } from "firebase/auth";
-import { UserData } from "../data/UserData";
+import { UserData } from "../data/User/UserData";
 
 export const serviceInit = () => {
     //Make sure run it before web opening

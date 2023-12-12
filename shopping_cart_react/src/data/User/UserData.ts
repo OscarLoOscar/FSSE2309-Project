@@ -1,3 +1,3 @@
 export type UserData = {
-    email: string;
+    email: string
 }

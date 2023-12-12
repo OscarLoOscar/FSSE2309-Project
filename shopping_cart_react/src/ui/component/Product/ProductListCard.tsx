@@ -1,5 +1,4 @@
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { ProductListData } from "../../../data/dto/ProductListData";
 import almaviva from "../../../assets/wine/almaviva.png";
 import borgogno_no_name from "../../../assets/wine/borgogno_no_name.png";
 import branaire_ducru from "../../../assets/wine/branaire_ducru.png";
@@ -19,6 +18,7 @@ import { createContext, useContext, useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
+import { ProductListDto } from "../../../data/Product/ProductListDto";
 
 const productPhotoMapping: { [key: number]: string } = {
   1: almaviva,
@@ -40,37 +40,14 @@ const productPhotoMapping: { [key: number]: string } = {
 
 
 type Props = {
-  productData: ProductListData;
+  productData: ProductListDto;
   onAddToCart: () => void;
 }
 export default function ProductListCard({ productData, onAddToCart }: Props) {
-  const [showOptions, setShowOptions] = useState(false);
 
-  const handleMouseEnter = () => {
-    setShowOptions(true);
-  };
-  const handleMouseLeave = () => {
-    setShowOptions(false);
-  };
 
-  // const ProductCard = ({ productData }: State) => {
   const [isAdded, setIsAdded] = useState(false);
-  // const dispatch = useContext(CartDispatchContext);
-  // // const { pid, name, price, has_stock } = productData;
 
-  // const handleAddToCart = () => {
-  //   const product = {
-  //     ...productData,
-  //     quantity: 1,
-  //     id: productData.pid
-  //   };
-  //   addToCart(dispatch, product);
-  //   setIsAdded(true);
-  //   setTimeout(() => {
-  //     setIsAdded(false);
-  //   }, 3500);
-  //   onAddToCart();
-  // };
 
   return (
     <>
@@ -104,7 +81,7 @@ export default function ProductListCard({ productData, onAddToCart }: Props) {
             <Button size="small"
               color="primary"
               href="#"
-      //        onClick={handleAddToCart}
+              //        onClick={handleAddToCart}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}
@@ -115,5 +92,4 @@ export default function ProductListCard({ productData, onAddToCart }: Props) {
 
     </>
   );
-  // }
 }

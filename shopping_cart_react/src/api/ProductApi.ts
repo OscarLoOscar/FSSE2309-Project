@@ -1,42 +1,31 @@
 import axios from "axios";
-import {ProductListData} from "../data/dto/ProductListData";
-import {ProductDetailData} from "../data/dto/ProductDetailData";
 import getEnvConfig from "../Config/EnvConfig";
+import { ProductDetailsDto } from "../data/Product/ProductDetailsDto";
+import { ProductListDto } from "../data/Product/ProductListDto";
 
 const baseUrl = getEnvConfig().baseUrl;
-
-export const getAllProduct = async () => {
+export const getProductDetailsApi = async (productId: string | undefined) =>   {
     try {
-        const response = await axios.get<ProductListData[]>(`${baseUrl}/public/product`)
+        if(productId)   {
+            const apiUrl = baseUrl + `/public/product/`+ productId
+            const response = await axios.get<ProductDetailsDto>(apiUrl)
+            return response.data;
+        }
+    }
+    catch(e)    {
+        console.error(e);
+        throw e;
+    }
+}
+
+export const getProductListApi = async () =>   {
+    try {
+        const apiUrl = baseUrl + `/public/product`
+        const response = await axios.get<ProductListDto[]>(apiUrl)
         return response.data;
     }
-    catch(error) {
-        console.error(error);
-        throw error;
-    }
-}
-export const getProductByPid = async (productId:string | undefined) => {
-    try {
-        if(productId) {
-            const response = await axios.get<ProductDetailData>(`${baseUrl}/public/product/${productId}`);
-            return response.data ;
-        }
-    }
-    catch(error) {
-        console.error(error);
-        throw error;
-    }
-}
-
-export const getProductBySearchText = async (searchText:string | undefined) => {
-    try {
-        if(searchText) {
-            const response = await axios.get<ProductListData[]>(`${baseUrl}/public/product/search/${searchText}`);
-            return response.data ;
-        }
-    }
-    catch(error) {
-        console.error(error);
-        throw error;
+    catch(e)    {
+        console.error(e);
+        throw e;
     }
 }

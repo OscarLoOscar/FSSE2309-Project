@@ -7,8 +7,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import { Container, Drawer } from '@mui/material';
-import ShoppingCartItem from '../../ShoppingCartItem/CartPreview';
-import { GetCartItemData } from '../../../../data/dto/GetCartItemData';
+import { ProductDetailsDto } from '../../../../data/Product/ProductDetailsDto';
 
 
 export default function UserStatus() {
@@ -43,11 +42,11 @@ export default function UserStatus() {
   }
 
   // Dummy data for illustration, replace it with your actual cart data
-  const dummyCartItem: GetCartItemData = {
+  const dummyCartItem: ProductDetailsDto = {
     pid: 1,
     name: 'Dummy Product',
     price: 50.00,
-    cart_quantity: 2,
+    description: "Testing",
     stock: 10, // Make sure to include the stock property or adjust as needed
   };
 

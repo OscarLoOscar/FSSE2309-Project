@@ -6,7 +6,6 @@ import { Container, Grid, Stack } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
 import UserStatus from './UserStatus/UserStatus';
 import ItemMenu from './ItemMenu/ItemMenu';
-import { Item } from '../../../data/dto/TransactionDetailData';
 
 
 export default function NavBar() {
@@ -38,7 +37,7 @@ export default function NavBar() {
 
     <>
       <AppBar position="static"
-        style={{ width: '100%' }}
+        style={{ width: 'auto' }}
       >
         <Toolbar>
 
