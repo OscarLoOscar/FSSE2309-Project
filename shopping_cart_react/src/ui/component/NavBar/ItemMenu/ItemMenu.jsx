@@ -25,7 +25,7 @@ export default function ItemMenu() {
   const navigate = useNavigate();
 
   const navigateMainPage = () => {
-    navigate("/")
+    navigate("/product")
   }
   const menuItems = [
     {

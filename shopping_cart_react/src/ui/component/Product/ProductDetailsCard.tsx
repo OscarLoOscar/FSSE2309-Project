@@ -111,7 +111,13 @@ export default function ProductDetailsCard(props: Props) {
         </Grid>
         <Grid item xs={12} sm={6}>
             <Box>
-                <Typography sx={{ fontSize: 18 }} color="black" gutterBottom>
+                <Typography sx={{
+                    fontSize: 18,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    maxWidth: '80%'
+                }} color="black" gutterBottom>
                     {props.data.name}
                 </Typography>
             </Box>

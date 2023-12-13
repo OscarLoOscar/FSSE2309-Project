@@ -211,7 +211,7 @@ export default function UserStatus() {
                       sx={{
                         py: 0.5,
                         px: 1,
-                        color: "darkGrayishBlue",
+                        color: "#009688",
                         fontSize: "13px",
                       }}
                     >
@@ -228,7 +228,7 @@ export default function UserStatus() {
                         sx={{
                           py: 0.5,
                           px: 1,
-                          color: "darkGrayishBlue",
+                          color: "#1a237e",
                           fontSize: "13px",
                         }}
                       >
@@ -236,7 +236,7 @@ export default function UserStatus() {
                       </Typography>
                       <Typography
                         sx={{
-                          color: "black",
+                          color: "#3d5afe",
                           fontSize: "13px",
                           fontWeight: "700",
                         }}
@@ -249,7 +249,7 @@ export default function UserStatus() {
                   {/* DELETE ICON */}
                   <Box
                     sx={{
-                      color: "darkGrayishBlue",
+                      color: "#1de9b6",
                       cursor: "pointer",
                       opacity: "0.7",
                     }}
@@ -263,7 +263,7 @@ export default function UserStatus() {
                 <Box
                   sx={{
                     p: 1.5,
-                    backgroundColor: "orange",
+                    backgroundColor: "#ffb74d",
                     mt: 2,
                     borderRadius: "0.5rem",
                     display: "flex",
@@ -287,7 +287,7 @@ export default function UserStatus() {
                 sx={{
                   p: 2,
                   fontWeight: "700",
-                  color: "darkGrayishBlue",
+                  color: "#4caf50",
                 }}
               >
                 Your cart is empty.

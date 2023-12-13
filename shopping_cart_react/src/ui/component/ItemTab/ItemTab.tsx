@@ -34,7 +34,6 @@ export default function ItemTab(props: Props) {
         <Grid
           style={{ display: 'block', margin: 'auto' }}
           sx={{
-            width: '90%',
             textAlign: { xs: 'center', md: 'center' }
           }}>
           <Tabs

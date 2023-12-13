@@ -101,7 +101,13 @@ export default function ProductListCard({ productData }: Props) {
             alt=""
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography sx={{
+              fontSize: 18,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              maxWidth: '80%'
+            }} color="black" gutterBottom>
               {productData.name}
             </Typography>
             <Typography gutterBottom variant="h6" component="div">

@@ -16,6 +16,7 @@ import { Params, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../component/Utility/Loading";
 import TransItemCard from "../../component/Transaction/TransItemCard";
 import { getAccessToken } from "../../../authService/FirebaseAuthService";
+import LogoImage from "../../component/LogoImage/LogoImage";
 
 
 export default function CartPage() {
@@ -212,13 +213,8 @@ export default function CartPage() {
     <>
       <title>Venturenix Lab React Project</title>
       <TopContainer />
-      <img
-        alt="Logo"
-        src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
-        title="company_logo"
-        width={500}
-        style={{ display: 'block', margin: 'auto' }}
-      />
+      <LogoImage />
+
       <ItemTab />
 
       <NavBar />

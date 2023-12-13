@@ -1,7 +1,7 @@
 import React from 'react';
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import './App.css';
-import ShoppingSite from './ui/page/ShoppingSite';
+import ShoppingSite from './ui/page/ProductPage/ShoppingSite';
 import LoginPage from './ui/page/LoginPage/LoginPage';
 import { createContext, useEffect, useState } from "react";
 import ThankyouPage from './ui/page/ThankyouPage/ThankyouPage';
@@ -9,11 +9,16 @@ import ErrorPage from './ui/page/ErrorPage/ErrorPage';
 import CartPage from './ui/page/ShoppingCartPage/CartPage';
 import { UserData } from './data/User/UserData';
 import Checkout from './ui/page/CheckoutPage/CheckoutPage';
-import ProductDetailsPage from './ui/page/ProductDetail';
+import ProductDetailsPage from './ui/page/ProductPage/ProductDetailsPage';
+import MainPage from './ui/page/MainPage/MainPage';
 
 const router = createHashRouter([
   {
     path: "/",
+    element: <MainPage />
+  },
+  {
+    path: "/product",
     element: <ShoppingSite />
   },
   {
