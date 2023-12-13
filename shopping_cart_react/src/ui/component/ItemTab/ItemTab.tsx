@@ -22,9 +22,9 @@ const ItemTabLAbel = [
   },
 ]
 export default function ItemTab(props: Props) {
-  const [value, setlabel] = React.useState('1');
+  const [value, setlabel] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setlabel(newValue);
   };
 
@@ -52,7 +52,7 @@ export default function ItemTab(props: Props) {
                   fontSize: '12px',
                   '&:hover': {
                     backgroundColor: item.hover.backgroundColor,
-                    colour: item.hover.color
+                    color: item.hover.color
                   },
                 }} />
 

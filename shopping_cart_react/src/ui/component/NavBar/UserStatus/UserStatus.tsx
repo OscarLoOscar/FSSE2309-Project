@@ -35,7 +35,7 @@ export default function UserStatus() {
 
   useEffect(() => {
     setBasket(localBasket);
-  }, [localBasket]);
+  }, []);
 
   //for Popover 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
