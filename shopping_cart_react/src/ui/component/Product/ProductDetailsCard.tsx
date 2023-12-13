@@ -133,14 +133,14 @@ export default function ProductDetailsCard(props: Props) {
                         shrink: true,
                     }}
                     size={"small"}
-                    inputProps={{ min: 0, max: props.data.stock }}
+                    inputProps={{ min: 0, max: props.data.unitStock }}
                     onChange={handleTextFieldChange}
                     defaultValue={itemQty}
                 />
                 <Box height="30px" />
             </Box>
             <Box>
-                {add2CartButton(props.data.stock)}
+                {add2CartButton(props.data.unitStock)}
             </Box>
         </Grid>
         <Grid item xs={12}>

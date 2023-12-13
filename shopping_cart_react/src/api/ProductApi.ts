@@ -4,7 +4,7 @@ import { ProductDetailsDto } from "../data/Product/ProductDetailsDto";
 import { ProductListDto } from "../data/Product/ProductListDto";
 
 const baseUrl = getEnvConfig().baseUrl;
-export const getProductDetailsApi = async (productId: string | undefined) =>   {
+export const getProductByIdApi = async (productId: string | undefined) =>   {
     try {
         if(productId)   {
             const apiUrl = baseUrl + `/public/product/`+ productId

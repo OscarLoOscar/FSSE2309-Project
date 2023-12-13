@@ -3,172 +3,210 @@ import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
 import { Container, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
 import Footer from "../../component/Footer/Footer";
-import { ImgData } from "../../../data/ImgData";
-import ImgDataJson from '../../../data/ImgData.json';
-import { ProductData } from "../../../data/ProductData"
-import ProductDataJson from "../../../data/ProductData.json"
 import { ProductDetailsDto } from "../../../data/Product/ProductDetailsDto";
-
-
-// const pData: ProductDetailsDto[] =
-//   [{
-//     "pid": 1,
-//     "name": "Almaviva",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 2,
-//     "name": "Borgogno No Name",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 3,
-//     "name": "Chateau Branine-Ducru",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 4,
-//     "name": "Chateau Cantemerle",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 5,
-//     "name": "Chateau D'ISSAN",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 6,
-//     "name": "Borgrigne",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 7,
-//     "name": "NSG",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 8,
-//     "name": "Napanook",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 9,
-//     "name": "Chateau Lafite",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 10,
-//     "name": "Chateau Lascome",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 11,
-//     "name": "Chateau Leoville Las Cast",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 12,
-//     "name": "Chateau Pichon Baron Les Friffons",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 13,
-//     "name": "Luce",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 14,
-//     "name": "Chateau Mouton",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 15,
-//     "name": "Quintessa",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   },
-//   {
-//     "pid": 16,
-//     "name": "null",
-//     "price": 123,
-//     "cart_quantity": 1,
-//     "stock": 10
-//   }
-//   ]
-//   ;
-
+import { Backdrop, CircularProgress, FormLabel, Input, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import React, { useEffect } from "react";
+import { GetTransDto } from "../../../data/Trans/GetTransDto";
+import * as TransApi from "../../../api/TransactionApi"
+import { Params, useNavigate, useParams } from "react-router-dom";
+import Loading from "../../component/Utility/Loading";
+import TransItemCard from "../../component/Transaction/TransItemCard";
+import { getAccessToken } from "../../../authService/FirebaseAuthService";
 
 
 export default function CartPage() {
-  const [data, setData] = useState<ImgData | undefined>(undefined);
-  const [pData, setPData] = useState<ProductData | undefined>(undefined);
-  const [cartItemList, setCartItemList] = useState<ProductDetailsDto[]>([]);
+  const [transData, setTransData] = React.useState<GetTransDto | undefined>(undefined);
+  const [cardNo, setCardNo] = React.useState<number | undefined>(undefined)
+  const [expDate, setExpDate] = React.useState<Date | undefined>(undefined)
+  const [payStatus, setPayStatus] = React.useState<string | undefined>(undefined)
+  const [cvv, setCvv] = React.useState<number | undefined>(undefined)
+  const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
+  const navigate = useNavigate();
+  const { transactionId } = useParams<Params>();
 
-  const fetchImgData = async () => {
-    const imgDataArray: {
-      position: number;
-      data: { href: string; src: string; alt: string; };
-    }[] | undefined = await ImgDataJson;
-
-    // Assuming you want the first item in the array
-    const imgData: ImgData | undefined = imgDataArray && imgDataArray.length > 0
-      ? { position: imgDataArray[0].position, data: [imgDataArray[0].data] }
-      : undefined;
-
-    setData(imgData);
+  const fetchTransData = async () => {
+    try {
+      // const token = await getAccessToken()
+      if (transactionId) {
+        // if (token && transactionId) {
+        // setTransData(await TransApi.getTransApi(token, transactionId))
+        setTransData(await TransApi.getTransApiTest(transactionId))
+      }
+    } catch (e) {
+      navigate("/error")
+    }
   }
 
-  const fetchProductData = async () => {
-    const productDataArray: {
-      pid: number;
-      name: string;
-      price: number;
-      stock: number;
-    }[] | undefined = await ProductDataJson;
-
-    // Assuming you want the first item in the array
-    const proData: ProductData | undefined =
-      productDataArray && productDataArray.length > 0
-        ? { products: productDataArray }
-        : undefined;
-
-    setPData(proData);
+  const transItemListHeader = () => {
+    return <>
+      <Box display="flex" flexDirection="row">
+        <Box width="20%" sx={{
+          textAlign: "center"
+        }}>
+          <Typography
+            variant="subtitle2"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >Item Image
+          </Typography>
+        </Box>
+        <Box width="20%" sx={{
+          textAlign: "center"
+        }}>
+          <Typography
+            variant="subtitle2"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >Item Name</Typography>
+        </Box>
+        <Box width="15%" sx={{
+          textAlign: "center"
+        }}>
+          <Typography
+            variant="subtitle2"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >Unit Price
+          </Typography>
+        </Box>
+        <Box width="15%" sx={{
+          textAlign: "center"
+        }}>
+          <Typography
+            variant="subtitle2"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >Item Qty
+          </Typography>
+        </Box>
+        <Box width="25%" sx={{
+          textAlign: "center"
+        }}>
+          <Typography
+            variant="subtitle2"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >Item Subtotal
+          </Typography>
+        </Box>
+      </Box>
+    </>
   }
+
+  const renderTransItemList = () => {
+    if (transData && transData.items.length > 0) {
+      return transData.items.map((value) => {
+        return <TransItemCard key={value.tpid} data={value} />
+      })
+    } else {
+      return <Loading />
+    }
+  }
+  const handleCardNoInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCardNo(Number(event.target.value))
+  }
+
+  const handleExpDateInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setExpDate(event.target.value)
+  }
+
+  const handleCVVInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCvv(Number(event.target.value))
+  }
+  const handleSubmitPayment = async () => {
+    setLoadingBackdrop(true)
+    const token = await getAccessToken()
+    if (token && transactionId) {
+      const payResult = await TransApi.payTransApi(token, transactionId)
+      setPayStatus(payResult.result)
+
+    }
+  }
+
+  const handlePaymentSuccess = async () => {
+    const token = await getAccessToken()
+    if (token && transactionId) {
+      const payResult = await TransApi.finishTransApi(token, transactionId)
+      setPayStatus(payResult.status)
+      setLoadingBackdrop(false)
+      navigate('/thankyou')
+    }
+  }
+
   useEffect(() => {
-    fetchImgData();
-    fetchProductData();
+    if (payStatus === 'SUCCESS') {
+      void handlePaymentSuccess()
+    }
+    setTransData(undefined)
+    void fetchTransData()
   }, [])
+
+  const transFooter = () => {
+    return <>
+      <Box height="200px"></Box>
+      <Box sx={{
+        margin: 'auto',
+        width: 800,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <form id="login" onSubmit={handleSubmitPayment}>
+          <FormLabel>
+            <Typography>
+              Credit Card Number
+            </Typography>
+          </FormLabel>
+          <Input
+            sx={{ '--Input-decoratorChildHeight': '45px' }}
+            type="tel"
+            required
+            value={cardNo || ''}
+            onChange={handleCardNoInput}
+          />
+          <FormLabel>
+            <Typography>
+              Expiry Date
+            </Typography>
+          </FormLabel>
+          <Input
+            sx={{ '--Input-decoratorChildHeight': '45px' }}
+            type="month"
+            required
+            value={expDate || ''}
+            onChange={handleExpDateInput}
+          />
+          <FormLabel>
+            <Typography>
+              CVV
+            </Typography>
+          </FormLabel>
+          <Input
+            sx={{ '--Input-decoratorChildHeight': '45px' }}
+            inputProps={{ min: 0, max: 999 }}
+            type="tel"
+            required
+            value={cvv || ''}
+            onChange={handleCVVInput}
+          />
+          <Button type="submit">Submit</Button>
+        </form>
+      </Box>
+    </>
+
+  }
 
   return (
     <>
@@ -187,22 +225,22 @@ export default function CartPage() {
 
       <BottomWrapper />
       <Container >
-        {pData?.products?.map((data2, index) => (
+        {/* {pData?.products?.map((data2, index) => (
           <Grid
             container
             spacing={5}
             justifyContent="center"
             alignItems="top"
             style={{ marginTop: 10 }}
-          >
-            {/* <ShoppingCartItem
+          > */}
+        {/* <ShoppingCartItem
               key={index}
               cartItem={data2}
               cartItemList={cartItemList}
               setCartItemList={setCartItemList}
             /> */}
-          </Grid>
-        ))};
+        {/* </Grid>
+        ))}; */}
       </Container>
       <Footer />
 

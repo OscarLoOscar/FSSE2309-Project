@@ -5,7 +5,7 @@ import MainWrapper from '../component/adv/MainWrapper';
 import NavBar from '../component/NavBar/NavBar';
 import { Container } from '@mui/material';
 import Footer from '../component/Footer/Footer';
-import ProductList from '../component/Product/ProductList';
+import ProductDetails from '../component/Product/ProductDetails';
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
   "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
@@ -16,7 +16,7 @@ const photos = [
 ];
 
 // define一個ShoppingSite组件
-export default function ShoppingSite() {
+export default function ProductDetailsPage() {
   return (
     <>
       <title>Venturenix Lab React Project</title>
@@ -35,7 +35,7 @@ export default function ShoppingSite() {
       <BottomWrapper />
       <Container >
         <MainWrapper imgs={photos} />
-        <ProductList />
+        <ProductDetails />
       </Container>
       {/*[if IE]>
 

@@ -9,11 +9,16 @@ import ErrorPage from './ui/page/ErrorPage/ErrorPage';
 import CartPage from './ui/page/ShoppingCartPage/CartPage';
 import { UserData } from './data/User/UserData';
 import Checkout from './ui/page/CheckoutPage/CheckoutPage';
+import ProductDetailsPage from './ui/page/ProductDetail';
 
 const router = createHashRouter([
   {
     path: "/",
     element: <ShoppingSite />
+  },
+  {
+    path: "/product/:productId",
+    element: <ProductDetailsPage />
   },
   {
     path: "/login",

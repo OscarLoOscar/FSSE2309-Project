@@ -18,7 +18,7 @@ export default function ProductDetails() {
     const { productId } = useParams<Params>()
     const fetchProductData = async () => {
         try {
-            setProductDetails(await ProductApi.getProductDetailsApi(productId))
+            setProductDetails(await ProductApi.getProductByIdApi(productId))
         } catch (e) {
             navigate("/error")
         }

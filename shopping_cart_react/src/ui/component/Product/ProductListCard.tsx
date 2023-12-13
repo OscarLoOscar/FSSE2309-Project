@@ -1,50 +1,91 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import almaviva from "../../../assets/wine/almaviva.png";
-import borgogno_no_name from "../../../assets/wine/borgogno_no_name.png";
-import branaire_ducru from "../../../assets/wine/branaire_ducru.png";
-import cantemerle from "../../../assets/wine/cantemerle.png";
-import dissan from "../../../assets/wine/dissan.png";
-import domaine_michel_noellat_coteaux_bourguignons_new from "../../../assets/wine/domaine_michel_noellat_coteaux_bourguignons_new.png";
-import domaine_pierre_amiot_et_fils_morey_saint_denis_1er_cru_les_millandes from "../../../assets/wine/domaine_pierre_amiot_et_fils_morey_saint_denis_1er_cru_les_millandes.png";
-import dominus_estate_napanook from "../../../assets/wine/dominus_estate_napanook.png";
-import lafite_rothschild_6 from "../../../assets/wine/lafite_rothschild_6.png";
-import lascombes from "../../../assets/wine/lascombes.png";
-import leoville_las_cases_90 from "../../../assets/wine/leoville_las_cases_90.png";
-import les_griffons_de_pichon_baron_1 from "../../../assets/wine/les_griffons_de_pichon_baron_1.png";
-import luce_della_vite_brunello_di_montalcino_1 from "../../../assets/wine/luce_della_vite_brunello_di_montalcino_1.png";
-import mouton_2004 from "../../../assets/wine/mouton_2004.png";
-import quintessa from "../../../assets/wine/quintessa.png";
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography, Collapse, Alert } from "@mui/material";
 import { createContext, useContext, useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
 import { ProductListDto } from "../../../data/Product/ProductListDto";
-
-const productPhotoMapping: { [key: number]: string } = {
-  1: almaviva,
-  2: borgogno_no_name,
-  3: branaire_ducru,
-  4: cantemerle,
-  5: dissan,
-  6: domaine_michel_noellat_coteaux_bourguignons_new,
-  7: domaine_pierre_amiot_et_fils_morey_saint_denis_1er_cru_les_millandes,
-  8: dominus_estate_napanook,
-  9: lafite_rothschild_6,
-  10: lascombes,
-  11: leoville_las_cases_90,
-  12: les_griffons_de_pichon_baron_1,
-  13: luce_della_vite_brunello_di_montalcino_1,
-  14: mouton_2004,
-  15: quintessa
-}
-
+import { addCartItemApi, addCartItemApiTest } from "../../../api/CartItemApi";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
   productData: ProductListDto;
-  onAddToCart: () => void;
 }
-export default function ProductListCard({ productData, onAddToCart }: Props) {
-
+export default function ProductListCard({ productData }: Props) {
+  const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
+  const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const handleAddCartItem = async () => {
+    // const token = await getAccessToken();
+    setAddCartItemStatus(undefined);
+    // if (token) {
+    // const result = await addCartItemApi(token,productData.pid.toString(),"1")
+    const result = await addCartItemApiTest(productData.pid.toString(), "1")
+    if (result) {
+      setAddCartItemStatus(result.result);
+      setMessageBoxOpen(true);
+    }
+    // }
+  }
+  const handleItemDetail = () => {
+    navigate(`/product/` + productData.pid.toString());
+  }
+  const addCartMessage = () => {
+    if (addCartItemStatus === "SUCCESS") {
+      return (
+        <Box sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 'drawer'
+        }}
+        >
+          <Collapse in={messageBoxOpen}>
+            <Alert action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setMessageBoxOpen(false);
+                }}>
+                <CloseIcon fontSize="inherit" />
+              </IconButton>}
+            >Item added to cart successfully</Alert>
+          </Collapse>
+        </Box>
+      )
+    } else if (addCartItemStatus === "FAIL") {
+      return (
+        <Box sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 'drawer'
+        }}
+        >
+          <Collapse in={messageBoxOpen}>
+            <Alert severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setMessageBoxOpen(false);
+                  }}>
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>}
+            >Item failed to add</Alert>
+          </Collapse>
+        </Box>
+      )
+    } else {
+      return <></>
+    }
+  }
 
   const [isAdded, setIsAdded] = useState(false);
 
@@ -56,7 +97,7 @@ export default function ProductListCard({ productData, onAddToCart }: Props) {
           <CardMedia
             component="img"
             height='auto'
-            image={productPhotoMapping[productData.pid]}
+            image={productData.image_url}
             alt=""
           />
           <CardContent>
@@ -81,7 +122,7 @@ export default function ProductListCard({ productData, onAddToCart }: Props) {
             <Button size="small"
               color="primary"
               href="#"
-              //        onClick={handleAddToCart}
+              onClick={handleAddCartItem}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}

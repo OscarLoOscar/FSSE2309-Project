@@ -3,4 +3,6 @@ export interface ProductListDto {
     name:      string;
     price:     number;
     has_stock: boolean;
+    image_url: string
+
 }

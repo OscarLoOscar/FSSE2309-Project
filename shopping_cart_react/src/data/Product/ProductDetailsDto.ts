@@ -1,7 +1,9 @@
 export interface ProductDetailsDto {
-    pid:         number;
-    name:        string;
+    pid: number;
+    name: string;
     description: string;
-    price:       number;
-    stock:       number;
+    price: number;
+    unitStock: number;
+    has_stock: boolean;
+    image_url: string
 }

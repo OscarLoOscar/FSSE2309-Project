@@ -11,8 +11,16 @@ import { ProductDetailsDto } from '../../../../data/Product/ProductDetailsDto';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useEffect } from 'react';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { getAccessToken } from '../../../../authService/FirebaseAuthService';
+import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
+import * as CartApi from "../../../../api/CartItemApi"
 
-export default function UserStatus() {
+type Props = {
+  data: CartItemListDto
+  update: React.Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
+}
+
+export default function UserStatus(props: Props) {
   const [value, setValue] = React.useState('Login');
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -57,17 +65,57 @@ export default function UserStatus() {
     navigate("/shoppingcart")
   }
 
-  // Dummy data for illustration, replace it with your actual cart data
-  const dummyCartItem: ProductDetailsDto = {
-    pid: 1,
-    name: 'Dummy Product',
-    price: 50.00,
-    description: "Testing",
-    stock: 10, // Make sure to include the stock property or adjust as needed
-  };
 
-  const [cartItemList, setCartItemList] = React.useState([dummyCartItem]);
+  const [cartItemList, setCartItemList] = React.useState([]);
 
+  //
+  const [cartItem, setCartItem] = React.useState<CartItemListDto>(props.data);
+  const [itemSubtotal, setItemSubtotal] = React.useState<number>(props.data.price * props.data.cart_quantity)
+  const HKDollar = new Intl.NumberFormat('zh-HK', {
+    style: 'currency',
+    currency: 'HKD',
+  });
+
+  const fetchCartData = async () => {
+    try {
+      props.update(undefined)
+      const token = await getAccessToken()
+      if (token) {
+        props.update(await CartApi.getCartItemListApi(token))
+      }
+    } catch (e) {
+      navigate("/error")
+    }
+  }
+
+  const handleQtyChange = async (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    try {
+      const token = await getAccessToken()
+      if (token) {
+        const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(token, props.data.pid.toString(), event.target.value.toString())
+        if (updatedCartItem) {
+          setCartItem(updatedCartItem)
+        }
+        setItemSubtotal(Number(event.target.value) * props.data.price);
+      }
+    } catch (e) {
+      navigate("/error")
+    } finally {
+      await fetchCartData()
+    }
+  }
+
+  const handleDeleteCartItem = async () => {
+    try {
+      const token = await getAccessToken()
+      if (token) {
+        await CartApi.deleteCartItemApi(token, props.data.pid.toString());
+        await fetchCartData()
+      }
+    } catch (e) {
+      navigate("/error")
+    }
+  }
 
 
   return (
