@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
@@ -6,6 +6,8 @@ import TopContainer from "../../component/TopContainer/TopContainer";
 import MainWrapper from "../../component/adv/MainWrapper";
 import Footer from "../../component/Footer/Footer";
 import LogoImage from "../../component/LogoImage/LogoImage";
+import { Parallax } from "../../component/parallax/Parallax";
+import ComplexButton from "../../component/ComplexButton/ComplexButton";
 
 const photos = [
   "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
@@ -32,6 +34,12 @@ export default function MainPage() {
       <Container >
         <MainWrapper imgs={photos} />
       </Container>
+      <Container sx={{ display: 'flex', justifyContent: 'center', marginBottom: '5%' }}>
+        {/* <Parallax /> */}
+        <ComplexButton />
+      </Container>
+
+
       <Footer />
     </>
   );

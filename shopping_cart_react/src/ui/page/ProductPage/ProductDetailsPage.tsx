@@ -29,7 +29,7 @@ export default function ProductDetailsPage() {
       <NavBar />
 
       <BottomWrapper />
-      <Container >
+      <Container sx={{ marginBottom: '5%' }}>
         <MainWrapper imgs={photos} />
         <ProductDetails />
       </Container>

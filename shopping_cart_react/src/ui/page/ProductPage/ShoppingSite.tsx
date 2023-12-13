@@ -30,7 +30,7 @@ export default function ShoppingSite() {
       <BottomWrapper />
 
       <MainWrapper imgs={photos} />
-      <Container fixed>
+      <Container fixed sx={{ marginBottom: '5%' }}>
         <ProductList />
       </Container>
       {/*[if IE]>

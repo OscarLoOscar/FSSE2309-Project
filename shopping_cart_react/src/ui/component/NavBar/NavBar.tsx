@@ -37,7 +37,7 @@ export default function NavBar() {
 
     <>
       <AppBar position="static"
-        style={{ width: 'auto' }}
+        style={{ width: 'auto', height: 70, justifyContent: 'flex-end' }}
       >
         <Toolbar>
 
@@ -45,7 +45,7 @@ export default function NavBar() {
           <SearchBox />
           <Stack spacing={2}
             sx={{
-              width: 700,
+              width: 500,
               // margin: 'flex', // Center the Stack horizontally
               marginLeft: 5,
               // display: 'flex', // Make it a flex container
