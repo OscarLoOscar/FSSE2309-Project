@@ -6,118 +6,80 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
-import { Badge, Box, Divider, Popover, Typography } from '@mui/material';
-import { ProductDetailsDto } from '../../../../data/Product/ProductDetailsDto';
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useEffect } from 'react';
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { getAccessToken } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
 import * as CartApi from "../../../../api/CartItemApi"
+import { Box, Divider, Popover, Typography } from '@mui/material';
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-type Props = {
-  data: CartItemListDto
-  update: React.Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
+interface CartPopoverProps {
+  basket: CartItemListDto | null; // Replace 'any' with the actual type of basket data
+  handleDeleteCartItem: () => void;
+  anchorEl: HTMLElement | null; // Add anchorEl property
+  onClose: () => void; // Add onClose property
 }
 
-export default function UserStatus(props: Props) {
+export default function UserStatus() {
   const [value, setValue] = React.useState('Login');
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-  const [basket, setBasket] = React.useState("");
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const [basket, setBasket] = React.useState<CartItemListDto | null>(null);
 
   const deleteItem = () => {
-    localStorage.clear()
-  }
+    localStorage.clear();
+  };
 
-  let localBasket = JSON.parse(localStorage.getItem("basket") || "[]");
-  //as ProductDetailsDto[];
+  let localBasket = JSON.parse(localStorage.getItem('basket') || '[]');
 
   useEffect(() => {
     setBasket(localBasket);
   }, [localBasket]);
 
+  //for Popover 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+  //
+
   const navigate = useNavigate();
 
   const navigateLoginPage = () => {
-    navigate("/login")
-  }
+    navigate('/login');
+  };
 
   const navigateThankyouPage = () => {
-    navigate("/thankyoupage")
-  }
+    navigate('/thankyoupage');
+  };
+
   const navigateErrorPage = () => {
-    navigate("/error")
-  }
+    navigate('/error');
+  };
+
   const navigateShoppingCartPage = () => {
-    navigate("/shoppingcart")
-  }
-
-
-  const [cartItemList, setCartItemList] = React.useState([]);
-
-  //
-  const [cartItem, setCartItem] = React.useState<CartItemListDto>(props.data);
-  const [itemSubtotal, setItemSubtotal] = React.useState<number>(props.data.price * props.data.cart_quantity)
-  const HKDollar = new Intl.NumberFormat('zh-HK', {
-    style: 'currency',
-    currency: 'HKD',
-  });
+    navigate('/shoppingcart');
+  };
 
   const fetchCartData = async () => {
     try {
-      props.update(undefined)
-      const token = await getAccessToken()
+      const token = await getAccessToken();
       if (token) {
-        props.update(await CartApi.getCartItemListApi(token))
+        const cartItems = await CartApi.getCartItemListApi(token);
+        setBasket(cartItems.length > 0 ? cartItems[0] : null);
       }
     } catch (e) {
-      navigate("/error")
+      navigate('/error');
     }
-  }
-
-  const handleQtyChange = async (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    try {
-      const token = await getAccessToken()
-      if (token) {
-        const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(token, props.data.pid.toString(), event.target.value.toString())
-        if (updatedCartItem) {
-          setCartItem(updatedCartItem)
-        }
-        setItemSubtotal(Number(event.target.value) * props.data.price);
-      }
-    } catch (e) {
-      navigate("/error")
-    } finally {
-      await fetchCartData()
-    }
-  }
-
-  const handleDeleteCartItem = async () => {
-    try {
-      const token = await getAccessToken()
-      if (token) {
-        await CartApi.deleteCartItemApi(token, props.data.pid.toString());
-        await fetchCartData()
-      }
-    } catch (e) {
-      navigate("/error")
-    }
-  }
-
-
+  };
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -179,6 +141,7 @@ export default function UserStatus(props: Props) {
         {/* Drawer -> 黑屏選項 效果 */}
         {/* Popover -> 彈出shopping cart 效果 */}
         <BottomNavigationAction
+          aria-describedby={id}
           label="Shopping Cart"
           icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
           // onClick={navigateShoppingCartPage}
@@ -196,9 +159,8 @@ export default function UserStatus(props: Props) {
       {/* Popover */}
       <Popover
         id={id}
+        //  open={Boolean(basket)}
         open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
@@ -207,6 +169,8 @@ export default function UserStatus(props: Props) {
           vertical: "top",
           horizontal: "center",
         }}
+        anchorEl={anchorEl}
+        onClose={handleClose}
       >
         <Box
           sx={{
@@ -237,13 +201,6 @@ export default function UserStatus(props: Props) {
                     width: "100%",
                   }}
                 >
-                  {/* <Image
-                      src={basket.image}
-                      width={50}
-                      height={50}
-                      style={{ borderRadius: "0.4rem" }}
-                      alt={basket.product}
-                    /> */}
                   <Box
                     sx={{
                       display: "flex",
@@ -258,7 +215,7 @@ export default function UserStatus(props: Props) {
                         fontSize: "13px",
                       }}
                     >
-                      {/* {basket.product} */}
+                      {basket.name}
                     </Typography>
                     <Box
                       sx={{
@@ -275,7 +232,7 @@ export default function UserStatus(props: Props) {
                           fontSize: "13px",
                         }}
                       >
-                        {/* ${basket.price}.00 x {basket.amount} */}
+                        ${basket.price}.00 x {basket.cart_quantity}
                       </Typography>
                       <Typography
                         sx={{
@@ -284,7 +241,7 @@ export default function UserStatus(props: Props) {
                           fontWeight: "700",
                         }}
                       >
-                        {/* ${basket.price * basket.amount}.00 */}
+                        ${basket.price * basket.cart_quantity}.00
                       </Typography>
                     </Box>
                   </Box>
@@ -296,7 +253,7 @@ export default function UserStatus(props: Props) {
                       cursor: "pointer",
                       opacity: "0.7",
                     }}
-                    onClick={deleteItem}
+                  // onClick={handleDeleteCartItem}
                   >
                     <DeleteOutlineOutlinedIcon />
                   </Box>
@@ -336,10 +293,8 @@ export default function UserStatus(props: Props) {
                 Your cart is empty.
               </Typography>
             )}
-
           </Box>
         </Box>
-      </Popover>
-    </>
+      </Popover>    </>
   );
 }
