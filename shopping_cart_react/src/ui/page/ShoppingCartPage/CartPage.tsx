@@ -1,9 +1,8 @@
-import { Container } from "react-bootstrap";
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
-import { Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import Footer from "../../component/Footer/Footer";
 import { ImgData } from "../../../data/ImgData";

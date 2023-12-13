@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import Footer from "../../component/Footer/Footer";
 import ItemTab from "../../component/ItemTab/ItemTab";
@@ -20,6 +21,7 @@ export default function Checkout() {
         <NavBar />
 
         <BottomWrapper />
+
         <TransactionDetail />
         <Footer />
 
