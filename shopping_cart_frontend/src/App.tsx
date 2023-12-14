@@ -1,6 +1,5 @@
 import React from 'react';
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import './App.css';
 import ShoppingSite from './ui/page/ProductPage/ShoppingSite';
 import LoginPage from './ui/page/LoginPage/LoginPage';
 import { createContext, useEffect, useState } from "react";
@@ -54,12 +53,9 @@ function App() {
 
   return (
     <>
-      {/* <ShoppingSite /> */}
-      {/* <loginUserContext.Provider value={loginUser}> */}
       <RouterProvider router={router} />
-      {/* </loginUserContext.Provider > */}
     </>
-  );
+  )
 }
 
-export default App;
+export default App
