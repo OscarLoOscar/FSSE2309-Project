@@ -1,12 +1,14 @@
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography, Collapse, Alert } from "@mui/material";
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
 import { ProductListDto } from "../../../data/Product/ProductListDto";
-import { addCartItemApi, addCartItemApiTest } from "../../../api/CartItemApi";
+import { addCartItemApiTest } from "../../../api/CartItemApi";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import DescriptionIcon from '@mui/icons-material/Description';
+import * as CartItemApi from "../../../api/CartItemApi"
 
 type Props = {
   productData: ProductListDto;
@@ -15,6 +17,14 @@ export default function ProductListCard({ productData }: Props) {
   const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
   const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
   const navigate = useNavigate();
+
+  const addProduct = async () => {
+    try {
+      const data = await CartItemApi.addCartItemApiTest(productData.pid.toString(), "1");
+    } catch (err) {
+      navigate("/error");
+    }
+  }
   const handleAddCartItem = async () => {
     // const token = await getAccessToken();
     setAddCartItemStatus(undefined);
@@ -124,11 +134,20 @@ export default function ProductListCard({ productData }: Props) {
               Share
             </Button>
           </Grid>
+          <Grid item xs={6} textAlign="left">
+            <Button size="small"
+              color="primary"
+              onClick={handleItemDetail}
+              endIcon={<DescriptionIcon />}>
+              Detail
+            </Button>
+          </Grid>
           <Grid item xs={8} textAlign="right">
             <Button size="small"
               color="primary"
               href="#"
-              onClick={handleAddCartItem}
+              // onClick={handleAddCartItem}
+              onClick={addProduct}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}

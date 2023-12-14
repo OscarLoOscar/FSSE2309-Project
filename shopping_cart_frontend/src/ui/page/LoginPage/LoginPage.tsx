@@ -1,17 +1,43 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import * as Components from './Components';
 import TopContainer from "../../component/TopContainer/TopContainer";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import Footer from "../../component/Footer/Footer";
 import LogoImage from "../../component/LogoImage/LogoImage";
+import * as FirebaseAuthService from "../../../authService/FirebaseAuthService"
+import { useNavigate } from "react-router-dom";
+
 export default function LoginPage() {
   const [signIn, toggle] = useState(true);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  
+  const navigate = useNavigate();
+
+  //點估event type ？用IDE估，onChange={(e)} ：React.ChangeEvent<HTMLInputElement>
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value)
+  }
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value)
+  }
+
+  const handleSumit = async (event: React.FormEvent<HTMLFormElement>) => {
+    //避免跳版
+    event.preventDefault();
+    console.log("email : ", email);
+    console.log("password :  ", password);
+    const loginResult = await FirebaseAuthService.handleSignInWithEmailAndPassword(email, password);
+    if (loginResult) {
+      navigate("/success");
+    } else {
+      alert("Login failed");
+    }
+  }
   return (
     <>
-      <title>Venturenix Lab React Project</title>
+      <title>Login Page</title>
       <TopContainer />
       <LogoImage />
 
@@ -24,17 +50,38 @@ export default function LoginPage() {
           <Components.Form>
             <Components.Title>Create Account</Components.Title>
             <Components.Input type='text' placeholder='Name' />
-            <Components.Input type='email' placeholder='Email' />
-            <Components.Input type='password' placeholder='Password' />
+            <Components.Input
+              type='email'
+              placeholder='Email'
+              onChange={handleEmailChange}
+              value={email}
+            />
+            <Components.Input
+              type='password'
+              placeholder='Password'
+              onChange={handlePasswordChange}
+              value={password} // come from State
+            />
             <Components.Button>Sign Up</Components.Button>
           </Components.Form>
         </Components.SignUpContainer>
 
         <Components.SignInContainer signinIn={signIn}>
-          <Components.Form>
+          <Components.Form
+            onSubmit={handleSumit} >
             <Components.Title>Sign in</Components.Title>
-            <Components.Input type='email' placeholder='Email' />
-            <Components.Input type='password' placeholder='Password' />
+            <Components.Input
+              type='email'
+              placeholder='Email'
+              onChange={handleEmailChange}
+              value={email} // come from State
+            />
+            <Components.Input
+              type='password'
+              placeholder='Password'
+              onChange={handlePasswordChange}
+              value={password} // come from State
+            />
             <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
             <Components.Button>Sigin In</Components.Button>
           </Components.Form>

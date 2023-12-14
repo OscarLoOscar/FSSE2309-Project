@@ -9,6 +9,7 @@ import { yellow } from "@mui/material/colors";
 import CloseIcon from '@mui/icons-material/Close';
 import { ProductDetailsDto } from "../../../data/Product/ProductDetailsDto";
 import * as CartApi from "../../../api/CartItemApi"
+import {  useNavigate } from "react-router-dom";
 // import { getAccessToken } from "../../../authService/FirebaseAuthService";
 
 type Props = {
@@ -37,10 +38,15 @@ export default function ProductDetailsCard(props: Props) {
     //     }
     // }
 
+    const navigate = useNavigate();
     const handleAddCartItem = async () => {
-        const result = await CartApi.addCartItemApiTest(props.data.pid.toString(), itemQty.toString());
-        if (result) {
-            setAddCartItemStatus(result.result);
+        try {
+            const result = await CartApi.addCartItemApiTest(props.data.pid.toString(), itemQty.toString());
+            if (result) {
+                setAddCartItemStatus(result.result);
+            }
+        } catch (err) {
+            navigate("/error")
         }
     };
 
@@ -103,7 +109,7 @@ export default function ProductDetailsCard(props: Props) {
         <Grid item xs={12} sm={6}>
             <Typography component="div">
                 <img
-                    //   src={props.data.image_url}
+                    src={props.data.image_url}
                     alt={props.data.name}
                     loading="lazy"
                     height='320px' />

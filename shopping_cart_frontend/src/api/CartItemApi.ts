@@ -20,6 +20,7 @@ export const addCartItemApi = async (token: string, productId: string, productQt
     throw e;
   }
 };
+
 export const addCartItemApiTest = async (productId: string, productQty: string) => {
   try {
     // const config = {

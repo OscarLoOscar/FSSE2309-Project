@@ -9,6 +9,7 @@ import { UserData } from './data/User/UserData';
 import Checkout from './ui/page/CheckoutPage/CheckoutPage';
 import ProductDetailsPage from './ui/page/ProductPage/ProductDetailsPage';
 import MainPage from './ui/page/MainPage/MainPage';
+import LoginSuccessPage from "./ui/page/LoginSuccessPage/LoginSuccessPage";
 
 const router = createHashRouter([
   {
@@ -38,6 +39,10 @@ const router = createHashRouter([
   {
     path: "/error",
     element: <ErrorPage />
+  },
+  {
+    path: "/success",
+    element: <LoginSuccessPage />
   }
 
 ])
