@@ -31,7 +31,7 @@ export default function UserStatus() {
     localStorage.clear();
   };
 
-  let localBasket = JSON.parse(localStorage.getItem('basket') || '[]');
+  const localBasket = JSON.parse(localStorage.getItem('basket') || '[]');
 
   useEffect(() => {
     setBasket(localBasket);

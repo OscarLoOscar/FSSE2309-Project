@@ -1,9 +1,7 @@
 import Tab from '@mui/material/Tab';
 import React from 'react';
 import { Grid, Tabs } from '@mui/material';
-type Props = {
 
-}
 
 const ItemTabLAbel = [
   {
@@ -21,7 +19,7 @@ const ItemTabLAbel = [
     ],
   },
 ]
-export default function ItemTab(props: Props) {
+export default function ItemTab() {
   const [value, setlabel] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

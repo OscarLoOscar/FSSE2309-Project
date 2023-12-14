@@ -1,10 +1,9 @@
-import { Breadcrumbs, Grid, Link, Typography, AppBar } from "@mui/material";
+import { Link, Typography, AppBar } from "@mui/material";
 import Container from "@mui/material/Container";
 import { red } from '@mui/material/colors';
 
-type Props = {};
 
-export default function BottomWrapper(props: Props) {
+export default function BottomWrapper() {
   const color = red[50];
 
   return (
@@ -54,10 +53,6 @@ export default function BottomWrapper(props: Props) {
         </Typography>
       </Container>
     </AppBar >
-    //   </footer>
-
-    //     {/* </Breadcrumbs>
-    //   </Grid>
-    // </Grid> */}
+ 
   );
 }

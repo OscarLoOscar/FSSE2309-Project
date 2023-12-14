@@ -13,6 +13,8 @@
 
 `npm install react@latest react-dom@latest`
 
+`npm install mui-nested-menu`
+
 `npm install axios`
 
 `npm i @mui/styles --save --force` => ==NPM install of @mui/styles is not working for React 18==

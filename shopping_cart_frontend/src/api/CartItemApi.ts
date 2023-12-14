@@ -2,7 +2,6 @@ import axios from "axios";
 import getEnvConfig from "../Config/EnvConfig";
 import { AddCartItemDto } from "../data/CartItem/AddCartItemDto";
 import { CartItemListDto } from "../data/CartItem/CartItemListDto";
-import { Navigate, useNavigate } from "react-router-dom";
 const baseUrl = getEnvConfig().baseUrl;
 
 export const addCartItemApi = async (token: string, productId: string, productQty: string) => {

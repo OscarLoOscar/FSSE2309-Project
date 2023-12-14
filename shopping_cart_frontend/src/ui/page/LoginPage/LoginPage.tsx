@@ -7,6 +7,8 @@ import Footer from "../../component/Footer/Footer";
 import LogoImage from "../../component/LogoImage/LogoImage";
 export default function LoginPage() {
   const [signIn, toggle] = useState(true);
+
+  
   return (
     <>
       <title>Venturenix Lab React Project</title>

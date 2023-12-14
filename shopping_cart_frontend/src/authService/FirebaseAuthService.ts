@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import { UserData } from "../data/User/UserData";
 
-export const serviceInit = () => {
+export const wwwoii2serviceInit = () => {
     //Make sure run it before web opening
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional

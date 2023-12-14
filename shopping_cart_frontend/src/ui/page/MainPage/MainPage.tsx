@@ -1,4 +1,4 @@
-import { Container, Box } from "@mui/material";
+import { Container } from "@mui/material";
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
@@ -6,15 +6,14 @@ import TopContainer from "../../component/TopContainer/TopContainer";
 import MainWrapper from "../../component/adv/MainWrapper";
 import Footer from "../../component/Footer/Footer";
 import LogoImage from "../../component/LogoImage/LogoImage";
-import { Parallax } from "../../component/parallax/Parallax";
 import ComplexButton from "../../component/ComplexButton/ComplexButton";
 
 const photos = [
-  "//images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
-  "//images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
-  "//images.hktvmall.com/image_slider/bannerzh_231129045222.jpg",
-  "//images.hktvmall.com/image_slider/bannerzh_230907025912.jpg",
-  "//images.hktvmall.com/image_slider/bannerzh_220712063428.jpg",
+  "https://images.hktvmall.com/image_slider/bannerzh_231130040831.jpg",
+  "https://images.hktvmall.com/image_slider/bannerzh_231201044918.jpg",
+  "https://images.hktvmall.com/image_slider/bannerzh_231129045222.jpg",
+  "https://images.hktvmall.com/image_slider/bannerzh_230907025912.jpg",
+  "https://images.hktvmall.com/image_slider/bannerzh_220712063428.jpg",
 
 ];
 
@@ -43,4 +42,4 @@ export default function MainPage() {
       <Footer />
     </>
   );
-};
+}

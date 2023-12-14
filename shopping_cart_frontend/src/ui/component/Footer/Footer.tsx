@@ -21,23 +21,6 @@ function Footer() {
               Venturenixlab
             </Link>
             {' | '}
-            {/* <Link color="inherit" href="#">
-              Second Link
-            </Link>
-            {' | '}
-            <Link color="inherit" href="#">
-              Third Link
-            </Link>
-            {' | '}
-            <Link color="inherit" href="#">
-              Fourth Link
-            </Link>
-            {' | '} */}
-            {/* </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"> */}
             <Link color="inherit" href="https://www.facebook.com/VenturenixLAB">
               <FacebookIcon />
             </Link>
