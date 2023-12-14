@@ -2,12 +2,19 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { Container, Grid, Stack } from '@mui/material';
+import { Container, Grid, Stack, styled } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
 import UserStatus from './UserStatus/UserStatus';
 import ItemMenu from './ItemMenu/ItemMenu';
 
-
+const Item = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  border: '1px solid',
+  borderColor: theme.palette.mode === 'dark' ? '#444d58' : '#ced7e0',
+  padding: theme.spacing(1),
+  borderRadius: '4px',
+  textAlign: 'center',
+}));
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -36,11 +43,17 @@ export default function NavBar() {
   return (
 
     <>
+
+
       <AppBar position="static"
-        style={{ width: 'auto', height: 70, justifyContent: 'flex-end' }}
+        style={{
+          width: 'auto',
+          height: 70,
+          justifyContent: 'space-evenly',
+          alignContent: 'center'
+        }}
       >
         <Toolbar>
-
           <ItemMenu />
           <SearchBox />
           <Stack spacing={2}
@@ -53,9 +66,6 @@ export default function NavBar() {
             }}
           >
           </Stack >
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          </Box>
           <UserStatus />
         </Toolbar>
       </AppBar>

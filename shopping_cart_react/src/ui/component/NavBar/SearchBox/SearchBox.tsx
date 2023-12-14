@@ -52,7 +52,7 @@ const CustomTextField = styled(TextField)({
     color: 'white', // 入左文字後，縮上去D字既color
   },
   '& .MuiInput-underline:after': {
-    borderBottomColor: 'orange', // Replace 'yourUnderlineColor' with the desired color
+    borderBottomColor: 'white', // Replace 'yourUnderlineColor' with the desired color
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
@@ -78,8 +78,8 @@ export default function SearchBox() {
           renderInput={(params) => (
             <CustomTextField
               {...params}
-              label="輸入品牌或產品名稱:搜尋全場1,606,059件商品"
-              sx={{ width: 400 }} // Replace 'yourWidth' with the desired width
+              label="輸入品牌或產品名稱"
+              sx={{ width: 400}} // Replace 'yourWidth' with the desired width
             />
           )}
         />

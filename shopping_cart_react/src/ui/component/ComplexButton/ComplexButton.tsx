@@ -7,21 +7,29 @@ import Bordeaux from './481844-Bordeaux.jpg';
 import BAROLO from './BAROLO.jpg';
 import DRC from './DRC.jpg';
 import { Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
+
 const images = [
   {
     url: Bordeaux,
     title: 'Bordeaux',
     width: '70%',
+    onclick: 1
   },
   {
     url: BAROLO,
     title: 'BAROLO',
     width: '70%',
+    onclick: 2
+
   },
   {
     url: DRC,
     title: 'Burgundy',
     width: '70%',
+    onclick: 3
+
   },
 ];
 
@@ -90,6 +98,14 @@ const ImageMarked = styled('span')(({ theme }) => ({
 }));
 
 export default function ComplexButton() {
+  const navigate = useNavigate();
+
+  const handleImageClick = (onclick: number) => {
+    if (onclick === 1) {
+      navigate("/product");
+    }
+  };
+
   return (
     <Grid sx={{
       display: 'flex',
@@ -107,6 +123,7 @@ export default function ComplexButton() {
           style={{
             width: image.width,
           }}
+          onClick={() => handleImageClick(image.onclick)}
         >
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
