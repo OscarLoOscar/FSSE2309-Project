@@ -3,6 +3,7 @@ package com.example.shoppingcart.controller.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.entity.UserEntity;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 public class CartItemControllerImpl implements CartItemController {
 
   private final CartItemServiceImpl cartItemService;
@@ -62,7 +64,8 @@ public class CartItemControllerImpl implements CartItemController {
   @Override
   public TransactionUpdateResponse addCartItem(JwtAuthenticationToken jwt, //
       String inputPid, //
-      String inputQuantity) throws ProductNotExistException , UserNotExistException {
+      String inputQuantity)
+      throws ProductNotExistException, UserNotExistException {
     // check user
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);

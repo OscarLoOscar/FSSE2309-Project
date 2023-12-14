@@ -3,6 +3,7 @@ package com.example.shoppingcart.controller.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.controller.ProductController;
@@ -14,6 +15,7 @@ import com.example.shoppingcart.services.ProductService;
 
 @RestController
 @RequestMapping("/public")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 public class ProductControllerImpl implements ProductController {
 
   ProductService productService;

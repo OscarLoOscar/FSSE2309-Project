@@ -31,11 +31,18 @@
 
 `npm i polished --force`
 
+Parallax
+`npm install gsap --force`
+
+` npm install --save react-credit-cards-2 --force`
 [Styling BottomNavigation in React.js Material-UI](https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui)
 
 [Nested Menu ](https://medium.com/geekculture/creating-a-dropdown-with-nested-menu-items-using-react-mui-bb0c084226da)
 https://mdbootstrap.com/docs/react/extended/dropdown-multilevel/#
 
+`npm i react-storage-complete --force`
+[Window/localStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage)
+[Window localStorage](https://github.com/justinmahar/react-storage-complete#installation)
 ### Open src/index.js, add the following import statement in the file head:
 
 import 'bootstrap/dist/css/bootstrap.min.css';

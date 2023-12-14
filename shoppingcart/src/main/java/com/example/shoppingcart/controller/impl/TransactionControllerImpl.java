@@ -3,6 +3,7 @@ package com.example.shoppingcart.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.controller.TransactionController;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/transaction")
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 public class TransactionControllerImpl implements TransactionController {
 
         private final UserService userService;
