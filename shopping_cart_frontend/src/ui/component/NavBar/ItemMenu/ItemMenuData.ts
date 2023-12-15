@@ -19,7 +19,7 @@ export const menuItemsData: MenuItemsData = {
     {
       label: "Red Wine",
       items: [
-        { label: "Bordeaux", onClick: () => console.log("Document clicked") },
+        { label: "Bordeaux", onClick: () => console.log("Document clicked")},
         { label: "Burgundy", onClick: () => console.log("Document clicked") },
         { label: "Loire Vally", onClick: () => console.log("Document clicked") },
         { label: "South France", onClick: () => console.log("Document clicked") },
@@ -66,3 +66,4 @@ export const menuItemsData: MenuItemsData = {
     },
   ],
 };
+

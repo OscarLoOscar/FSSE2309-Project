@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import * as React from "react";
 import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,15 +7,16 @@ import * as CartApi from "../../../api/CartItemApi.js";
 import { useNavigate } from "react-router-dom";
 import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
 import { getAccessToken } from "../../../authService/FirebaseAuthService.js";
+import { Dispatch, useState, ChangeEvent } from "react";
 
 type Props = {
     data: CartItemListDto
-    update: React.Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
+    update: Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
 }
 
 export default function ShoppingCartListCard(props: Props) {
-    const [cartItem, setCartItem] = React.useState<CartItemListDto>(props.data)
-    const [itemSubtotal, setItemSubtotal] = React.useState<number>(props.data.price * props.data.cart_quantity)
+    const [cartItem, setCartItem] = useState<CartItemListDto>(props.data)
+    const [itemSubtotal, setItemSubtotal] = useState<number>(props.data.price * props.data.cart_quantity)
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
         currency: 'HKD',
@@ -35,7 +35,7 @@ export default function ShoppingCartListCard(props: Props) {
         }
     }
 
-    const handleQtyChange = async (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleQtyChange = async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         try {
             const token = await getAccessToken()
             if (token) {

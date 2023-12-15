@@ -1,4 +1,3 @@
-import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -6,7 +5,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState, MouseEvent, SyntheticEvent } from 'react';
 import { getAccessToken } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
 import * as CartApi from "../../../../api/CartItemApi"
@@ -21,11 +20,11 @@ interface CartPopoverProps {
 }
 
 export default function UserStatus() {
-  const [value, setValue] = React.useState('Login');
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const [value, setValue] = useState('Login');
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-  const [basket, setBasket] = React.useState<CartItemListDto | null>(null);
+  const [basket, setBasket] = useState<CartItemListDto | null>(null);
 
   const deleteItem = () => {
     localStorage.clear();
@@ -38,9 +37,9 @@ export default function UserStatus() {
   }, []);
 
   //for Popover 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 

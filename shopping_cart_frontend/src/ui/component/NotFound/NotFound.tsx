@@ -1,13 +1,13 @@
-import React from 'react';
 import HomeIcon from '@mui/icons-material/Home';
-import { Box, Button, Grid } from '@mui/material';
+import {  Button, Grid } from '@mui/material';
+import { FC } from 'react';
 
 interface NotFoundProps {
   title: string;
   subtitle: string;
 }
 
-const NotFound: React.FC<NotFoundProps> = ({ title, subtitle }) => {
+const NotFound: FC<NotFoundProps> = ({ title, subtitle }) => {
   return (
     <>
       <Grid

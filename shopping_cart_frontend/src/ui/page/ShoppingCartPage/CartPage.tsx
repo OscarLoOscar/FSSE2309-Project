@@ -4,11 +4,11 @@ import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
 import { Container } from "@mui/material";
 import Footer from "../../component/Footer/Footer";
-import {  FormLabel, Input } from "@mui/material";
+import { FormLabel, Input } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import React, { useEffect } from "react";
+import { useEffect, useState , ChangeEvent} from "react";
 import { GetTransDto } from "../../../data/Trans/GetTransDto";
 import * as TransApi from "../../../api/TransactionApi"
 import * as CartItemApi from "../../../api/CartItemApi"
@@ -20,12 +20,12 @@ import LogoImage from "../../component/LogoImage/LogoImage";
 
 
 export default function CartPage() {
-  const [transData, setTransData] = React.useState<GetTransDto | undefined>(undefined);
-  const [cardNo, setCardNo] = React.useState<number | undefined>(undefined)
-  const [expDate, setExpDate] = React.useState<Date | undefined>(undefined)
-  const [payStatus, setPayStatus] = React.useState<string | undefined>(undefined)
-  const [cvv, setCvv] = React.useState<number | undefined>(undefined)
-  const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
+  const [transData, setTransData] = useState<GetTransDto | undefined>(undefined);
+  const [cardNo, setCardNo] = useState<number | undefined>(undefined)
+  const [expDate, setExpDate] = useState<Date | undefined>(undefined)
+  const [payStatus, setPayStatus] = useState<string | undefined>(undefined)
+  const [cvv, setCvv] = useState<number | undefined>(undefined)
+  const [loadingBackdrop, setLoadingBackdrop] = useState<boolean>(false);
   const navigate = useNavigate();
   const { transactionId } = useParams<Params>();
 
@@ -112,17 +112,17 @@ export default function CartPage() {
       return <Loading />
     }
   }
-  const handleCardNoInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleCardNoInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCardNo(Number(event.target.value))
   }
 
-  const handleExpDateInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleExpDateInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setExpDate(event.target.value)
   }
 
-  const handleCVVInput = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleCVVInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCvv(Number(event.target.value))
   }
   const handleSubmitPayment = async () => {

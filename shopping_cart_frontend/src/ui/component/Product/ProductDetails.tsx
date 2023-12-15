@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -13,7 +12,7 @@ type Params = {
 }
 
 export default function ProductDetails() {
-    const [productDetails, setProductDetails] = React.useState<ProductDetailsDto | undefined>(undefined);
+    const [productDetails, setProductDetails] = useState<ProductDetailsDto | undefined>(undefined);
     const navigate = useNavigate()
     const { productId } = useParams<Params>()
     const fetchProductData = async () => {

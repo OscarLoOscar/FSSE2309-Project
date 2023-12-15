@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Backdrop, CircularProgress, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -11,18 +10,18 @@ import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
 import { getAccessToken } from "../../../authService/FirebaseAuthService.js";
 import ShoppingCartListCard from "./ShoppingCartListCard.js";
 import Loading from "../Utility/Loading.js";
-import { loginUserContext } from "../../../App.js";
+import { LoginUserContext } from "../../../App.js";
 
 export default function ShoppingCartList() {
-    const [cartItemList, setCartItemList] = React.useState<CartItemListDto[] | undefined | null>(undefined);
-    const [transId, setTransId] = React.useState<string | undefined>(undefined);
-    const [loadingBackdrop, setLoadingBackdrop] = React.useState<boolean>(false);
+    const [cartItemList, setCartItemList] = useState<CartItemListDto[] | undefined | null>(undefined);
+    const [transId, setTransId] = useState<string | undefined>(undefined);
+    const [loadingBackdrop, setLoadingBackdrop] = useState<boolean>(false);
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
         currency: 'HKD',
     });
     const navigate = useNavigate();
-    const loginUser = useContext(loginUserContext);
+    const loginUser = useContext(LoginUserContext);
     let totalAmt = 0;
 
     const fetchCartData = async () => {

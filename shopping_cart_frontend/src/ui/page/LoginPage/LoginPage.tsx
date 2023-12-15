@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import * as Components from './Components';
 import TopContainer from "../../component/TopContainer/TopContainer";
 import ItemTab from "../../component/ItemTab/ItemTab";
@@ -16,14 +16,14 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   //點估event type ？用IDE估，onChange={(e)} ：React.ChangeEvent<HTMLInputElement>
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
   }
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
   }
 
-  const handleSumit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSumit = async (event: FormEvent<HTMLFormElement>) => {
     //避免跳版
     event.preventDefault();
     console.log("email : ", email);

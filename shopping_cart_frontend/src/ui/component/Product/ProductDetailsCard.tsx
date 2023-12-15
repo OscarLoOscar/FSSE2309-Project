@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Alert, Collapse, Grid, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -9,7 +8,8 @@ import { yellow } from "@mui/material/colors";
 import CloseIcon from '@mui/icons-material/Close';
 import { ProductDetailsDto } from "../../../data/Product/ProductDetailsDto";
 import * as CartApi from "../../../api/CartItemApi"
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState , ChangeEvent } from "react";
 // import { getAccessToken } from "../../../authService/FirebaseAuthService";
 
 type Props = {
@@ -25,9 +25,9 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 export default function ProductDetailsCard(props: Props) {
-    const [itemQty, setItemQty] = React.useState<number>(1);
-    const [addCartItemStatus, setAddCartItemStatus] = React.useState<string | undefined>(undefined);
-    const [messageBoxOpen, setMessageBoxOpen] = React.useState<boolean>(true);
+    const [itemQty, setItemQty] = useState<number>(1);
+    const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
+    const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
     // const handleAddCartItem = async () => {
     //     const token = await getAccessToken()
     //     if (token) {
@@ -50,7 +50,7 @@ export default function ProductDetailsCard(props: Props) {
         }
     };
 
-    const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setItemQty(Number(event.target.value));
     }
 

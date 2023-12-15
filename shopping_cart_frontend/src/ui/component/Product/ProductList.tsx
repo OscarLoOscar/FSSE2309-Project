@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, styled } from "@mui/material";
 import Box from '@mui/material/Box';
@@ -16,7 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 export default function ProductList() {
-    const [productList, setProductList] = React.useState<ProductListDto[] | undefined>(undefined);
+    const [productList, setProductList] = useState<ProductListDto[] | undefined>(undefined);
     const navigate = useNavigate()
 
     const fetchProductData = async () => {

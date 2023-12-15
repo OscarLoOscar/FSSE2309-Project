@@ -1,15 +1,18 @@
 import { NestedDropdown } from 'mui-nested-menu';
 import { menuItemsData } from "./ItemMenuData"
+import { Box } from '@mui/material';
 
 export default function MenuMenu() {
   return (
     <>
-      <NestedDropdown
-        menuItemsData={menuItemsData}
-        MenuProps={{ elevation: 13, sx: { width: '100' /* your font color */ } }}
-        ButtonProps={{ variant: 'outlined', sx: { fontSize: '18px', color: 'white'/* your font size */ } }}
-        onClick={() => console.log('Clicked')}
-      />
+      <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
+        <NestedDropdown
+          menuItemsData={menuItemsData}
+          MenuProps={{ elevation: 3, sx: { width: '200', flex: 'none' } }}
+          ButtonProps={{ variant: 'outlined', sx: { fontSize: '18px', color: 'white'/* your font size */ } }}
+          onClick={() => console.log('Clicked')}
+        />
+      </Box>
     </>
   );
 

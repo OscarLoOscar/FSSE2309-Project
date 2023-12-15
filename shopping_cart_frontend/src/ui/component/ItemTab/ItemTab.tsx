@@ -1,5 +1,5 @@
 import Tab from '@mui/material/Tab';
-import React from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { Grid, Tabs } from '@mui/material';
 
 
@@ -20,9 +20,9 @@ const ItemTabLAbel = [
   },
 ]
 export default function ItemTab() {
-  const [value, setlabel] = React.useState(0);
+  const [value, setlabel] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
     setlabel(newValue);
   };
 
