@@ -5,12 +5,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, MouseEvent, SyntheticEvent } from 'react';
-import { getAccessToken } from '../../../../authService/FirebaseAuthService';
+import { useEffect, useState, MouseEvent, SyntheticEvent, useContext } from 'react';
+import { getAccessToken, handleSignOut } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
 import * as CartApi from "../../../../api/CartItemApi"
 import { Box, Divider, Popover, Typography } from '@mui/material';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { LoginUserContext } from '../../../../App';
 
 interface CartPopoverProps {
   basket: CartItemListDto | null; // Replace 'any' with the actual type of basket data
@@ -24,6 +25,7 @@ export default function UserStatus() {
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
   const [basket, setBasket] = useState<CartItemListDto | null>(null);
 
   const deleteItem = () => {
@@ -55,7 +57,9 @@ export default function UserStatus() {
   const navigateLoginPage = () => {
     navigate('/login');
   };
-
+  // const navigateLogOutPage = () => {
+  //   navigate('/logout');
+  // };
   const navigateThankyouPage = () => {
     navigate('/thankyoupage');
   };
@@ -79,6 +83,30 @@ export default function UserStatus() {
       navigate('/error');
     }
   };
+
+  const handleUserLogout = async () => {
+    await handleSignOut();
+    navigate('/logout');
+  }
+
+  const loginUser = useContext(LoginUserContext);
+  const renderLoginContainer = () => {
+    if (loginUser) {
+      return (
+        <>
+          <div style={{ color: "white" }}>
+            Logout {loginUser.email.substring(0, 7)}
+          </div>
+        </>
+      )
+    } else {
+      return (
+        <>
+          Login
+        </>
+      )
+    }
+  }
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -98,12 +126,11 @@ export default function UserStatus() {
         showLabels
         onChange={handleChange}
       >
-
         <BottomNavigationAction
-          label="Login "
-          value="Login"
+          label={renderLoginContainer()}
+          value={loginUser ? "Welcome" : "Login"}
           icon={<PersonIcon sx={{ color: 'white' }} />}
-          onClick={navigateLoginPage}
+          onClick={loginUser ? handleUserLogout : navigateLoginPage}
           sx={{
             width: 100,
             '&:hover': {
@@ -113,8 +140,6 @@ export default function UserStatus() {
           }
         />
         {/**handleChange 之前icon白色 */}
-
-
         <BottomNavigationAction
           label="Notifications"
           icon={<NotificationsIcon sx={{ color: 'white' }} />}
