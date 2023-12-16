@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useContext, useEffect } from "react";
 import * as Components from './Components';
 import TopContainer from "../../component/TopContainer/TopContainer";
 import ItemTab from "../../component/ItemTab/ItemTab";
@@ -7,12 +7,13 @@ import Footer from "../../component/Footer/Footer";
 import LogoImage from "../../component/LogoImage/LogoImage";
 import * as FirebaseAuthService from "../../../authService/FirebaseAuthService"
 import { useNavigate } from "react-router-dom";
+import { LoginUserContext } from "../../../App";
 
 export default function LoginPage() {
   const [signIn, toggle] = useState(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const loginUser = useContext(LoginUserContext);
   const navigate = useNavigate();
 
   //點估event type ？用IDE估，onChange={(e)} ：React.ChangeEvent<HTMLInputElement>
@@ -35,6 +36,14 @@ export default function LoginPage() {
       alert("Login failed");
     }
   }
+
+  useEffect(() => {
+    if (loginUser) {
+      navigate("/");
+    }
+  }, [loginUser, navigate]);
+  //state variable 有任何改變，都行useEffect一次=> checking loging status 
+
   return (
     <>
       <title>Login Page</title>

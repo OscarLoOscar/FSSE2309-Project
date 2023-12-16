@@ -43,64 +43,6 @@ export default function NavBar() {
   return (
 
     <>
-      {/* <AppBar position="static"
-        style={{
-          width: 'auto',
-          height: 70,
-          justifyContent: 'space-evenly',
-          alignContent: 'center'
-        }}
-      >
-        <Toolbar>
-          <MenuMenu />
-          <SearchBox />
-          <Stack spacing={2}
-            sx={{
-              width: 500,
-              // margin: 'flex', // Center the Stack horizontally
-              marginLeft: 5,
-              // display: 'flex', // Make it a flex container
-              // alignItems: 'center', // Center the content vertically
-            }}
-          >
-          </Stack >
-          <UserStatus />
-        </Toolbar>
-      </AppBar> */}
-
-
-      {/* <AppBar position="static" >
-        <Toolbar variant="dense" sx={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <Grid container style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
-            <Grid item style={{ width: '140px' }}>
-              <MenuMenu />
-            </Grid>
-            <Grid item style={{  width: '500px' }}>
-              <SearchBox />
-            </Grid>
-            <Grid item style={{ width: '300px' }}>
-              <UserStatus />
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar> */}
-
-      {/* <AppBar position="static">
-        <Toolbar variant="regular" sx={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} md={2} sx={{ flex: '1 1 0', maxWidth: '100px' }}>
-              <MenuMenu />
-            </Grid>
-            <Grid item xs={12} sm={8} md={6} sx={{ flex: '1 1 0', maxWidth: '500px' }}>
-              <SearchBox />
-            </Grid>
-            <Grid item xs={12} sm={12} md={4} sx={{ flex: '1 1 0', maxWidth: '300px' }}>
-              <UserStatus />
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar> */}
-
       <AppBar position="static">
         <Toolbar variant="regular" sx={{ maxWidth: '1200px', margin: '0 auto' }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">

@@ -9,7 +9,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { ProductDetailsDto } from "../../../data/Product/ProductDetailsDto";
 import * as CartApi from "../../../api/CartItemApi"
 import { useNavigate } from "react-router-dom";
-import { useState , ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
+import { getAccessToken } from "../../../authService/FirebaseAuthService";
 // import { getAccessToken } from "../../../authService/FirebaseAuthService";
 
 type Props = {
@@ -28,27 +29,19 @@ export default function ProductDetailsCard(props: Props) {
     const [itemQty, setItemQty] = useState<number>(1);
     const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
     const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
-    // const handleAddCartItem = async () => {
-    //     const token = await getAccessToken()
-    //     if (token) {
-    //         const result = await CartApi.addCartItemApi(token, props.data.pid.toString(), itemQty.toString())
-    //         if (result) {
-    //             setAddCartItemStatus(result.result)
-    //         }
-    //     }
-    // }
-
     const navigate = useNavigate();
+
     const handleAddCartItem = async () => {
-        try {
-            const result = await CartApi.addCartItemApiTest(props.data.pid.toString(), itemQty.toString());
+        const token = await getAccessToken()
+        if (token) {
+            const result = await CartApi.addCartItemApi(token, props.data.pid.toString(), itemQty.toString())
             if (result) {
-                setAddCartItemStatus(result.result);
+                setAddCartItemStatus(result.result)
             }
-        } catch (err) {
-            navigate("/error")
         }
-    };
+    }
+
+
 
     const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setItemQty(Number(event.target.value));

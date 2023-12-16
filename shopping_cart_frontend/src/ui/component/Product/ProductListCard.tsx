@@ -1,14 +1,16 @@
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography, Collapse, Alert } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
 import { ProductListDto } from "../../../data/Product/ProductListDto";
-import { addCartItemApiTest } from "../../../api/CartItemApi";
+import { addCartItemApi } from "../../../api/CartItemApi";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionIcon from '@mui/icons-material/Description';
-import * as CartItemApi from "../../../api/CartItemApi"
+import { getAccessToken } from "../../../authService/FirebaseAuthService";
+import { LoginUserContext } from "../../../App";
+import * as CartApi from "../../../api/CartItemApi"
 
 type Props = {
   productData: ProductListDto;
@@ -16,27 +18,16 @@ type Props = {
 export default function ProductListCard({ productData }: Props) {
   const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
   const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
+  const loginUser = useContext(LoginUserContext);
   const navigate = useNavigate();
 
-  const addProduct = async () => {
-    try {
-      const data = await CartItemApi.addCartItemApiTest(productData.pid.toString(), "1");
-    } catch (err) {
-      navigate("/error");
-    }
-  }
   const handleAddCartItem = async () => {
-    // const token = await getAccessToken();
-    setAddCartItemStatus(undefined);
-    // if (token) {
-    // const result = await addCartItemApi(token,productData.pid.toString(),"1")
-    const result = await addCartItemApiTest(productData.pid.toString(), "1")
-    if (result) {
-      setAddCartItemStatus(result.result);
-      setMessageBoxOpen(true);
-    }
-    // }
+    const result = await CartApi.addCartItemApi(productData.pid.toString(), "1")
+    console.log(result);
+    setAddCartItemStatus(productData.name);
+
   }
+
   const handleItemDetail = () => {
     navigate(`/product/` + productData.pid.toString());
   }
@@ -99,6 +90,9 @@ export default function ProductListCard({ productData }: Props) {
 
   const [isAdded, setIsAdded] = useState(false);
 
+  useEffect(() => {
+
+  }, []);
 
   return (
     <>
@@ -146,8 +140,7 @@ export default function ProductListCard({ productData }: Props) {
             <Button size="small"
               color="primary"
               href="#"
-              // onClick={handleAddCartItem}
-              onClick={addProduct}
+              onClick={handleAddCartItem}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}

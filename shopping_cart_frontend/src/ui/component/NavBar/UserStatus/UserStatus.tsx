@@ -1,65 +1,70 @@
+import { useState, MouseEvent, SyntheticEvent, useContext } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState, MouseEvent, SyntheticEvent, useContext } from 'react';
 import { getAccessToken, handleSignOut } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
-import * as CartApi from "../../../../api/CartItemApi"
-import { Box, Divider, Popover, Typography } from '@mui/material';
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import * as CartApi from '../../../../api/CartItemApi';
+import { Box, Divider, Popover, Skeleton, Typography } from '@mui/material';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { LoginUserContext } from '../../../../App';
-
-interface CartPopoverProps {
-  basket: CartItemListDto | null; // Replace 'any' with the actual type of basket data
-  handleDeleteCartItem: () => void;
-  anchorEl: HTMLElement | null; // Add anchorEl property
-  onClose: () => void; // Add onClose property
-}
 
 export default function UserStatus() {
   const [value, setValue] = useState('Login');
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
+  const handleChange = (_event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
-  const [basket, setBasket] = useState<CartItemListDto | null>(null);
+  //user login
+  const loginUser = useContext(LoginUserContext);
+  const renderLoginContainer = () => {
+    if (loginUser) {
+      return (
+        <>
+          <div style={{ color: "white" }}>
+            Logout {loginUser.email.substring(0, 7)}
+          </div>
+        </>
+      )
+    } else if (loginUser === null) {
+      return (
+        <>
+          Login
+        </>
+      )
+    } else {
+      return (
+        <>
+          <Skeleton variant="circular" width={40} height={40} />
+        </>
+      )
+    }
+  }
+  // For Popover
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const deleteItem = () => {
-    localStorage.clear();
-  };
-
-  const localBasket = JSON.parse(localStorage.getItem('basket') || '[]');
-
-  useEffect(() => {
-    setBasket(localBasket);
-  }, []);
-
-  //for Popover 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleOpenPopoverClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
-  //
 
   const navigate = useNavigate();
 
   const navigateLoginPage = () => {
     navigate('/login');
   };
-  // const navigateLogOutPage = () => {
-  //   navigate('/logout');
-  // };
+
   const navigateThankyouPage = () => {
     navigate('/thankyoupage');
   };
@@ -72,41 +77,110 @@ export default function UserStatus() {
     navigate('/shoppingcart');
   };
 
-  const fetchCartData = async () => {
+  const handleUserLogout = async () => {
+    await handleSignOut();
+    navigate('/logout');
+  }
+  const [cartItems, setCartItems] = useState<CartItemListDto[]>([]);
+
+  const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+
     try {
       const token = await getAccessToken();
       if (token) {
         const cartItems = await CartApi.getCartItemListApi(token);
-        setBasket(cartItems.length > 0 ? cartItems[0] : null);
+        setCartItems(cartItems);
       }
     } catch (e) {
       navigate('/error');
     }
   };
 
-  const handleUserLogout = async () => {
-    await handleSignOut();
-    navigate('/logout');
-  }
-
-  const loginUser = useContext(LoginUserContext);
-  const renderLoginContainer = () => {
-    if (loginUser) {
-      return (
-        <>
-          <div style={{ color: "white" }}>
-            Logout {loginUser.email.substring(0, 7)}
-          </div>
-        </>
-      )
-    } else {
-      return (
-        <>
-          Login
-        </>
-      )
+  const handleDeleteCartItem = async (pid: string) => {
+    try {
+      const token = await getAccessToken();
+      if (token) {
+        await CartApi.deleteCartItemApi(token, pid);
+        // Assuming setCartItems is how you update the cartItems state
+        const updatedCartItems = await CartApi.getCartItemListApi(token);
+        setCartItems(updatedCartItems);
+      }
+    } catch (e) {
+      navigate('/error');
     }
-  }
+  };
+
+  const popoverContent = (
+    <Box sx={{ width: '18rem', height: '15rem' }}>
+      <Typography sx={{ p: 2, fontWeight: '700' }}>Cart</Typography>
+      <Divider />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '70%',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {cartItems.length > 0 ? (
+          cartItems.map((item) => (
+            <Box
+              key={item.pid}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Typography sx={{ py: 0.5, px: 1, color: '#009688', fontSize: '13px' }}>
+                  {item.name}
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography sx={{ py: 0.5, px: 1, color: '#1a237e', fontSize: '13px' }}>
+                    ${item.price}.00 x {item.cart_quantity}
+                  </Typography>
+                  <Typography sx={{ color: '#3d5afe', fontSize: '13px', fontWeight: '700' }}>
+                    ${item.price * item.cart_quantity}.00
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* DELETE ICON */}
+              <Box
+                sx={{
+                  color: '#1de9b6',
+                  cursor: 'pointer',
+                  opacity: '0.7',
+                }}
+                onClick={() => handleDeleteCartItem(item.pid.toString())}
+              >
+                <DeleteOutlineOutlinedIcon />
+              </Box>
+            </Box>
+          ))
+        ) : (
+          <Typography sx={{ p: 2, fontWeight: '700', color: '#4caf50' }}>Your cart is empty.</Typography>
+        )}
+      </Box>
+    </Box>
+  );
+
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -117,27 +191,26 @@ export default function UserStatus() {
           cursor: 'pointer',
           '& .Mui-selected': {
             '& .MuiBottomNavigationAction-label': {
-              fontSize: theme => theme.typography.caption,
+              fontSize: (theme) => theme.typography.caption,
               fontWeight: 'bold',
-              color: 'white'
-            }
-          }
+              color: 'white',
+            },
+          },
         }}
         showLabels
         onChange={handleChange}
       >
         <BottomNavigationAction
           label={renderLoginContainer()}
-          value={loginUser ? "Welcome" : "Login"}
-          icon={<PersonIcon sx={{ color: 'white' }} />}
+          value={loginUser ? 'Welcome' : 'Login'}
+          icon={loginUser ? <LogoutIcon sx={{ color: 'white' }} /> : <PersonIcon sx={{ color: 'white' }} />}
           onClick={loginUser ? handleUserLogout : navigateLoginPage}
           sx={{
             width: 100,
             '&:hover': {
               backgroundColor: '#90caf9',
-            }
-          }
-          }
+            },
+          }}
         />
         {/**handleChange 之前icon白色 */}
         <BottomNavigationAction
@@ -148,7 +221,7 @@ export default function UserStatus() {
             width: 100,
             '&:hover': {
               backgroundColor: '#90caf9',
-            }
+            },
           }}
         />
         <BottomNavigationAction
@@ -158,8 +231,8 @@ export default function UserStatus() {
           sx={{
             width: 100,
             '&:hover': {
-              backgroundColor: '#90caf9'
-            }
+              backgroundColor: '#90caf9',
+            },
           }}
         />
         {/* Drawer -> 黑屏選項 效果 */}
@@ -168,157 +241,33 @@ export default function UserStatus() {
           aria-describedby={id}
           label="Shopping Cart"
           icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
-          // onClick={navigateShoppingCartPage}
-          onClick={handleClick}
+          onClick={handleOpenPopoverClick}
           sx={{
             width: 100,
             '&:hover': {
-              backgroundColor: '#90caf9'
-            }
+              backgroundColor: '#90caf9',
+            },
           }}
         />
-      </BottomNavigation >
+      </BottomNavigation>
       {/* CART */}
-
       {/* Popover */}
       <Popover
         id={id}
-        //  open={Boolean(basket)}
         open={open}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
         anchorEl={anchorEl}
         onClose={handleClose}
       >
-        <Box
-          sx={{
-            width: "18rem",
-            height: "15rem",
-          }}
-        >
-          <Typography sx={{ p: 2, fontWeight: "700" }}>Cart</Typography>
-          <Divider />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              height: "70%",
-              width: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {/* POPOVER-BASKET */}
-            {basket ? (
-              <Box sx={{ display: "flex", flexDirection: "column", p: 1 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        py: 0.5,
-                        px: 1,
-                        color: "#009688",
-                        fontSize: "13px",
-                      }}
-                    >
-                      {basket.name}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          py: 0.5,
-                          px: 1,
-                          color: "#1a237e",
-                          fontSize: "13px",
-                        }}
-                      >
-                        ${basket.price}.00 x {basket.cart_quantity}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          color: "#3d5afe",
-                          fontSize: "13px",
-                          fontWeight: "700",
-                        }}
-                      >
-                        ${basket.price * basket.cart_quantity}.00
-                      </Typography>
-                    </Box>
-                  </Box>
-
-                  {/* DELETE ICON */}
-                  <Box
-                    sx={{
-                      color: "#1de9b6",
-                      cursor: "pointer",
-                      opacity: "0.7",
-                    }}
-                  // onClick={handleDeleteCartItem}
-                  >
-                    <DeleteOutlineOutlinedIcon />
-                  </Box>
-                </Box>
-
-                {/* CHECKOUT BUTTON */}
-                <Box
-                  sx={{
-                    p: 1.5,
-                    backgroundColor: "#ffb74d",
-                    mt: 2,
-                    borderRadius: "0.5rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontWeight: "700",
-                      color: "white",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Checkout
-                  </Typography>
-                </Box>
-              </Box>
-            ) : (
-              <Typography
-                sx={{
-                  p: 2,
-                  fontWeight: "700",
-                  color: "#4caf50",
-                }}
-              >
-                Your cart is empty.
-              </Typography>
-            )}
-          </Box>
-        </Box>
-      </Popover>    </>
+        {popoverContent}
+      </Popover>
+    </>
   );
 }

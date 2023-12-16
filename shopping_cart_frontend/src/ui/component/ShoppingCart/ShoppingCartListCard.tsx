@@ -48,7 +48,7 @@ export default function ShoppingCartListCard(props: Props) {
         } catch (e) {
             navigate("/error")
         } finally {
-            await fetchCartData()
+            await fetchCartData();
         }
     }
 
@@ -98,9 +98,7 @@ export default function ShoppingCartListCard(props: Props) {
                     id={cartItem.pid.toString() + "_itemQuantity"}
                     type="number"
                     fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
+                    InputLabelProps={{ shrink: true }}
                     size={"small"}
                     inputProps={{ min: 1, max: cartItem.stock }}
                     onBlur={handleQtyChange}
@@ -130,5 +128,8 @@ export default function ShoppingCartListCard(props: Props) {
                 </IconButton>
             </Box>
         </Box>
+        <Typography variant="body2">
+            Selected Product: {cartItem.name} | Price: {HKDollar.format(cartItem.price)} | Quantity: {cartItem.cart_quantity}
+        </Typography>
     </>
 }
