@@ -6,7 +6,7 @@ import TopContainer from "../../component/TopContainer/TopContainer";
 import LogoImage from "../../component/LogoImage/LogoImage";
 import ShoppingCartList from "../../component/ShoppingCart/ShoppingCartList";
 
-export default function ShoppingcartPage() {
+export default function C() {
     return <>
         <TopContainer />
         <LogoImage />

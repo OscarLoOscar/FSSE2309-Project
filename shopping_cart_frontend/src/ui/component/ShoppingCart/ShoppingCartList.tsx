@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import * as CartApi from "../../../api/CartItemApi.js";
 // import * as TransApi from "../../../api/TransactionApi.js";
 import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
-import ShoppingCartListCard from "./ShoppingCartListCard.js";
+import ShoppingCartListCard from "./ShoppingCartListCard";
 import Loading from "../Utility/Loading.js";
 import { LoginUserContext } from "../../../App.js";
 
@@ -43,9 +43,9 @@ export default function ShoppingCartList() {
         if (cartItemList && cartItemList.length > 0) {
             return cartItemList.map((value) => {
                 totalAmt += value.price * value.cart_quantity;
-                return <ShoppingCartListCard key={value.pid} data={value} 
+                return <ShoppingCartListCard key={value.pid} data={value}
                 // update={setCartItemList}
-                 />
+                />
             })
         } else {
             return <Loading />
@@ -163,7 +163,7 @@ export default function ShoppingCartList() {
         if (transId) {
             navigate('/checkout/' + transId)
         }
-    }, [loginUser]);
+    }, [loginUser,transId]);
 
     return <>
         <Box height="70px"></Box>

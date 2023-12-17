@@ -11,7 +11,7 @@ import MainPage from './ui/page/MainPage/MainPage';
 import LoginSuccessPage from "./ui/page/LoginSuccessPage/LoginSuccessPage";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService"
 import LogOutPage from "./ui/page/LogOutPage/LogOutPage";
-import ShoppingcartPage from "./ui/page/CheckoutPage/CheckoutPage";
+import ShoppingCartPage from "./ui/page/ShoppingCartPage/ShoppingCartPage";
 
 //useContext - is a way to manage state globally
 
@@ -55,7 +55,7 @@ function App() {
     // },
     {
       path: "/shoppingcart",
-      element: <ShoppingcartPage />
+      element: <ShoppingCartPage />
     },
     {
       path: "/error",

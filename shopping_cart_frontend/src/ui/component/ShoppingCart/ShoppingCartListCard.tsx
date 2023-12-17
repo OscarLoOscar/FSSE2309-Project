@@ -16,6 +16,7 @@ type Props = {
 export default function ShoppingCartListCard({ data }: Props) {
     const [cartItem, setCartItems] = useState<CartItemListDto>(data)
     const [itemSubtotal, setItemSubtotal] = useState<number>(data.price * data.cart_quantity)
+    const [quantity, setQuantity] = useState<number>(data.cart_quantity);
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
         currency: 'HKD',
@@ -34,24 +35,35 @@ export default function ShoppingCartListCard({ data }: Props) {
         }
     }
 
-    const handleQtyChange = async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleQtyChange = async (newQuantity: number) => {
         try {
-            const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(data.pid.toString(), event.target.value);
-            if (updatedCartItem) {
-                setCartItems(updatedCartItem);
+            if (newQuantity >= 1 && newQuantity <= cartItem.stock) {
+                const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(
+                    data.pid.toString(),
+                    newQuantity.toString()
+                );
+
+                if (updatedCartItem) {
+                    setCartItems(updatedCartItem);
+                    setItemSubtotal(updatedCartItem.price * newQuantity);
+                    setQuantity(newQuantity);
+                }
+            } else {
+                setItemSubtotal(data.cart_quantity * data.price);
+                navigate("/error");
             }
-            setItemSubtotal(Number(event.target.value) * data.price);
         } catch (e) {
             navigate("/error");
         }
     };
+    const handlePlusButton = () => {
+        handleQtyChange(quantity + 1);
+    };
 
-
-    // const handleDecreaseClick = () => {
-    //     // 确保数量不小于 1，避免出现负数
-    //     const newQuantity = Math.max(cartItem.cart_quantity - 1, 1);
-    //     handleQtyChange(newQuantity);
-    // };
+    const handleMinusButton = () => {
+        const newQuantity = Math.max(cartItem.cart_quantity - 1, 1);
+        handleQtyChange(newQuantity)
+    };
 
     const handleDeleteCartItem = async (pid: string) => {
         try {
@@ -101,7 +113,7 @@ export default function ShoppingCartListCard({ data }: Props) {
                     InputLabelProps={{ shrink: true }}
                     size={"small"}
                     inputProps={{ min: 1, max: cartItem.stock }}
-                    onBlur={handleQtyChange}
+                    onBlur={(e) => handleQtyChange(Number(e.target.value))}
                     defaultValue={cartItem.cart_quantity}
                 />
             </Box>
@@ -129,7 +141,7 @@ export default function ShoppingCartListCard({ data }: Props) {
             </Box>
         </Box>
         <Typography variant="body2">
-            Selected Product: {cartItem.name} | Price: {HKDollar.format(cartItem.price)} | Quantity: {cartItem.cart_quantity}
+            Selected Product: {cartItem.name} | Price: {HKDollar.format(cartItem.price)} | Quantity: {quantity}
         </Typography>
     </>
 }
