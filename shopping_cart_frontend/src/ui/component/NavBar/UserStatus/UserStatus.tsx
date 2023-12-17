@@ -99,7 +99,7 @@ export default function UserStatus() {
   }
 
   const popoverContent = (
-    <Box sx={{ width: '18rem', height: '15rem' }}>
+    <Box sx={{ width: 'auto', height: 'auto' }}>
       <Typography sx={{ p: 2, fontWeight: '700' }}>Cart</Typography>
       <Divider />
       <Box
@@ -173,7 +173,9 @@ export default function UserStatus() {
       {/** handleChange之後keep白色 */}
       <BottomNavigation
         sx={{
-          width: 300,
+          width: "auto",
+          display: 'block',
+          margin: "auto",
           backgroundColor: 'transparent',
           cursor: 'pointer',
           '& .Mui-selected': {

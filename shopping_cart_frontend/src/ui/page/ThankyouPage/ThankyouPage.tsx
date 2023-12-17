@@ -7,6 +7,7 @@ import ItemTab from "../../component/ItemTab/ItemTab";
 import BottomWrapper from "../../component/BottomWrapper/BottomWrapper";
 import NavBar from "../../component/NavBar/NavBar";
 import Footer from "../../component/Footer/Footer";
+import LogoImage from "../../component/LogoImage/LogoImage";
 
 
 export default function ThankyouPage() {
@@ -27,13 +28,7 @@ export default function ThankyouPage() {
         <>
             <title>Venturenix Lab React Project</title>
             <TopContainer />
-            <img
-                alt="Logo"
-                src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
-                title="company_logo"
-                width={500}
-                style={{ display: 'block', margin: 'auto' }}
-            />
+            <LogoImage />
             <ItemTab />
 
             <NavBar />

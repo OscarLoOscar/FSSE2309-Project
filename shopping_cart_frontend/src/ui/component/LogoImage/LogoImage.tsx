@@ -13,8 +13,13 @@ export default function LogoImage() {
         alt="Logo"
         src="https://venturenixlab.co/wp-content/uploads/2022/05/cropped-cropped-Vlab-horizontal-logo.png"
         title="company_logo"
-        width={500}
-        style={{ display: 'block', margin: 'auto', cursor: 'pointer' }}
+        //置中3寶
+        style={{
+          width: "30%",
+          display: 'block',
+          margin: "auto",
+          cursor: 'pointer',
+        }}
         onClick={navigateMainPage}
       />
     </>

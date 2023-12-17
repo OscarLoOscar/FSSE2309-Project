@@ -66,7 +66,7 @@ const CustomTextField = styled(TextField)({
 export default function SearchBox() {
   return (
     <>
-      <Stack spacing={2} sx={{ width: 1500 }}>
+      <Stack spacing={2} sx={{ width: "auto" }}>
         <Autocomplete
           id="free-solo-demo"
           freeSolo
@@ -75,7 +75,7 @@ export default function SearchBox() {
             <CustomTextField
               {...params}
               label="輸入品牌或產品名稱"
-              sx={{ width: 400 }} // Replace 'yourWidth' with the desired width
+              sx={{ width: 500 }} // Replace 'yourWidth' with the desired width
             />
           )}
         />

@@ -24,21 +24,18 @@ export default function MainPage() {
       <title>Venturenix Lab React Project</title>
       <TopContainer />
       <LogoImage />
-
       <ItemTab />
-
       <NavBar />
-
       <BottomWrapper />
       <Container >
         <MainWrapper imgs={photos} />
       </Container>
-      <Container sx={{ display: 'flex', justifyContent: 'center', marginBottom: '5%' }}>
+      <Container
+        sx={{ display: 'flex', justifyContent: 'center', marginBottom: '5%' }}
+      >
         {/* <Parallax /> */}
         <ComplexButton />
       </Container>
-
-
       <Footer />
     </>
   );

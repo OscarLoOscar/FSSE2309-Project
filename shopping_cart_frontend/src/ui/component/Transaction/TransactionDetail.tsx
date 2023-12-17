@@ -211,8 +211,8 @@ export default function TransactionDetail() {
         </Container>
         <Box height="70px"></Box>
         
-        <Stack maxWidth={900} margin="auto" key="CartItemStack">
-            <Box maxWidth={900} margin="auto">
+        <Stack width={900} margin="auto" key="CartItemStack">
+            <Box width={900} margin="auto">
                 <h1>Transaction</h1>
             </Box>
             {transItemListHeader()}
@@ -299,8 +299,8 @@ export default function TransactionDetail() {
 //         <>
 //             <Box height="70px"></Box>
 
-//             <Stack maxWidth={900} margin="auto" key="CartItemStack">
-//                 <Box maxWidth={900} margin="auto">
+//             <Stack width={900} margin="auto" key="CartItemStack">
+//                 <Box width={900} margin="auto">
 //                     <h1>Transaction</h1>
 //                 </Box>
 //                 {transFooter()}

@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography, Collapse, Alert } from "@mui/material";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import { ProductListDto } from "../../../data/Product/ProductListDto";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionIcon from '@mui/icons-material/Description';
-import { LoginUserContext } from "../../../App";
 import * as CartApi from "../../../api/CartItemApi"
 
 type Props = {
@@ -16,10 +15,11 @@ type Props = {
 export default function ProductListCard({ productData }: Props) {
   const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
   const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
-  const loginUser = useContext(LoginUserContext);
   const navigate = useNavigate();
 
-  const handleAddCartItem = async () => {
+  const handleAddCartItem = async (event: FormEvent<HTMLFormElement>) => {
+    //避免跳版
+    event.preventDefault();
     const result = await CartApi.addCartItemApi(productData.pid.toString(), "1")
     console.log(result);
     setAddCartItemStatus(productData.name);
@@ -94,13 +94,15 @@ export default function ProductListCard({ productData }: Props) {
 
   return (
     <>
-      <Card sx={{ maxWidth: 1000 }}>
+      <Card sx={{ maxWidth: 350 }}>
         <CardActionArea sx={{ flexGrow: 1, borderRadius: 0 }} >
           <CardMedia
             component="img"
-            height='auto'
             image={productData.image_url}
             alt=""
+            width='50%'  // Set the width to 100% to ensure it takes the full width of its container
+            height='250px'  // Set a fixed height for the image (adjust as needed)
+            style={{ objectFit: 'cover' }}  // Preserve aspect ratio by covering the container
           />
           <CardContent>
             <Typography sx={{
@@ -108,7 +110,7 @@ export default function ProductListCard({ productData }: Props) {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              maxWidth: '80%'
+              width: '80%'
             }} color="black" gutterBottom>
               {productData.name}
             </Typography>

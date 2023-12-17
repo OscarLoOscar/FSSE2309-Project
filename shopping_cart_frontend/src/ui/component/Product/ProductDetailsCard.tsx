@@ -23,7 +23,7 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
     },
 }));
 
-export default function ProductDetailsCard({productData}: Props) {
+export default function ProductDetailsCard({ productData }: Props) {
     const [itemQty, setItemQty] = useState<number>(1);
     const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
     const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
@@ -33,8 +33,8 @@ export default function ProductDetailsCard({productData}: Props) {
         const result = await CartApi.addCartItemApi(productData.pid.toString(), "1")
         console.log(result);
         setAddCartItemStatus(productData.name);
-    
-      }
+
+    }
 
     const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setItemQty(Number(event.target.value));
@@ -98,7 +98,8 @@ export default function ProductDetailsCard({productData}: Props) {
                     src={productData.image_url}
                     alt={productData.name}
                     loading="lazy"
-                    height='320px' />
+                    height='220px' 
+                    />
             </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -108,7 +109,7 @@ export default function ProductDetailsCard({productData}: Props) {
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
-                    maxWidth: '80%'
+                    width: '80%'
                 }} color="black" gutterBottom>
                     {productData.name}
                 </Typography>

@@ -1,6 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import { styled, Grid, Box } from '@mui/material';
+import { styled, Box } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
 import UserStatus from './UserStatus/UserStatus';
 import MenuMenu from './ItemMenu/ContextMenu';
@@ -43,21 +43,20 @@ export default function NavBar() {
   return (
 
     <>
-      <AppBar position="static">
-        <Toolbar variant="regular" sx={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-            <Box flex="1 1 0" width="140px">
-              <MenuMenu />
-            </Box>
-            <Box flex="1 1 0" maxWidth="500px">
-              <SearchBox />
-            </Box>
-            <Box flex="1 1 0" maxWidth="300px">
-              <UserStatus />
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static"
+          sx={{
+            width: "100%",
+            display: 'block',
+            margin: "auto",
+          }}>
+          <Toolbar>
+            <MenuMenu />
+            <SearchBox />
+            <UserStatus />
+          </Toolbar>
+        </AppBar>
+      </Box >
     </>
   );
 }

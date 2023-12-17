@@ -166,8 +166,8 @@ export default function ShoppingCartList() {
     return <>
         <Box height="70px"></Box>
 
-        <Stack maxWidth={900} margin="auto" key="CartItemStack">
-            <Box maxWidth={900} margin="auto" >
+        <Stack width={900} margin="auto" key="CartItemStack">
+            <Box width={900} margin="auto" >
                 <h1>Shopping Cart</h1>
             </Box>
             {cartItemListHeader()}

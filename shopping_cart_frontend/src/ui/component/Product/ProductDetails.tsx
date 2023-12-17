@@ -37,7 +37,7 @@ export default function ProductDetails() {
 
     return <>
         <Box height="70px"></Box>
-        <Grid container maxWidth={900} margin="auto" key="itemDetailGrid">
+        <Grid container width={900} margin="auto" key="itemDetailGrid">
             {renderProductDetail()}
         </Grid>
     </>
