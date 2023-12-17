@@ -42,8 +42,10 @@ export default function ShoppingCartList() {
     const renderCartItemList = () => {
         if (cartItemList && cartItemList.length > 0) {
             return cartItemList.map((value) => {
-                totalAmt += value.price * value.cart_quantity
-                return <ShoppingCartListCard key={value.pid} data={value} update={setCartItemList} />
+                totalAmt += value.price * value.cart_quantity;
+                return <ShoppingCartListCard key={value.pid} data={value} 
+                // update={setCartItemList}
+                 />
             })
         } else {
             return <Loading />
@@ -152,16 +154,16 @@ export default function ShoppingCartList() {
     }
 
     useEffect(() => {
-        // setCartItemList(undefined)
-        // if (loginUser) {
-        void fetchCartData()
-        // } else if (loginUser === null) {
-        //     navigate('/login')
-        // }
-        // if (transId) {
-        //     navigate('/checkout/' + transId)
-        // }
-    }, []);
+        setCartItemList(undefined)
+        if (loginUser) {
+            void fetchCartData()
+        } else if (loginUser === null) {
+            navigate('/login')
+        }
+        if (transId) {
+            navigate('/checkout/' + transId)
+        }
+    }, [loginUser]);
 
     return <>
         <Box height="70px"></Box>

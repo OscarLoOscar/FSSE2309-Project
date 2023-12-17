@@ -5,6 +5,7 @@ interface MenuItem {
   disabled?: boolean;
   sx?: { color: string };
   items?: MenuItem[];
+  category?: string;
 }
 
 interface MenuItemsData {
@@ -12,14 +13,13 @@ interface MenuItemsData {
   items: MenuItem[];
 }
 
-
 export const menuItemsData: MenuItemsData = {
   label: "商品分類",
   items: [
     {
       label: "Red Wine",
       items: [
-        { label: "Bordeaux", onClick: () => console.log("Document clicked")},
+        { label: "Bordeaux", category: "/product" },
         { label: "Burgundy", onClick: () => console.log("Document clicked") },
         { label: "Loire Vally", onClick: () => console.log("Document clicked") },
         { label: "South France", onClick: () => console.log("Document clicked") },
@@ -28,7 +28,8 @@ export const menuItemsData: MenuItemsData = {
         { label: "Germany", onClick: () => console.log("Document clicked") },
         { label: "America", onClick: () => console.log("Document clicked") },
         { label: "Argentina", onClick: () => console.log("Document clicked") },
-        { label: "Australia", onClick: () => console.log("Document clicked") },],
+        { label: "Australia", onClick: () => console.log("Document clicked") },
+      ],
     },
     {
       label: "White Wine",

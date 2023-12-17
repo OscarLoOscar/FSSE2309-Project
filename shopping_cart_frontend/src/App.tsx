@@ -6,13 +6,12 @@ import ThankyouPage from './ui/page/ThankyouPage/ThankyouPage';
 import ErrorPage from './ui/page/ErrorPage/ErrorPage';
 // import CartPage from './ui/page/ShoppingCartPage/CartPage';
 import { UserData } from './data/User/UserData';
-import Checkout from './ui/page/CheckoutPage/CheckoutPage';
 import ProductDetailsPage from './ui/page/ProductPage/ProductDetailsPage';
 import MainPage from './ui/page/MainPage/MainPage';
 import LoginSuccessPage from "./ui/page/LoginSuccessPage/LoginSuccessPage";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService"
 import LogOutPage from "./ui/page/LogOutPage/LogOutPage";
-import CartPage from "./ui/page/ShoppingCartPage/CartPage";
+import ShoppingcartPage from "./ui/page/CheckoutPage/CheckoutPage";
 
 //useContext - is a way to manage state globally
 
@@ -50,15 +49,14 @@ function App() {
       path: "/thankyoupage",
       element: <ThankyouPage />
     },
+    // {
+    //   path: "/checkout",
+    //   element: <CartPage />
+    // },
     {
       path: "/shoppingcart",
-      element: <CartPage />
+      element: <ShoppingcartPage />
     },
-    {
-      path: "/checkout",
-      element: <Checkout />
-    },
-
     {
       path: "/error",
       element: <ErrorPage />

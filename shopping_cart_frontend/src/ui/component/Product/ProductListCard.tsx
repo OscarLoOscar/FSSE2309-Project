@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography, Collapse, Alert } from "@mui/material";
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect } from "react";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
@@ -17,9 +17,9 @@ export default function ProductListCard({ productData }: Props) {
   const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const handleAddCartItem = async (event: FormEvent<HTMLFormElement>) => {
-    //避免跳版
-    event.preventDefault();
+  const handleAddCartItem = async () => {
+    // //避免跳版
+    // event.preventDefault();
     const result = await CartApi.addCartItemApi(productData.pid.toString(), "1")
     console.log(result);
     setAddCartItemStatus(productData.name);
@@ -139,8 +139,11 @@ export default function ProductListCard({ productData }: Props) {
           <Grid item xs={8} textAlign="right">
             <Button size="small"
               color="primary"
-              href="#"
-              onClick={handleAddCartItem}
+              // href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                handleAddCartItem();
+              }}
               endIcon={<AddShoppingCartIcon />}
             >
               {!isAdded ? "ADD TO CART" : "✔ ADDED"}

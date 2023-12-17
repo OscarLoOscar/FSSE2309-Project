@@ -23,11 +23,8 @@ export default function ShoppingSite() {
       <TopContainer />
       <LogoImage />
       <ItemTab />
-
       <NavBar />
-
       <BottomWrapper />
-
       <MainWrapper imgs={photos} />
       <Container fixed sx={{ marginBottom: '5%' }}>
         <ProductList />
@@ -41,15 +38,6 @@ export default function ShoppingSite() {
         type="hidden"
         defaultValue="page-GadgetsandelectronicsLandingPage"
       />
-      {/* Google Code for Remarketing Tag */}
-      {/*------------------------------------------------
-    Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
-    -------------------------------------------------*/}
-      <noscript>
-        & lt;div style="display:inline;"&gt; &lt;img alt="" height="1"
-        src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/964752338/?value=0&amp;amp;guid=ON&amp;amp;script=0"
-        style="border-style:none;" width="1"&gt; &lt;/img&gt; &lt;/div&gt;
-      </noscript>
       <Footer />
     </>
   );

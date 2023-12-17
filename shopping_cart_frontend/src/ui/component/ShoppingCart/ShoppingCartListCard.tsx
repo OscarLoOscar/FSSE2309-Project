@@ -10,10 +10,10 @@ import { Dispatch, useState, useEffect, ChangeEvent } from "react";
 
 type Props = {
     data: CartItemListDto
-    update: Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
+    // update: Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
 }
 
-export default function ShoppingCartListCard({ data, update }: Props) {
+export default function ShoppingCartListCard({ data }: Props) {
     const [cartItem, setCartItems] = useState<CartItemListDto>(data)
     const [itemSubtotal, setItemSubtotal] = useState<number>(data.price * data.cart_quantity)
     const HKDollar = new Intl.NumberFormat('zh-HK', {
@@ -25,30 +25,24 @@ export default function ShoppingCartListCard({ data, update }: Props) {
 
     const getCartItemList = async () => {
         try {
-            update(undefined)
+            //      update(undefined)
             const result = await CartApi.getCartItemListApi();
             console.log(result);
-            update(result);
+            //        update(result);
         } catch (error) {
             console.error(error);
         }
     }
 
-    useEffect(() => {
-        getCartItemList();
-    }, []);
-
     const handleQtyChange = async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         try {
-            const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(data.pid.toString(), newQuantity.toString());
+            const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(data.pid.toString(), event.target.value);
             if (updatedCartItem) {
                 setCartItems(updatedCartItem);
             }
             setItemSubtotal(Number(event.target.value) * data.price);
         } catch (e) {
             navigate("/error");
-        } finally {
-            await getCartItemList();
         }
     };
 
@@ -58,6 +52,7 @@ export default function ShoppingCartListCard({ data, update }: Props) {
     //     const newQuantity = Math.max(cartItem.cart_quantity - 1, 1);
     //     handleQtyChange(newQuantity);
     // };
+
     const handleDeleteCartItem = async (pid: string) => {
         try {
             const result = await CartApi.deleteCartItemApi(pid.toString())

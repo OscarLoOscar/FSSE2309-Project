@@ -3,20 +3,17 @@ import Footer from "../../component/Footer/Footer";
 import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
-import TransactionDetail from "../../component/Transaction/TransactionDetail";
 import LogoImage from "../../component/LogoImage/LogoImage";
+import ShoppingCartList from "../../component/ShoppingCart/ShoppingCartList";
 
-export default function Checkout() {
+export default function ShoppingcartPage() {
     return <>
         <TopContainer />
         <LogoImage />
         <ItemTab />
-
         <NavBar />
-
         <BottomWrapper />
-
-        <TransactionDetail />
+        <ShoppingCartList/>
         <Footer />
     </>
 }

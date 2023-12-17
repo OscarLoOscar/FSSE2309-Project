@@ -3,7 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { styled, Box } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
 import UserStatus from './UserStatus/UserStatus';
-import MenuMenu from './ItemMenu/ContextMenu';
+import ContextMenu from './ItemMenu/ContextMenu';
 import { LoginUserContext } from '../../../App';
 import { useContext, useState, MouseEvent } from 'react';
 const Item = styled('div')(({ theme }) => ({
@@ -51,7 +51,7 @@ export default function NavBar() {
             margin: "auto",
           }}>
           <Toolbar>
-            <MenuMenu />
+            <ContextMenu />
             <SearchBox />
             <UserStatus />
           </Toolbar>

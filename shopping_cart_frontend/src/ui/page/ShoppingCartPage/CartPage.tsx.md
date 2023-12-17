@@ -13,7 +13,6 @@ import { GetTransDto } from "../../../data/Trans/GetTransDto";
 // import * as TransApi from "../../../api/TransactionApi"
 import { Params, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../component/Utility/Loading";
-import TransItemCard from "../../component/Transaction/TransItemCard";
 import LogoImage from "../../component/LogoImage/LogoImage";
 import ShoppingCartList from "../../component/ShoppingCart/ShoppingCartList";
 import ShoppingCartListCard from "../../component/ShoppingCart/ShoppingCartListCard";
