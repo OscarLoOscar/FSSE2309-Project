@@ -1,4 +1,4 @@
-import {  RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ShoppingSite from './ui/page/ProductPage/ShoppingSite';
 import LoginPage from './ui/page/LoginPage/LoginPage';
 import { createContext, useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import MainPage from './ui/page/MainPage/MainPage';
 import LoginSuccessPage from "./ui/page/LoginSuccessPage/LoginSuccessPage";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService"
 import LogOutPage from "./ui/page/LogOutPage/LogOutPage";
+import CartPage from "./ui/page/ShoppingCartPage/CartPage";
 
 //useContext - is a way to manage state globally
 
@@ -51,8 +52,13 @@ function App() {
     },
     {
       path: "/shoppingcart",
+      element: <CartPage />
+    },
+    {
+      path: "/checkout",
       element: <Checkout />
     },
+
     {
       path: "/error",
       element: <ErrorPage />

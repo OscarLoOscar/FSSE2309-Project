@@ -5,9 +5,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import * as CartApi from "../../../api/CartItemApi.js";
-import * as TransApi from "../../../api/TransactionApi.js";
+// import * as TransApi from "../../../api/TransactionApi.js";
 import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
-import { getAccessToken } from "../../../authService/FirebaseAuthService.js";
 import ShoppingCartListCard from "./ShoppingCartListCard.js";
 import Loading from "../Utility/Loading.js";
 import { LoginUserContext } from "../../../App.js";
@@ -26,25 +25,19 @@ export default function ShoppingCartList() {
 
     const fetchCartData = async () => {
         try {
-            const token = await getAccessToken()
-            if (token) {
-                setCartItemList(await CartApi.getCartItemListApi(token))
-            }
+            setCartItemList(await CartApi.getCartItemListApi())
         } catch (e) {
             navigate("/error")
         }
     }
 
-    const handleCheckout = async () => {
-        setLoadingBackdrop(true)
-        const token = await getAccessToken()
-        setTransId(undefined)
-        if (token) {
-            const result = await TransApi.prepTransApi(token)
-            setTransId(result.tid.toString())
-            setLoadingBackdrop(false)
-        }
-    }
+    // const handleCheckout = async () => {
+    //     setLoadingBackdrop(true)
+    //     setTransId(undefined)
+    //     const result = await TransApi.prepTransApi()
+    //     setTransId(result.tid.toString())
+    //     setLoadingBackdrop(false)
+    // }
 
     const renderCartItemList = () => {
         if (cartItemList && cartItemList.length > 0) {
@@ -117,7 +110,6 @@ export default function ShoppingCartList() {
             </Box>
         </>
     }
-
     const cartItemListFooter = () => {
         return <Box display="flex" flexDirection="row">
             <Box width="70%" sx={{
@@ -142,7 +134,6 @@ export default function ShoppingCartList() {
             </Box>
         </Box>
     }
-
     const cartItemListCheckout = () => {
         return <Box display="flex" flexDirection="row">
             <Box width="70%">
@@ -151,7 +142,9 @@ export default function ShoppingCartList() {
                 display: "flex",
                 alignItems: "center"
             }}>
-                <Button variant="contained" fullWidth onClick={handleCheckout}>Checkout</Button>
+                <Button variant="contained" fullWidth
+                // onClick={handleCheckout}
+                >Checkout</Button>
             </Box>
             <Box width="5%">
             </Box>
@@ -159,22 +152,22 @@ export default function ShoppingCartList() {
     }
 
     useEffect(() => {
-        setCartItemList(undefined)
-        if (loginUser) {
-            void fetchCartData()
-        } else if (loginUser === null) {
-            navigate('/login')
-        }
-        if (transId) {
-            navigate('/checkout/' + transId)
-        }
-    }, [loginUser, transId]);
+        // setCartItemList(undefined)
+        // if (loginUser) {
+        void fetchCartData()
+        // } else if (loginUser === null) {
+        //     navigate('/login')
+        // }
+        // if (transId) {
+        //     navigate('/checkout/' + transId)
+        // }
+    }, []);
 
     return <>
         <Box height="70px"></Box>
 
         <Stack maxWidth={900} margin="auto" key="CartItemStack">
-            <Box maxWidth={900} margin="auto">
+            <Box maxWidth={900} margin="auto" >
                 <h1>Shopping Cart</h1>
             </Box>
             {cartItemListHeader()}

@@ -10,11 +10,9 @@ import { ProductDetailsDto } from "../../../data/Product/ProductDetailsDto";
 import * as CartApi from "../../../api/CartItemApi"
 import { useNavigate } from "react-router-dom";
 import { useState, ChangeEvent } from "react";
-import { getAccessToken } from "../../../authService/FirebaseAuthService";
-// import { getAccessToken } from "../../../authService/FirebaseAuthService";
 
 type Props = {
-    data: ProductDetailsDto
+    productData: ProductDetailsDto
 }
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -25,23 +23,18 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
     },
 }));
 
-export default function ProductDetailsCard(props: Props) {
+export default function ProductDetailsCard({productData}: Props) {
     const [itemQty, setItemQty] = useState<number>(1);
     const [addCartItemStatus, setAddCartItemStatus] = useState<string | undefined>(undefined);
     const [messageBoxOpen, setMessageBoxOpen] = useState<boolean>(true);
     const navigate = useNavigate();
 
     const handleAddCartItem = async () => {
-        const token = await getAccessToken()
-        if (token) {
-            const result = await CartApi.addCartItemApi(token, props.data.pid.toString(), itemQty.toString())
-            if (result) {
-                setAddCartItemStatus(result.result)
-            }
-        }
-    }
-
-
+        const result = await CartApi.addCartItemApi(productData.pid.toString(), "1")
+        console.log(result);
+        setAddCartItemStatus(productData.name);
+    
+      }
 
     const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setItemQty(Number(event.target.value));
@@ -102,8 +95,8 @@ export default function ProductDetailsCard(props: Props) {
         <Grid item xs={12} sm={6}>
             <Typography component="div">
                 <img
-                    src={props.data.image_url}
-                    alt={props.data.name}
+                    src={productData.image_url}
+                    alt={productData.name}
                     loading="lazy"
                     height='320px' />
             </Typography>
@@ -117,17 +110,17 @@ export default function ProductDetailsCard(props: Props) {
                     whiteSpace: 'nowrap',
                     maxWidth: '80%'
                 }} color="black" gutterBottom>
-                    {props.data.name}
+                    {productData.name}
                 </Typography>
             </Box>
             <Box>
                 <Typography sx={{ fontSize: 14 }} color="black" gutterBottom>
-                    {props.data.description}
+                    {productData.description}
                 </Typography>
             </Box>
             <Box>
                 <Typography variant="body2">
-                    ${props.data.price}
+                    ${productData.price}
                 </Typography>
             </Box>
             <Box>
@@ -138,14 +131,14 @@ export default function ProductDetailsCard(props: Props) {
                         shrink: true,
                     }}
                     size={"small"}
-                    inputProps={{ min: 0, max: props.data.unitStock }}
+                    inputProps={{ min: 0, max: productData.unitStock }}
                     onChange={handleTextFieldChange}
                     defaultValue={itemQty}
                 />
                 <Box height="30px" />
             </Box>
             <Box>
-                {add2CartButton(props.data.unitStock)}
+                {add2CartButton(productData.unitStock)}
             </Box>
         </Grid>
         <Grid item xs={12}>

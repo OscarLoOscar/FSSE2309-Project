@@ -7,7 +7,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
-import { getAccessToken, handleSignOut } from '../../../../authService/FirebaseAuthService';
+import { handleSignOut } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
 import * as CartApi from '../../../../api/CartItemApi';
 import { Box, Divider, Popover, Skeleton, Typography } from '@mui/material';
@@ -83,33 +83,20 @@ export default function UserStatus() {
   }
   const [cartItems, setCartItems] = useState<CartItemListDto[]>([]);
 
-  const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const getCartItemList = async () => {
+    const result = await CartApi.getCartItemListApi();
+    console.log(result);
+  }
 
-    try {
-      const token = await getAccessToken();
-      if (token) {
-        const cartItems = await CartApi.getCartItemListApi(token);
-        setCartItems(cartItems);
-      }
-    } catch (e) {
-      navigate('/error');
-    }
-  };
+  const handleUpdateCartItem = async (pid: string) => {
+    const result = await CartApi.updateCartItemApi(pid.toString(), "1")
+    console.log(result);
+  }
 
   const handleDeleteCartItem = async (pid: string) => {
-    try {
-      const token = await getAccessToken();
-      if (token) {
-        await CartApi.deleteCartItemApi(token, pid);
-        // Assuming setCartItems is how you update the cartItems state
-        const updatedCartItems = await CartApi.getCartItemListApi(token);
-        setCartItems(updatedCartItems);
-      }
-    } catch (e) {
-      navigate('/error');
-    }
-  };
+    const result = await CartApi.deleteCartItemApi(pid.toString())
+    console.log(result);
+  }
 
   const popoverContent = (
     <Box sx={{ width: '18rem', height: '15rem' }}>
@@ -271,3 +258,4 @@ export default function UserStatus() {
     </>
   );
 }
+

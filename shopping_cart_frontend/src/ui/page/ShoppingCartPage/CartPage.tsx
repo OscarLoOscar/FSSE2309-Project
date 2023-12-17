@@ -8,16 +8,16 @@ import { FormLabel, Input } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState , ChangeEvent} from "react";
+import { useEffect, useState, ChangeEvent, SetStateAction } from "react";
 import { GetTransDto } from "../../../data/Trans/GetTransDto";
-import * as TransApi from "../../../api/TransactionApi"
-import * as CartItemApi from "../../../api/CartItemApi"
+// import * as TransApi from "../../../api/TransactionApi"
 import { Params, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../component/Utility/Loading";
 import TransItemCard from "../../component/Transaction/TransItemCard";
-import { getAccessToken } from "../../../authService/FirebaseAuthService";
 import LogoImage from "../../component/LogoImage/LogoImage";
-
+import ShoppingCartList from "../../component/ShoppingCart/ShoppingCartList";
+import ShoppingCartListCard from "../../component/ShoppingCart/ShoppingCartListCard";
+import { CartItemListDto } from "../../../data/CartItem/CartItemListDto";
 
 export default function CartPage() {
   const [transData, setTransData] = useState<GetTransDto | undefined>(undefined);
@@ -31,11 +31,8 @@ export default function CartPage() {
 
   const fetchTransData = async () => {
     try {
-      // const token = await getAccessToken()
       if (transactionId) {
-        // if (token && transactionId) {
-        // setTransData(await TransApi.getTransApi(token, transactionId))
-        setTransData(await TransApi.getTransApiTest(transactionId))
+        setTransData(await TransApi.getTransApi(transactionId))
       }
     } catch (e) {
       navigate("/error")
@@ -127,18 +124,16 @@ export default function CartPage() {
   }
   const handleSubmitPayment = async () => {
     setLoadingBackdrop(true)
-    const token = await getAccessToken()
-    if (token && transactionId) {
-      const payResult = await TransApi.payTransApi(token, transactionId)
+    if (transactionId) {
+      const payResult = await TransApi.payTransApi(transactionId)
       setPayStatus(payResult.result)
 
     }
   }
 
   const handlePaymentSuccess = async () => {
-    const token = await getAccessToken()
-    if (token && transactionId) {
-      const payResult = await TransApi.finishTransApi(token, transactionId)
+    if (transactionId) {
+      const payResult = await TransApi.finishTransApi(transactionId)
       setPayStatus(payResult.status)
       setLoadingBackdrop(false)
       navigate('/thankyou')
@@ -150,8 +145,9 @@ export default function CartPage() {
       void handlePaymentSuccess()
     }
     setTransData(undefined)
-    void fetchTransData()
-  }, [])
+    void fetchTransData();
+  }, []);
+  // }, [fetchTransData, handlePaymentSuccess, payStatus]);
 
   const transFooter = () => {
     return <>
@@ -220,23 +216,9 @@ export default function CartPage() {
       <NavBar />
 
       <BottomWrapper />
-      <Container >
-        {/* {pData?.products?.map((data2, index) => (
-          <Grid
-            container
-            spacing={5}
-            justifyContent="center"
-            alignItems="top"
-            style={{ marginTop: 10 }}
-          > */}
-        {/* <ShoppingCartItem
-              key={index}
-              cartItem={data2}
-              cartItemList={cartItemList}
-              setCartItemList={setCartItemList}
-            /> */}
-        {/* </Grid>
-        ))}; */}
+      <Container sx={{ marginBottom: 10 }}>
+        <ShoppingCartList />
+        {/* //   {transItemListHeader} */}
       </Container>
       <Footer />
 

@@ -1,15 +1,14 @@
 import  { useEffect, useRef  ,useState , ChangeEvent} from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Backdrop, CircularProgress, Container, FormLabel, Input, Stack } from "@mui/material";
+import { Backdrop, CircularProgress, Container, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { GetTransDto } from "../../../data/Trans/GetTransDto";
-import { getAccessToken } from "../../../authService/FirebaseAuthService";
-import * as TransApi from "../../../api/TransactionApi"
+// import * as TransApi from "../../../api/TransactionApi"
 //import { getTransApiTest } from "../../../api/TransactionApi";
 import TransItemCard from "./TransItemCard";
 import Loading from "../Utility/Loading";
-import PaymentForm from "./PaymentForm";
+// import PaymentForm from "./PaymentForm";
 
 type Params = {
     transactionId: string
@@ -28,17 +27,17 @@ export default function TransactionDetail() {
     const cardDateRef = useRef<HTMLInputElement>(null);
 
 
-    const fetchTransData = async () => {
-        try {
-            // const token = await getAccessToken()
-            // if (token && transactionId) {
-            if (transactionId) {
-                setTransData(await TransApi.getTransApiTest(transactionId))
-            }
-        } catch (e) {
-            navigate("/error")
-        }
-    }
+    // const fetchTransData = async () => {
+    //     try {
+    //         // const token = await getAccessToken()
+    //         // if (token && transactionId) {
+    //         if (transactionId) {
+    //             setTransData(await TransApi.getTransApi(transactionId))
+    //         }
+    //     } catch (e) {
+    //         navigate("/error")
+    //     }
+    // }
 
     const transItemListHeader = () => {
         return <>
@@ -123,33 +122,31 @@ export default function TransactionDetail() {
     const handleCVVInput = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setCvv(Number(event.target.value))
     }
-    const handleSubmitPayment = async () => {
-        setLoadingBackdrop(true)
-        const token = await getAccessToken()
-        if (token && transactionId) {
-            const payResult = await TransApi.payTransApi(token, transactionId)
-            setPayStatus(payResult.result)
+    // const handleSubmitPayment = async () => {
+    //     setLoadingBackdrop(true)
+    //     if ( transactionId) {
+    //         const payResult = await TransApi.payTransApi( transactionId)
+    //         setPayStatus(payResult.result)
 
-        }
-    }
+    //     }
+    // }
 
-    const handlePaymentSuccess = async () => {
-        const token = await getAccessToken()
-        if (token && transactionId) {
-            const payResult = await TransApi.finishTransApi(token, transactionId)
-            setPayStatus(payResult.status)
-            setLoadingBackdrop(false)
-            navigate('/thankyou')
-        }
-    }
+    // const handlePaymentSuccess = async () => {
+    //     if (transactionId) {
+    //         const payResult = await TransApi.finishTransApi( transactionId)
+    //         setPayStatus(payResult.status)
+    //         setLoadingBackdrop(false)
+    //         navigate('/thankyou')
+    //     }
+    // }
 
-    useEffect(() => {
-        if (payStatus === 'SUCCESS') {
-            void handlePaymentSuccess()
-        }
-        setTransData(undefined)
-        void fetchTransData()
-    }, [])
+    // useEffect(() => {
+    //     if (payStatus === 'SUCCESS') {
+    //         void handlePaymentSuccess()
+    //     }
+    //     setTransData(undefined)
+    //     void fetchTransData()
+    // }, [])
 
     const transFooter = () => {
         return <>
@@ -210,8 +207,7 @@ export default function TransactionDetail() {
     return <>
 
     <Container>
-        <PaymentForm
-        />
+        {/* <PaymentForm/> */}
         </Container>
         <Box height="70px"></Box>
         

@@ -4,11 +4,9 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from "react-router-dom";
 import { ProductListDto } from "../../../data/Product/ProductListDto";
-import { addCartItemApi } from "../../../api/CartItemApi";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionIcon from '@mui/icons-material/Description';
-import { getAccessToken } from "../../../authService/FirebaseAuthService";
 import { LoginUserContext } from "../../../App";
 import * as CartApi from "../../../api/CartItemApi"
 

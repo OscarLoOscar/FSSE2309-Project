@@ -46,7 +46,7 @@ export default function NavBar() {
       <AppBar position="static">
         <Toolbar variant="regular" sx={{ maxWidth: '1200px', margin: '0 auto' }}>
           <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-            <Box flex="1 1 0" maxWidth="140px">
+            <Box flex="1 1 0" width="140px">
               <MenuMenu />
             </Box>
             <Box flex="1 1 0" maxWidth="500px">
