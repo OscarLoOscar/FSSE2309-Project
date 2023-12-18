@@ -15,7 +15,7 @@ import com.example.shoppingcart.services.ProductService;
 
 @RestController
 @RequestMapping("/public")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class ProductControllerImpl implements ProductController {
 
   ProductService productService;

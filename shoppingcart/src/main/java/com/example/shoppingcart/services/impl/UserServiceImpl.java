@@ -38,13 +38,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserData getUserById(Long userId) {
+  public UserEntity getUserById(Long userId) {
     // return Mapper.map(userRepository.findAll().stream()//
     // .filter(e -> e.getUserId().equals(userId))//
     // .findFirst()//
     // .get());
     return userRepository.findById(userId)//
-        .map(Mapper::map)//
+      //  .map(Mapper::map)//
         .orElse(null);
   }
 

@@ -26,17 +26,15 @@ export const addCartItemApi = async (productId: string, productQty: string) => {
 }
 
 export const deleteCartItemApi = async (productId: string) => {
-  const accessToken = await FirebaseAuthService.getAccessToken();
+  const accessToken = await FirebaseAuthService.getAccessToken()
   try {
-    const config = {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    };
-    if (productId) {
-      const apiUrl = `${baseUrl}/cart/${productId}`;
-      const response = await axios.delete<CartItemListDto>(apiUrl, config);
+    if (accessToken) {
+      const response = await axios.delete<CartItemListDto>(`${baseUrl}/cart/${productId}`,
+        { headers: { "Authorization": `Bearer ${accessToken}` } });
       return response.data;
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error);
     throw error;
   }

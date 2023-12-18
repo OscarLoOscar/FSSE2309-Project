@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.shoppingcart.entity.Transaction;
 import com.example.shoppingcart.entity.TransactionProduct;
+import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.Mapper;
@@ -64,9 +65,9 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   private Transaction createTransactionRecord(Long userId) {
-    UserData userData = userService.getUserById(userId);
+    UserEntity userData = userService.getUserById(userId);
     Transaction transactionRecord = Transaction.builder()
-        .user(Mapper.map(userData))//
+        .user(userData)//
         .datetime(LocalDateTime.now())
         .status(TranStatus.PREPARE)//
         .build();

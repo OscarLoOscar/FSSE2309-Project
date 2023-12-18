@@ -82,4 +82,12 @@ public class ProductServiceImpl implements ProductService {
   public boolean isEnoughStock(Long pid, Integer quantity) {
     return productRepository.findById(pid).get().getUnitStock() >= quantity;
   }
+
+  @Override
+  public Product getProductEntityById(Long productId)
+      throws ProductNotExistException {
+    return productRepository.findById(productId)//
+        .orElseThrow(
+            () -> new ProductNotExistException(Code.PRODUCT_NOT_EXIST));
+  }
 }

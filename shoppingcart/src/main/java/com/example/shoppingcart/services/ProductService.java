@@ -13,6 +13,8 @@ public interface ProductService {
 
   ProductData getProductById(Long productId) throws ProductNotExistException;
 
+  Product getProductEntityById(Long productId) throws ProductNotExistException;
+
   ProductData editProduct(Product product);
 
   ProductData editProductPrice(Long productId, double price);

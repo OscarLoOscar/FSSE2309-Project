@@ -14,7 +14,7 @@ public interface UserService {
 
   UserEntity getEntityByFireBaseUserData(FireBaseUserData fireBaseUserData);
 
-  UserData getUserById(Long userId) throws UserNotExistException;
+  UserEntity getUserById(Long userId) throws UserNotExistException;
 
   // UserData findUserByUserName(String userName);
 

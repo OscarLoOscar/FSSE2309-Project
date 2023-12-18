@@ -3,6 +3,7 @@ package com.example.shoppingcart.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
@@ -26,7 +27,8 @@ public class SecurityConfig {
         .permitAll()//
         .anyRequest()//
         .authenticated()) // 用緊anyRequest，所有request都會受保護->question: 如何不受保護
-        .csrf(csrf -> csrf.disable());
+        .csrf(csrf -> csrf.disable())//
+        .cors(Customizer.withDefaults());
     http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
         .jwt(jwt -> jwt.decoder(JwtDecoders.fromIssuerLocation(issuer))));
     return http.build();

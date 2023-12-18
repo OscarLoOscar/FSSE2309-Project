@@ -14,7 +14,7 @@ type Props = {
 }
 
 export default function ShoppingCartListCard({ data }: Props) {
-    const [cartItem, setCartItems] = useState<CartItemListDto>(data)
+    const [cartItem, setCartItemState] = useState<CartItemListDto | undefined>(data)
     const [itemSubtotal, setItemSubtotal] = useState<number>(data.price * data.cart_quantity)
     const [quantity, setQuantity] = useState<number>(data.cart_quantity);
     const HKDollar = new Intl.NumberFormat('zh-HK', {
@@ -37,17 +37,17 @@ export default function ShoppingCartListCard({ data }: Props) {
 
     const handleQtyChange = async (newQuantity: number) => {
         try {
-            if (newQuantity >= 1 && newQuantity <= cartItem.stock) {
-                const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(
-                    data.pid.toString(),
-                    newQuantity.toString()
-                );
+            if (newQuantity >= 1 && newQuantity <= data.stock) {
+                // const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(
+                //     data.pid.toString(),
+                //     newQuantity.toString()
+                // );
 
-                if (updatedCartItem) {
-                    setCartItems(updatedCartItem);
-                    setItemSubtotal(updatedCartItem.price * newQuantity);
-                    setQuantity(newQuantity);
-                }
+                // if (updatedCartItem) {
+                //     setCartItems(updatedCartItem);
+                //     setItemSubtotal(updatedCartItem.price * newQuantity);
+                setQuantity(newQuantity);
+                // }
             } else {
                 setItemSubtotal(data.cart_quantity * data.price);
                 navigate("/error");
@@ -61,25 +61,28 @@ export default function ShoppingCartListCard({ data }: Props) {
     };
 
     const handleMinusButton = () => {
-        const newQuantity = Math.max(cartItem.cart_quantity - 1, 1);
+        const newQuantity = Math.max(data.cart_quantity - 1, 1);
         handleQtyChange(newQuantity)
     };
 
-    const handleDeleteCartItem = async (pid: string) => {
+    const handleDeleteCartItem = async () => {
         try {
-            const result = await CartApi.deleteCartItemApi(pid.toString())
+            const result = await CartApi.deleteCartItemApi(data?.pid.toString())
             console.log(result);
             await getCartItemList();
+            setCartItemState(undefined);
+            setQuantity(0)
+
         } catch (e) {
             navigate("/error")
         }
     }
 
     return <>
-        <Box display="flex" flexDirection="row" key={cartItem.pid}>
+        <Box display="flex" flexDirection="row" key={data.pid}>
             <Box width="20%">
-                <img src={cartItem.image_url}
-                    alt={cartItem.name}
+                <img src={data.image_url}
+                    alt={data.name}
                     loading="lazy"
                     height='80px' />
             </Box>
@@ -89,7 +92,7 @@ export default function ShoppingCartListCard({ data }: Props) {
             }}>
                 <Typography
                     sx={{ margin: "auto auto auto 0" }}>
-                    {cartItem.name}
+                    {data.name}
                 </Typography>
             </Box>
             <Box width="15%" sx={{
@@ -98,7 +101,7 @@ export default function ShoppingCartListCard({ data }: Props) {
             }}>
                 <Typography
                     sx={{ margin: "auto" }}>
-                    {HKDollar.format(cartItem.price)}
+                    {HKDollar.format(data.price)}
                 </Typography>
             </Box>
             <Box width="15%" sx={{
@@ -107,14 +110,14 @@ export default function ShoppingCartListCard({ data }: Props) {
             }}>
                 {/* Controll _itemQuantity */}
                 <TextField
-                    id={cartItem.pid.toString() + "_itemQuantity"}
+                    id={data.pid.toString() + "_itemQuantity"}
                     type="number"
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     size={"small"}
-                    inputProps={{ min: 1, max: cartItem.stock }}
+                    inputProps={{ min: 1, max: data.stock }}
                     onBlur={(e) => handleQtyChange(Number(e.target.value))}
-                    defaultValue={cartItem.cart_quantity}
+                    defaultValue={data.cart_quantity}
                 />
             </Box>
             <Box width="25%" sx={{
@@ -134,14 +137,14 @@ export default function ShoppingCartListCard({ data }: Props) {
                 <IconButton
                     size="large"
                     color="inherit"
-                    onClick={() => handleDeleteCartItem(cartItem.pid.toString())}
+                    onClick={() => handleDeleteCartItem()}
                 >
                     <DeleteIcon />
                 </IconButton>
             </Box>
         </Box>
         <Typography variant="body2">
-            Selected Product: {cartItem.name} | Price: {HKDollar.format(cartItem.price)} | Quantity: {quantity}
+            Selected Product: {data.name} | Price: {HKDollar.format(data.price)} | Quantity: {quantity}
         </Typography>
     </>
 }

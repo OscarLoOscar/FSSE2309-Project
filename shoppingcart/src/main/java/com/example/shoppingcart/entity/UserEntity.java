@@ -43,7 +43,7 @@ public class UserEntity implements Serializable {
   @Column(name = "email", nullable = false, unique = true) // unique = true -> column 入面value唔重覆
   String email;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+  @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE,
       fetch = FetchType.LAZY)
   private List<Transaction> transactions;
 

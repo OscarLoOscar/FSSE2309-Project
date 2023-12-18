@@ -18,11 +18,13 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
                         Product product);
 
         // @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM cart_item c "
-        //                 + "WHERE c.uid = :uid AND c.pid = :pid",nativeQuery = true)
+        // + "WHERE c.uid = :uid AND c.pid = :pid",nativeQuery = true)
         // boolean existsByuidAndpid(@Param("uid") Long uid,
-        //                 @Param("pid") Long pid);
+        // @Param("pid") Long pid);
 
-        @Query(value = "SELECT * FROM cart_item c WHERE c.uid = :uid AND c.pid = :pid",
+        // @Query(value = "SELECT * FROM cart_item c WHERE c.uid = :uid AND c.pid = :pid",
+        // nativeQuery = true)
+        @Query(value = "SELECT * FROM cart_item WHERE uid = ?1 AND pid = ?2",
                         nativeQuery = true)
         Optional<CartItem> findByUser_UidAndProduct_Pid(@Param("uid") Long uid,
                         @Param("pid") Long pid);

@@ -7,8 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.shoppingcart.entity.CartItem;
+import com.example.shoppingcart.entity.Product;
+import com.example.shoppingcart.entity.UserEntity;
+import com.example.shoppingcart.exception.CartItemNotFoundException;
 import com.example.shoppingcart.exception.ProductNotExistException;
 import com.example.shoppingcart.exception.UserNotExistException;
+import com.example.shoppingcart.exception.setting.Code;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.ProductData;
@@ -21,6 +25,9 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import com.example.shoppingcart.services.ProductService;
+import com.example.shoppingcart.services.TransactionProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Slf4j
 @Service
@@ -38,10 +45,59 @@ public class CartItemServiceImpl implements CartItemService {
   @Autowired
   ProductService productService;
 
+  @Autowired
+  TransactionProductService transactionProductService;
 
   @Override
-  public void deleteCartItemByCartItemId(Long cartItemId) {
-    cartItemRepository.deleteById(cartItemId);
+  @Transactional
+  public void deleteCartItemByCartItemId(long userId, long cartItemId)
+      throws UserNotExistException, CartItemNotFoundException {
+    UserEntity userData = userService.getUserById(userId);
+    Optional<CartItem> cartItemOptional =
+        cartItemRepository.findById(cartItemId);
+
+    if (cartItemOptional.isEmpty()) {
+      throw new CartItemNotFoundException(Code.PRODUCT_NOT_EXIST);
+    }
+
+    CartItem cartItem = cartItemOptional.get();
+
+    // Check if the cart item belongs to the specified user
+    if (cartItem.getUser().getUserId() == userId) {
+      cartItemRepository.delete(cartItem);
+    } else {
+      // Handle the case where the cart item doesn't belong to the user
+      throw new UserNotExistException(Code.USER_NOT_FOUND);
+    }
+  }
+
+
+  @Override
+  @Transactional
+  public boolean updateCartQuantity(long userId, long pid, int quantity)
+      throws ProductNotExistException, UserNotExistException {
+    UserEntity userData = userService.getUserById(userId);
+
+    Optional<CartItem> optionalCartItem = getEntityByUidAndPid(userId, pid);
+
+    if (optionalCartItem.isPresent()) {
+      CartItem cartItem2 = optionalCartItem.get();
+      cartItem2.setQuantity(
+          cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
+      cartItem2 = entityManager.merge(cartItem2);
+      cartItemRepository.save(cartItem2);
+    } else {
+      // ProductData productEntity = productService.getProductById(pid);
+      Product product = productService.getProductEntityById(pid);
+      CartItem cartItementity = CartItem.builder()//
+          .product(product)//
+          .user(userData)//
+          .quantity(BigDecimal.valueOf(quantity))//
+          .build();
+      cartItementity = entityManager.merge(cartItementity);
+      cartItemRepository.save(cartItementity);
+    }
+    return true;
   }
 
   @Override
@@ -141,32 +197,7 @@ public class CartItemServiceImpl implements CartItemService {
   // }
   // return true;
   // }
-  @Override
-  @Transactional
-  public boolean updateCartQuantity(long userId, long pid, int quantity)
-      throws ProductNotExistException, UserNotExistException {
-    UserData userData = userService.getUserById(userId);
 
-    Optional<CartItem> optionalCartItem = getEntityByUidAndPid(userId, pid);
-
-    if (optionalCartItem.isPresent()) {
-      CartItem cartItem2 = optionalCartItem.get();
-      cartItem2.setQuantity(
-          cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
-      cartItem2 = entityManager.merge(cartItem2);
-      cartItemRepository.save(cartItem2);
-    } else {
-      ProductData productEntity = productService.getProductById(pid);
-      CartItem cartItementity = CartItem.builder()//
-          .product(Mapper.map(productEntity))//
-          .user(Mapper.map(userData))//
-          .quantity(BigDecimal.valueOf(quantity))//
-          .build();
-      cartItementity = entityManager.merge(cartItementity);
-      cartItemRepository.save(cartItementity);
-    }
-    return true;
-  }
 
   // old
   // public CartItem getEntityByUidAndPid(Long uid, Long pid) {
@@ -182,10 +213,10 @@ public class CartItemServiceImpl implements CartItemService {
     return productService.isEnoughStock(pid, quantity);
   }
 
-  @Override
-  public void addCartItem(CartItem cartItem) {
-    cartItemRepository.save(cartItem);
-  }
+  // @Override
+  // public void addCartItem(CartItem cartItem) {
+  // cartItemRepository.save(cartItem);
+  // }
 
   @Override
   public CartItemData getCartItemDetails(long uid, long pid) {
@@ -198,4 +229,40 @@ public class CartItemServiceImpl implements CartItemService {
     return null;
   }
 
+  @Override
+  @Transactional
+  public void addCartItem(long userId, long productId, int quantity)
+      throws UserNotExistException, ProductNotExistException {
+    // Retrieve UserEntity and Product
+    UserEntity user = userService.getUserById(userId);
+    Product product = productService.getProductEntityById(productId);
+    log.info("CHECTK1: " + user.toString());
+    log.info("CHECTK2: " + product.toString());
+
+    // Check if the product and user exist
+    if (user == null || product == null) {
+      throw new UserNotExistException(Code.USER_NOT_FOUND);
+    }
+
+    // Check if there is already a cart item for the user and product
+    cartItemRepository.findByUser_UidAndProduct_Pid(userId, productId)
+        .ifPresent(existingCartItem -> {
+          // If the cart item already exists, update the quantity
+          existingCartItem.setQuantity(
+              existingCartItem.getQuantity().add(BigDecimal.valueOf(quantity)));
+          cartItemRepository.save(existingCartItem);
+          log.info("CHECTK3: " + existingCartItem.toString());
+
+        });
+
+    // If the cart item does not exist, create a new one
+    if (!cartItemRepository.findByUser_UidAndProduct_Pid(userId, productId)
+        .isPresent()) {
+      CartItem newCartItem = CartItem.builder().user(user).product(product)
+          .quantity(BigDecimal.valueOf(quantity)).build();
+      cartItemRepository.save(newCartItem);
+      log.info("CHECTK4: " + newCartItem.toString());
+
+    }
+  }
 }

@@ -19,8 +19,7 @@ spring.sql.init:
   mode: always # always
   platform: mysql
 spring.profiles.active: enableScheduling
-
-spring.data.mongodb:
-  host: localhost
-  port: 27017
-  database: Cart_ItemMGD
+# spring.data.mongodb:
+#   host: localhost
+#   port: 27017
+#   database: Cart_ItemMGD

@@ -12,4 +12,6 @@ public interface TransactionProductService {
   TransactionProduct findByProductId(Long pid);
 
   TransactionProduct findByTranProductId(Long tpid);
+
+  void deleteByProductId(Long pid);
 }

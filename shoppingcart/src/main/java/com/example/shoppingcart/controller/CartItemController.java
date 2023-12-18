@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import com.example.shoppingcart.exception.CartItemNotFoundException;
 import com.example.shoppingcart.exception.ProductNotExistException;
 import com.example.shoppingcart.exception.UserNotExistException;
 import com.example.shoppingcart.model.CartItemData;
@@ -50,10 +51,12 @@ public interface CartItemController {
 
         // 6.DELETE /cart/{pid}: Remove cart item
         @DeleteMapping("/{pid}")
-        @ResponseStatus(HttpStatus.NO_CONTENT)
+        @ResponseStatus(HttpStatus.ACCEPTED)
         TransactionUpdateResponse removeCartItem(
                         @PathVariable(name = "pid") String inputPid, //
-                        JwtAuthenticationToken jwt);
+                        JwtAuthenticationToken jwt)
+                        throws NumberFormatException, UserNotExistException,
+                        CartItemNotFoundException;
 
 
 }

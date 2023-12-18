@@ -33,4 +33,9 @@ public class TransactionProductServiceImpl
   public TransactionProduct findByTranProductId(Long tpid) {
     return transactionProductRepository.findByTpid(tpid);
   }
+
+  @Override
+  public void deleteByProductId(Long pid) {
+    transactionProductRepository.deleteById(pid);
+  }
 }

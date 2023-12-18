@@ -2,7 +2,7 @@ package com.example.shoppingcart.entity;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.data.mongodb.core.mapping.Document;
+// import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-@Document(collection = "cartItems")
+// @Document(collection = "cartItems")
 public class CartItemStorage {
   private static final Map<Long, Integer> cartItemMap = new HashMap<>();
 

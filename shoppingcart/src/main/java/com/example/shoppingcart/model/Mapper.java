@@ -54,6 +54,14 @@ public class Mapper {
         .build();
   }
 
+  public static CartItem map(Product product, UserEntity user) {
+    return CartItem.builder()//
+        .product(product)//
+        .user(user)//
+        .build();
+  }
+
+
   public static UserEntity map(FireBaseUserData data) {
     return UserEntity.builder()//
         .fireBaseUid(data.getFirebaseUid())//
@@ -76,8 +84,7 @@ public class Mapper {
         .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
         .datetime(transactionEntity.getDatetime())
         .status(transactionEntity.getStatus()) // Adjust accordingly
-        .total(transactionEntity.getTotalPrice().setScale(2))
-        .build();
+        .total(transactionEntity.getTotalPrice().setScale(2)).build();
   }
 
   public static TransactionProductData map(

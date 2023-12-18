@@ -13,12 +13,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "product")
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product implements Serializable {
