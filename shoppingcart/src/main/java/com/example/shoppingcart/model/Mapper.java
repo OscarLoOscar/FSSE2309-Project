@@ -44,6 +44,7 @@ public class Mapper {
 
   public static CartItemData map(CartItem cartItem) {
     return CartItemData.builder()//
+        .cid(cartItem.getCartId())//
         .pid(cartItem.getProduct().getProductId())//
         .name(cartItem.getProduct().getProductName())//
         .imageUrl(cartItem.getProduct().getImageUrl())//
