@@ -163,7 +163,7 @@ export default function ShoppingCartList() {
         if (transId) {
             navigate('/checkout/' + transId)
         }
-    }, [loginUser,transId]);
+    }, [loginUser, transId]);
 
     return <>
         <Box height="70px"></Box>

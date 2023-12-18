@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import * as CartApi from "../../../api/CartItemApi.js";
 import { useNavigate } from "react-router-dom";
 import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
-import { Dispatch, useState, useEffect, ChangeEvent } from "react";
+import { useState } from "react";
 
 type Props = {
     data: CartItemListDto
@@ -67,7 +67,12 @@ export default function ShoppingCartListCard({ data }: Props) {
 
     const handleDeleteCartItem = async () => {
         try {
-            const result = await CartApi.deleteCartItemApi(data?.pid.toString())
+            if (!data) {
+                // 如果 data 為 undefined，可能需要進行處理或拋出錯誤
+                throw new Error("Data is undefined");
+            }
+            const result = await CartApi.deleteCartItemApi(data?.cid.toString())
+            console.log(data.cid);
             console.log(result);
             await getCartItemList();
             setCartItemState(undefined);
@@ -79,7 +84,8 @@ export default function ShoppingCartListCard({ data }: Props) {
     }
 
     return <>
-        <Box display="flex" flexDirection="row" key={data.pid}>
+
+        <Box display="flex" flexDirection="row" key={data.cid}>
             <Box width="20%">
                 <img src={data.image_url}
                     alt={data.name}
@@ -137,7 +143,7 @@ export default function ShoppingCartListCard({ data }: Props) {
                 <IconButton
                     size="large"
                     color="inherit"
-                    onClick={() => handleDeleteCartItem()}
+                    onClick={handleDeleteCartItem}
                 >
                     <DeleteIcon />
                 </IconButton>

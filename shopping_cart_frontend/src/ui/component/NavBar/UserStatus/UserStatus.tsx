@@ -93,8 +93,8 @@ export default function UserStatus() {
     console.log(result);
   }
 
-  const handleDeleteCartItem = async (pid: string) => {
-    const result = await CartApi.deleteCartItemApi(pid.toString())
+  const handleDeleteCartItem = async (cid: string) => {
+    const result = await CartApi.deleteCartItemApi(cid.toString())
     console.log(result);
   }
 

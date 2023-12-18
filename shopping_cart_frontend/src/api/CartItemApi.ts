@@ -25,12 +25,13 @@ export const addCartItemApi = async (productId: string, productQty: string) => {
   }
 }
 
-export const deleteCartItemApi = async (productId: string) => {
+export const deleteCartItemApi = async (cartItemId: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken()
   try {
     if (accessToken) {
-      const response = await axios.delete<CartItemListDto>(`${baseUrl}/cart/${productId}`,
+      const response = await axios.delete<CartItemListDto>(`${baseUrl}/cart/${cartItemId}`,
         { headers: { "Authorization": `Bearer ${accessToken}` } });
+      console.log(response.data)
       return response.data;
     }
   }

@@ -1,6 +1,8 @@
 package com.example.shoppingcart.controller.impl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,18 +49,13 @@ public class CartItemControllerImpl implements CartItemController {
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
     Long userId = userEntity.getUserId();
 
-    // if (authentication == null || !authentication.isAuthenticated()) {
-    // }
-    // Retrieve the usename from authentication object
-
-    // Call service to get user cart items
-    List<CartItemData> userCartItems =
-        cartItemService.findAllByUserUid(userId).get();
-
-    // if (userCartItems == null || userCartItems.isEmpty()) {
-
-    // }
-    return userCartItems;
+    if (userEntity == null) {
+      // Handle the case where userEntity is null, perhaps by returning an empty list or throwing an exception
+      return Collections.emptyList();
+    }
+    Optional<List<CartItemData>> userCartItemsOptional =
+        cartItemService.findAllByUserUid(userId);
+    return userCartItemsOptional.orElse(Collections.emptyList());
   }
 
   // postman : development environment
@@ -126,14 +123,14 @@ public class CartItemControllerImpl implements CartItemController {
   }
 
   @Override
-  public TransactionUpdateResponse removeCartItem(String inputPid,
+  public TransactionUpdateResponse removeCartItem(String inputCid,
       JwtAuthenticationToken jwt) throws NumberFormatException,
       UserNotExistException, CartItemNotFoundException {
     FireBaseUserData user = JwtUntil.getFireBaseUser(jwt);
     UserEntity userEntity = userService.getEntityByFireBaseUserData(user);
 
     cartItemService.deleteCartItemByCartItemId(userEntity.getUserId(),
-        Long.valueOf(inputPid));
+        Long.valueOf(inputCid));
     return new TransactionUpdateResponse(TranStatus.SUCCESS.name());
   }
 

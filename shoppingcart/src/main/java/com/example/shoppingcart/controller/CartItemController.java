@@ -49,11 +49,11 @@ public interface CartItemController {
                         JwtAuthenticationToken jwt)
                         throws ProductNotExistException, UserNotExistException;
 
-        // 6.DELETE /cart/{pid}: Remove cart item
-        @DeleteMapping("/{pid}")
+        // 6.DELETE /cart/{cid}: Remove cart item
+        @DeleteMapping("/{cid}")
         @ResponseStatus(HttpStatus.ACCEPTED)
         TransactionUpdateResponse removeCartItem(
-                        @PathVariable(name = "pid") String inputPid, //
+                        @PathVariable(name = "cid") String inputPid, //
                         JwtAuthenticationToken jwt)
                         throws NumberFormatException, UserNotExistException,
                         CartItemNotFoundException;

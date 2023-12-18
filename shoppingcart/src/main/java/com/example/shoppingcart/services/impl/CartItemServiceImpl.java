@@ -16,7 +16,6 @@ import com.example.shoppingcart.exception.setting.Code;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.ProductData;
-import com.example.shoppingcart.model.UserData;
 import com.example.shoppingcart.repository.CartItemRepository;
 import com.example.shoppingcart.services.CartItemService;
 import com.example.shoppingcart.services.UserService;
@@ -26,8 +25,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import com.example.shoppingcart.services.ProductService;
 import com.example.shoppingcart.services.TransactionProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 @Service
