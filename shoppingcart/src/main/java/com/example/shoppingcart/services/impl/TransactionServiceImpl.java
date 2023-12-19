@@ -82,6 +82,7 @@ public class TransactionServiceImpl implements TransactionService {
       TransactionProduct transactionProduct =
           Mapper.map(transactionProductData);
       transactionProductServiceImpl.save(transactionProduct);
+
       // after save to DB , get primary key , set back to DTO
       transactionProductData.setTpid(transactionProduct.getTpid());
 
@@ -94,6 +95,7 @@ public class TransactionServiceImpl implements TransactionService {
     return output;
 
   }
+
   @Override
   public Transaction getTransactionByTransactionId(Long transactionId) {
     return transactionRepository.findById(transactionId).orElse(null);
@@ -114,33 +116,43 @@ public class TransactionServiceImpl implements TransactionService {
       Long uid) {
     // 2. get all transaction by userId
     TransactionData tList = this.findByTidAndUid(tid, uid);
+    log.info("Service tList : " + tList);
     // 3.get transaction product by tid
     List<TransactionProduct> tpList = transactionProductServiceImpl
         .findAllTransactionProductByTransactionId(tid);
+    log.info("Service tpList : " + tpList.size());
 
     // 4.get all cart_item by userId
     List<CartItemData> cList = cartItemService.findAllByUserUid(uid).get();
+    log.info("Service cList : " + cList.size());
 
     // 5.convent from List<TransactionProduct> to List<TransactionProductData>
     List<TransactionProductData> items = new ArrayList<>();
 
-    CartItemData matchedCartItem = null;
+    BigDecimal total = BigDecimal.ZERO;
+    // CartItemData matchedCartItem = null;
     for (TransactionProduct tp : tpList) {
       Transaction t = tp.getTransaction();
-      matchedCartItem = findMatchingCartItem(tp, t, cList);
-
+      log.info("Service t : " + t);
+      CartItemData matchedCartItem = findMatchingCartItem(tp, t, cList);
+      log.info("Service matchedCartItem : " + matchedCartItem);
       // Create a new TransactionProductData instance for each iteration
       TransactionProductData transactionProductData = Mapper.map(tp);
+      log.info("Service transactionProductData : " + transactionProductData);
+
       if (matchedCartItem != null) {
         items.add(transactionProductData);
+        total = total.add(matchedCartItem.getPrice()
+            .multiply(transactionProductData.getQuantity()));
+        log.info("Service : " + total);
       }
     }
-
     // 6.ensure correct placement of return statement
+
     if (!items.isEmpty()) {
       // Assuming total calculation is correct based on matchedCartItem
-      BigDecimal total =
-          matchedCartItem.getPrice().multiply(items.get(0).getQuantity());
+      // BigDecimal total =
+      // matchedCartItem.getPrice().multiply(items.get(0).getQuantity());
 
       return TransactionData.builder()//
           .transactionId(tid)//
@@ -149,11 +161,18 @@ public class TransactionServiceImpl implements TransactionService {
           .status(tList.getStatus())//
           .total(total.setScale(2))//
           .items(items)//
-
           .build();
     }
 
-    return null;
+    return TransactionData.builder()//
+        .transactionId(tid)//
+        .buyerUid(uid)//
+        .datetime(tList.getDatetime())//
+        .status(tList.getStatus())//
+        .total(total.setScale(2))//
+        .items(items)//
+
+        .build();
   }
 
   // 7.Encapsulate for finding match cart item

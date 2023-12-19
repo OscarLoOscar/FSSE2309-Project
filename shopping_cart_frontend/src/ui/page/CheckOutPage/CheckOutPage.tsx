@@ -8,15 +8,14 @@ import { FormLabel, Input } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState, ChangeEvent, SetStateAction } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { GetTransDto } from "../../../data/Trans/GetTransDto";
-// import * as TransApi from "../../../api/TransactionApi"
+import * as TransApi from "../../../api/TransactionApi"
 import { Params, useNavigate, useParams } from "react-router-dom";
 import Loading from "../../component/Utility/Loading";
 import LogoImage from "../../component/LogoImage/LogoImage";
 import ShoppingCartList from "../../component/ShoppingCart/ShoppingCartList";
-import ShoppingCartListCard from "../../component/ShoppingCart/ShoppingCartListCard";
-import { CartItemListDto } from "../../../data/CartItem/CartItemListDto";
+import TransItemCard from "../../component/Transaction/TransItemCard";
 
 export default function CartPage() {
   const [transData, setTransData] = useState<GetTransDto | undefined>(undefined);
@@ -31,7 +30,8 @@ export default function CartPage() {
   const fetchTransData = async () => {
     try {
       if (transactionId) {
-        setTransData(await TransApi.getTransApi(transactionId))
+        console.log(transactionId)
+        setTransData(await TransApi.getTransactionDetailByTid(transactionId))
       }
     } catch (e) {
       navigate("/error")
@@ -124,7 +124,7 @@ export default function CartPage() {
   const handleSubmitPayment = async () => {
     setLoadingBackdrop(true)
     if (transactionId) {
-      const payResult = await TransApi.payTransApi(transactionId)
+      const payResult = await TransApi.updateTransactionToProcessing(transactionId)
       setPayStatus(payResult.result)
 
     }
@@ -132,7 +132,7 @@ export default function CartPage() {
 
   const handlePaymentSuccess = async () => {
     if (transactionId) {
-      const payResult = await TransApi.finishTransApi(transactionId)
+      const payResult = await TransApi.finishTransaction(transactionId)
       setPayStatus(payResult.status)
       setLoadingBackdrop(false)
       navigate('/thankyou')

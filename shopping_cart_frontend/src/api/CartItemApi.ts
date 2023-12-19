@@ -6,6 +6,7 @@ const baseUrl = getEnvConfig().baseUrl;
 
 export const addCartItemApi = async (productId: string, productQty: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
+  console.log("addCartItemApi running")
   if (!accessToken)
     throw new Error();
   try {
@@ -14,8 +15,7 @@ export const addCartItemApi = async (productId: string, productQty: string) => {
     };
     if (productId) {
       const apiUrl = `${baseUrl}/cart/${productId}/${productQty}`
-      const response = await axios.put(
-        apiUrl, null, config);
+      const response = await axios.put(apiUrl,null, config);
       console.log(response.data);
     }
   }
@@ -59,13 +59,14 @@ export const getCartItemListApi = async () => {
 
 export const updateCartItemApi = async (productId: string, productQty: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
+  console.log("updateCartItemApi running")
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
     };
     if (productId) {
       const apiUrl = `${baseUrl}/cart/${productId}/${productQty}`;
-      const response = await axios.patch<CartItemListDto>(apiUrl, '', config);
+      const response = await axios.patch<CartItemListDto>(apiUrl, "", config);
       return response.data;
     }
   } catch (error) {

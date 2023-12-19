@@ -42,7 +42,7 @@ export default function ShoppingCartListCard({ data, update }: Props) {
             if (newQuantity >= 1 && newQuantity <= data.stock) {
                 // 调用 API 更新购物车商品数量
                 const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(
-                    data.cid.toString(),
+                    data.pid.toString(),
                     newQuantity.toString()
                 );
 
@@ -65,7 +65,7 @@ export default function ShoppingCartListCard({ data, update }: Props) {
     useEffect(() => {
         // 在 quantity 更新後執行 update 函數
         // update();
-    }, [quantity, update]);
+    }, [quantity]);
 
     const handlePlusButton = () => {
         const newQuantity = Math.max(quantity + 1, 1);
@@ -76,7 +76,7 @@ export default function ShoppingCartListCard({ data, update }: Props) {
     const handleMinusButton = () => {
         // if (quantity > 1)
         //     setQuantity((quantity) => quantity - 1);
-        const newQuantity = Math.min(quantity - 1, data.stock);
+        const newQuantity = Math.min(quantity - 1, 1);
         setQuantity(newQuantity);
         handleQtyChange(newQuantity);
     };

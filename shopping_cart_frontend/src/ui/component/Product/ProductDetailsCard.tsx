@@ -84,7 +84,10 @@ export default function ProductDetailsCard({ productData }: Props) {
         if (stock > 0) {
             return <ColorButton
                 variant="contained"
-                onClick={handleAddCartItem}
+                onClick={(event) => {
+                    event.preventDefault();
+                    handleAddCartItem
+                }}
             >Add to Cart</ColorButton>
         } else {
             return <ColorButton variant="contained" disabled>Not Available</ColorButton>
@@ -98,8 +101,8 @@ export default function ProductDetailsCard({ productData }: Props) {
                     src={productData.image_url}
                     alt={productData.name}
                     loading="lazy"
-                    height='220px' 
-                    />
+                    height='220px'
+                />
             </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>

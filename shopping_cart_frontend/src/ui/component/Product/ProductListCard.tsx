@@ -142,7 +142,7 @@ export default function ProductListCard({ productData }: Props) {
               // href="#"
               onClick={(event) => {
                 event.preventDefault();
-                handleAddCartItem();
+                handleAddCartItem;
               }}
               endIcon={<AddShoppingCartIcon />}
             >

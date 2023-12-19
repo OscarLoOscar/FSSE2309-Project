@@ -50,7 +50,7 @@ function App() {
       element: <ThankyouPage />
     },
     {
-      path: "/checkout",
+      path: "/checkout/:transactionId",
       element: <CheckOutPage />
     },
     {

@@ -47,7 +47,7 @@ public class TransactionControllerImpl implements TransactionController {
 
                 TransactionData output =
                                 transactionService.createTransaction(userId);
- //              log.info("CHECK trans controller" + output.toString());
+                // log.info("CHECK trans controller" + output.toString());
                 return TransactionData.builder()//
                                 .transactionId(output.getTransactionId())//
                                 .buyerUid(userId)//

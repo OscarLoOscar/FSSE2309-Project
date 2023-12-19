@@ -10,6 +10,7 @@ const baseUrl = getEnvConfig().baseUrl;
 
 export const createTransaction = async () => {
   const accessToken = await FirebaseAuthService.getAccessToken();
+  console.log(accessToken)
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
@@ -40,11 +41,14 @@ export const updateTransactionToProcessing = async (tid: string) => {
 
 export const getTransactionDetailByTid = async (tid: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
+  console.log(accessToken)
+
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
     };
     const apiUrl = `${baseUrl}/transaction/${tid}`;
+    console.log(apiUrl)
     const response = await axios.get<GetTransDto>(apiUrl, config);
     return response.data;
   } catch (error) {

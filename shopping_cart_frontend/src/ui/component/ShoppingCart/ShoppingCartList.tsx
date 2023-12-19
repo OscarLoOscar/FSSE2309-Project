@@ -36,6 +36,7 @@ export default function ShoppingCartList() {
         setTransId(undefined)
         const result = await TransApi.createTransaction()
         setTransId(result.tid.toString())
+        console.log("result.tid.toString() : "+ result.tid.toString())
         setLoadingBackdrop(false)
     }
 
@@ -163,9 +164,7 @@ export default function ShoppingCartList() {
             navigate('/login')
         }
         if (transId) {
-            // navigate('/checkout/' + transId)
-            navigate('/checkout')
-
+            navigate('/checkout/' + transId)
         }
     }, [loginUser, transId]);
 

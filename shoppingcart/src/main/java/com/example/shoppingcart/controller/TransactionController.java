@@ -20,7 +20,7 @@ public interface TransactionController {
 
     // 8. GET    /transaction/{tid}: Get transaction details by ID
     @GetMapping("/{tid}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public TransactionData getTransactionDetailByTransactionId(
             @PathVariable(name = "tid") Long transactionId,
             JwtAuthenticationToken jwt);
