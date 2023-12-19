@@ -4,7 +4,6 @@ import LoginPage from './ui/page/LoginPage/LoginPage';
 import { createContext, useEffect, useState } from "react";
 import ThankyouPage from './ui/page/ThankyouPage/ThankyouPage';
 import ErrorPage from './ui/page/ErrorPage/ErrorPage';
-// import CartPage from './ui/page/ShoppingCartPage/CartPage';
 import { UserData } from './data/User/UserData';
 import ProductDetailsPage from './ui/page/ProductPage/ProductDetailsPage';
 import MainPage from './ui/page/MainPage/MainPage';
@@ -12,6 +11,7 @@ import LoginSuccessPage from "./ui/page/LoginSuccessPage/LoginSuccessPage";
 import * as FirebaseAuthService from "./authService/FirebaseAuthService"
 import LogOutPage from "./ui/page/LogOutPage/LogOutPage";
 import ShoppingCartPage from "./ui/page/ShoppingCartPage/ShoppingCartPage";
+import CheckOutPage from "./ui/page/CheckOutPage/CheckOutPage";
 
 //useContext - is a way to manage state globally
 
@@ -49,10 +49,10 @@ function App() {
       path: "/thankyoupage",
       element: <ThankyouPage />
     },
-    // {
-    //   path: "/checkout",
-    //   element: <CartPage />
-    // },
+    {
+      path: "/checkout",
+      element: <CheckOutPage />
+    },
     {
       path: "/shoppingcart",
       element: <ShoppingCartPage />

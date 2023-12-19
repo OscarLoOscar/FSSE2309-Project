@@ -95,8 +95,6 @@ public class CartItemControllerImpl implements CartItemController {
     return true;
   }
 
-
-
   @Override
   public CartItemData updateCartQuantity(String inputPid, String inputQuantity,
       JwtAuthenticationToken jwt)
@@ -120,7 +118,6 @@ public class CartItemControllerImpl implements CartItemController {
       // You can customize this part based on your business logic
       return new CartItemData(); // Return an empty object or handle accordingly
     }
-
   }
 
   @Override

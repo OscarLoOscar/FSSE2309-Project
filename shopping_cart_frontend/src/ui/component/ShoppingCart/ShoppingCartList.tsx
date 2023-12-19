@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import * as CartApi from "../../../api/CartItemApi.js";
-// import * as TransApi from "../../../api/TransactionApi.js";
+import * as TransApi from "../../../api/TransactionApi.js";
 import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
 import ShoppingCartListCard from "./ShoppingCartListCard";
 import Loading from "../Utility/Loading.js";
@@ -31,13 +31,13 @@ export default function ShoppingCartList() {
         }
     }
 
-    // const handleCheckout = async () => {
-    //     setLoadingBackdrop(true)
-    //     setTransId(undefined)
-    //     const result = await TransApi.prepTransApi()
-    //     setTransId(result.tid.toString())
-    //     setLoadingBackdrop(false)
-    // }
+    const handleCheckout = async () => {
+        setLoadingBackdrop(true)
+        setTransId(undefined)
+        const result = await TransApi.createTransaction()
+        setTransId(result.tid.toString())
+        setLoadingBackdrop(false)
+    }
 
     const renderCartItemList = () => {
         if (cartItemList && cartItemList.length > 0) {
@@ -147,7 +147,7 @@ export default function ShoppingCartList() {
                 alignItems: "center"
             }}>
                 <Button variant="contained" fullWidth
-                // onClick={handleCheckout}
+                    onClick={handleCheckout}
                 >Checkout</Button>
             </Box>
             <Box width="5%">
@@ -163,7 +163,9 @@ export default function ShoppingCartList() {
             navigate('/login')
         }
         if (transId) {
-            navigate('/checkout/' + transId)
+            // navigate('/checkout/' + transId)
+            navigate('/checkout')
+
         }
     }, [loginUser, transId]);
 

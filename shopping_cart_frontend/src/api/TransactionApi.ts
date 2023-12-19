@@ -7,14 +7,15 @@ import { FinishTransDto } from "../data/Trans/FinishTransDto";
 import * as FirebaseAuthService from "../authService/FirebaseAuthService"
 
 const baseUrl = getEnvConfig().baseUrl;
-export const prepTransApi = async () => {
+
+export const createTransaction = async () => {
   const accessToken = await FirebaseAuthService.getAccessToken();
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
     };
     const apiUrl = `${baseUrl}/transaction/prepare`;
-    const response = await axios.post<PrepTransDto>(apiUrl, '', config);
+    const response = await axios.post<PrepTransDto>(apiUrl, null, config);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -22,14 +23,14 @@ export const prepTransApi = async () => {
   }
 };
 
-export const payTransApi = async (tid: string) => {
+export const updateTransactionToProcessing = async (tid: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
     };
     const apiUrl = `${baseUrl}/transaction/${tid}/pay`;
-    const response = await axios.patch<PayTransDto>(apiUrl, '', config);
+    const response = await axios.patch<PayTransDto>(apiUrl, null, config);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -37,7 +38,7 @@ export const payTransApi = async (tid: string) => {
   }
 };
 
-export const getTransApi = async (tid: string) => {
+export const getTransactionDetailByTid = async (tid: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
   try {
     const config = {
@@ -53,14 +54,14 @@ export const getTransApi = async (tid: string) => {
 };
 
 
-export const finishTransApi = async (tid: string) => {
+export const finishTransaction = async (tid: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
     };
     const apiUrl = `${baseUrl}/transaction/${tid}/finish`;
-    const response = await axios.patch<FinishTransDto>(apiUrl, '', config);
+    const response = await axios.patch<FinishTransDto>(apiUrl, null, config);
     return response.data;
   } catch (error) {
     console.error(error);

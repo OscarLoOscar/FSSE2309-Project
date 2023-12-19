@@ -42,18 +42,15 @@ public class Transaction implements Serializable {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "uid", nullable = false)
-  @JsonProperty(value = "buyer_uid")
   private UserEntity user;
 
   @Column(nullable = false)
   private LocalDateTime datetime;
 
-  // @Column(name = "status", nullable = false)
-  // private String status;
   @Column(name = "status", nullable = false)
   @Enumerated(EnumType.STRING)
   private TranStatus status;
-  
-  @Column(nullable = false)
+
+  @Column(name = "total_price", nullable = false)
   private BigDecimal totalPrice;
 }

@@ -3,6 +3,7 @@ package com.example.shoppingcart.services;
 import java.util.List;
 import java.util.Optional;
 import com.example.shoppingcart.entity.CartItem;
+import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.exception.CartItemNotFoundException;
 import com.example.shoppingcart.exception.ProductNotExistException;
 import com.example.shoppingcart.exception.UserNotExistException;
@@ -10,23 +11,26 @@ import com.example.shoppingcart.model.CartItemData;
 
 public interface CartItemService {
 
-  Optional<List<CartItemData>> findAllByUserUid(Long uid);
+        Optional<List<CartItemData>> findAllByUserUid(Long uid);
 
-  Optional<List<CartItemData>> getUserCartItemsByProductId(Long pid);
+        Optional<List<CartItemData>> getUserCartItemsByProductId(Long pid);
 
-  // void addCartItem(CartItem cartItem);
+        Optional<List<CartItem>> findCartEntityByUserUid(Long uid);
 
-  void addCartItem(long userId, long pid, int quantity)
-      throws UserNotExistException, ProductNotExistException;
+        // void addCartItem(CartItem cartItem);
 
-  boolean updateCartQuantity(long userId, long pid, int quantity)
-      throws ProductNotExistException, UserNotExistException;
+        void addCartItem(long userId, long pid, int quantity)
+                        throws UserNotExistException, ProductNotExistException;
 
-  CartItemData getCartItemDetails(long userId, long productId);
+        boolean updateCartQuantity(long userId, long pid, int quantity)
+                        throws ProductNotExistException, UserNotExistException;
 
-  void deleteCartItemByCartItemId(long userid, long cartItemId)
-      throws UserNotExistException, CartItemNotFoundException;
+        CartItemData getCartItemDetails(long userId, long productId);
 
-  void deleteAllCartItem();
+        void deleteCartItemByCartItemId(long userid, long cartItemId)
+                        throws UserNotExistException, CartItemNotFoundException;
 
+        void deleteAllCartItem();
+
+        public boolean checkStock(Product productEntity, Integer quantity);
 }

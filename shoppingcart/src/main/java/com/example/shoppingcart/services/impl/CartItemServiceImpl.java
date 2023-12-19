@@ -262,4 +262,24 @@ public class CartItemServiceImpl implements CartItemService {
 
     }
   }
+
+
+  @Override
+  public Optional<List<CartItem>> findCartEntityByUserUid(Long uid) {
+    List<CartItem> cartItems = cartItemRepository.findAllByUserUid(uid).get();
+
+    // Check if the list is empty
+    if (cartItems.isEmpty()) {
+      return Optional.empty();
+    } else {
+      return Optional.of(cartItems.stream()//
+          .collect(Collectors.toList()));
+    }
+  }
+
+  @Override
+  public boolean checkStock(Product productEntity, Integer quantity) {
+    return quantity <= productEntity.getUnitStock()
+        && productEntity.getUnitStock() != 0;
+  }
 }

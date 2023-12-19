@@ -14,6 +14,8 @@ public enum Code {
       "Can't add more items to the cart than the available stock."), //
   CartItemNotFoundException(41005, "Item is not found in the cart."), //
   USER_NOT_FOUND(41006, "User not exists."), //
+  CART_IS_EMPTY(41007, "Cart is empty"), //
+  OUT_OF_STOCK(41008, "Out of Stock"), //
   // Server
   SERVER_TIMEOUT(50000, "Server Timeout."), //
   THIRD_PARTY_SERVER_UNAVAILABLE(50001, "Third Party Service Unavailable."), //
