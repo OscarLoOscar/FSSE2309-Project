@@ -108,6 +108,7 @@ public class CartItemControllerImpl implements CartItemController {
     // convent pid and quantoty
     Long pid = Long.valueOf(inputPid);
     Integer quantity = Integer.valueOf(inputQuantity);
+    log.info("CHECK input Quantity : " + quantity);
     // Update cart quantity
     boolean success = cartItemService.updateCartQuantity(uid, pid, quantity);
 

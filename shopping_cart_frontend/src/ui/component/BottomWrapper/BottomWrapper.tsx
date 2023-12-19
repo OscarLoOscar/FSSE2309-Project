@@ -17,29 +17,30 @@ export default function BottomWrapper() {
     >
       <Typography color="text.primary" align="center">
         熱門搜尋:
-        {'  (贊助) '}
-        <Link underline="hover" color={color} href="/sponsor/momax-flagship">
-          momax旗艦店
+        {/* {'  (贊助) '} */}
+        {'  '}
+        <Link underline="hover" color={color} href="/product">
+          Bordeaux
         </Link>
         {' | '}
-        <Link underline="hover" color={color} href="/iphone15">
-          iPhone15
+        <Link underline="hover" color={color} href="/shoppingcart">
+          Burgundy
         </Link>
         {' | '}
-        <Link underline="hover" color={color} href="/switch">
-          Switch
+        <Link underline="hover" color={color} href="/#">
+          Italy
         </Link>
         {' | '}
-        <Link underline="hover" color={color} href="/sony">
-          SONY
+        <Link underline="hover" color={color} href="/#">
+          Germany
         </Link>
         {' | '}
-        <Link underline="hover" color={color} href="/soundbar">
-          Soundbar
+        <Link underline="hover" color={color} href="/#">
+          Spain
         </Link>
         {' | '}
-        <Link underline="hover" color={color} href="/tab-s9">
-          Tab S9
+        <Link underline="hover" color={color} href="/#">
+          Napa Vally
         </Link>
         {' | '}
         <Link

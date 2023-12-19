@@ -6,17 +6,18 @@ import Typography from "@mui/material/Typography";
 import * as CartApi from "../../../api/CartItemApi.js";
 import { useNavigate } from "react-router-dom";
 import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ProductDetails from "../Product/ProductDetails.js";
 type Props = {
     data: CartItemListDto
-    // update: Dispatch<React.SetStateAction<CartItemListDto[] | null | undefined>>
+    update: () => void;
 }
 
-export default function ShoppingCartListCard({ data }: Props) {
-    const [cartItem, setCartItemState] = useState<CartItemListDto | undefined>(data)
-    const [itemSubtotal, setItemSubtotal] = useState<number>(data.price * data.cart_quantity)
-    const [quantity, setQuantity] = useState<number>(data.cart_quantity);
+export default function ShoppingCartListCard({ data, update }: Props) {
+    const [quantity, setQuantity] = useState<number>(1);
+    const [itemSubtotal, setItemSubtotal] = useState<number>(data.price * quantity);
     const HKDollar = new Intl.NumberFormat('zh-HK', {
         style: 'currency',
         currency: 'HKD',
@@ -37,32 +38,47 @@ export default function ShoppingCartListCard({ data }: Props) {
 
     const handleQtyChange = async (newQuantity: number) => {
         try {
+            // 检查新数量是否在合理范围内
             if (newQuantity >= 1 && newQuantity <= data.stock) {
-                // const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(
-                //     data.pid.toString(),
-                //     newQuantity.toString()
-                // );
+                // 调用 API 更新购物车商品数量
+                const updatedCartItem: CartItemListDto | undefined = await CartApi.updateCartItemApi(
+                    data.cid.toString(),
+                    newQuantity.toString()
+                );
 
-                // if (updatedCartItem) {
-                //     setCartItems(updatedCartItem);
-                //     setItemSubtotal(updatedCartItem.price * newQuantity);
-                setQuantity(newQuantity);
-                // }
+                if (updatedCartItem) {
+                    // 如果 API 调用成功，更新本地状态并触发父级组件更新
+                    setItemSubtotal(updatedCartItem.price * newQuantity);
+                    update();
+                }
             } else {
+                // 如果新数量不在合理范围内，进行相应处理（比如导航到错误页面）
                 setItemSubtotal(data.cart_quantity * data.price);
                 navigate("/error");
             }
         } catch (e) {
+            // 处理 API 调用中的错误，比如导航到错误页面
             navigate("/error");
         }
     };
+
+    useEffect(() => {
+        // 在 quantity 更新後執行 update 函數
+        // update();
+    }, [quantity, update]);
+
     const handlePlusButton = () => {
-        handleQtyChange(quantity + 1);
+        const newQuantity = Math.max(quantity + 1, 1);
+        setQuantity(newQuantity);
+        handleQtyChange(newQuantity);
     };
 
     const handleMinusButton = () => {
-        const newQuantity = Math.max(data.cart_quantity - 1, 1);
-        handleQtyChange(newQuantity)
+        // if (quantity > 1)
+        //     setQuantity((quantity) => quantity - 1);
+        const newQuantity = Math.min(quantity - 1, data.stock);
+        setQuantity(newQuantity);
+        handleQtyChange(newQuantity);
     };
 
     const handleDeleteCartItem = async () => {
@@ -74,10 +90,7 @@ export default function ShoppingCartListCard({ data }: Props) {
             const result = await CartApi.deleteCartItemApi(data?.cid.toString())
             console.log(data.cid);
             console.log(result);
-            await getCartItemList();
-            setCartItemState(undefined);
-            setQuantity(0)
-
+            update();
         } catch (e) {
             navigate("/error")
         }
@@ -115,17 +128,23 @@ export default function ShoppingCartListCard({ data }: Props) {
                 alignItems: "center"
             }}>
                 {/* Controll _itemQuantity */}
+                <IconButton aria-label="minusOne" onClick={handleMinusButton}>
+                    <RemoveIcon />
+                </IconButton>
                 <TextField
+                    required
                     id={data.pid.toString() + "_itemQuantity"}
-                    type="number"
                     fullWidth
-                    InputLabelProps={{ shrink: true }}
                     size={"small"}
-                    inputProps={{ min: 1, max: data.stock }}
-                    onBlur={(e) => handleQtyChange(Number(e.target.value))}
-                    defaultValue={data.cart_quantity}
+                    // inputProps={{ min: 1, max: data.stock }}
+                    //     onBlur={(e) => handleQtyChange(Number(e.target.value))}
+                    value={quantity}
                 />
+                <IconButton aria-label="plueOne" onClick={handlePlusButton}>
+                    <AddIcon />
+                </IconButton>
             </Box>
+
             <Box width="25%" sx={{
                 display: "flex",
                 alignItems: "center"

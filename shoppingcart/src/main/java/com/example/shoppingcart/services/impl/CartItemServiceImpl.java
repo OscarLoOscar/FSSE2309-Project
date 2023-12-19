@@ -79,8 +79,8 @@ public class CartItemServiceImpl implements CartItemService {
 
     if (optionalCartItem.isPresent()) {
       CartItem cartItem2 = optionalCartItem.get();
-      cartItem2.setQuantity(
-          cartItem2.getQuantity().add(BigDecimal.valueOf(quantity)));
+      cartItem2.setQuantity(BigDecimal.valueOf(quantity));
+      log.info("Service quantity : " + quantity);
       cartItem2 = entityManager.merge(cartItem2);
       cartItemRepository.save(cartItem2);
     } else {

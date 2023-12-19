@@ -43,8 +43,10 @@ export default function ShoppingCartList() {
         if (cartItemList && cartItemList.length > 0) {
             return cartItemList.map((value) => {
                 totalAmt += value.price * value.cart_quantity;
-                return <ShoppingCartListCard key={value.pid} data={value}
-                // update={setCartItemList}
+                return <ShoppingCartListCard
+                    key={value.pid}
+                    data={value}
+                    update={fetchCartData}
                 />
             })
         } else {
