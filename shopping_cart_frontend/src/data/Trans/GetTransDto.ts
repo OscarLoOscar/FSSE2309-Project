@@ -1,24 +1,27 @@
 export interface GetTransDto {
-    tid:       number;
-    datetime:  Date;
-    status:    string;
-    total:     number;
+    tid: number;
+    datetime: string;
+    status: string;
+    total: number;
     buyer_uid: number;
-    items:     Item[];
+    items: Item[];
 }
 
 export interface Item {
-    tpid:     number;
+    tpid: number;
+    tid: number;
     quantity: number;
     subtotal: number;
-    product:  Product;
+    product: Product;
 }
 
 export interface Product {
-    pid:         number;
-    name:        string;
+    cid: number;
+    pid: number;
+    name: string;
     description: string;
-    price:       number;
-    image_url:   string;
-    stock:       number;
+    image_url: string;
+    price: number;
+    cart_quantity: number;
+    stock: number;
 }

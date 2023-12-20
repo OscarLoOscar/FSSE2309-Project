@@ -6,14 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.shoppingcart.entity.Product;
 import com.example.shoppingcart.entity.Transaction;
 import com.example.shoppingcart.entity.TransactionProduct;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.model.CartItemData;
 import com.example.shoppingcart.model.Mapper;
+import com.example.shoppingcart.model.ProductData;
 import com.example.shoppingcart.model.TransactionData;
 import com.example.shoppingcart.model.TransactionProductData;
 import com.example.shoppingcart.repository.TransactionRepository;
+import com.example.shoppingcart.services.ProductService;
 import com.example.shoppingcart.services.TransactionService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -26,30 +29,30 @@ public class TransactionServiceImpl implements TransactionService {
   private final TransactionRepository transactionRepository;
   private final CartItemServiceImpl cartItemService;
   private final TransactionProductServiceImpl transactionProductServiceImpl;
+  private final ProductService productService;
 
   @Autowired
   public TransactionServiceImpl(UserServiceImpl userService,
       TransactionRepository transactionRepository,
       CartItemServiceImpl cartItemService,
-      TransactionProductServiceImpl transactionProductServiceImpl) {
+      TransactionProductServiceImpl transactionProductServiceImpl,
+      ProductService productService) {
     this.userService = userService;
     this.transactionRepository = transactionRepository;
     this.cartItemService = cartItemService;
     this.transactionProductServiceImpl = transactionProductServiceImpl;
+    this.productService = productService;
   }
 
   @Transactional
   @Override
   public TransactionData createTransaction(Long userId) {
-    log.info("CHECK LIST : "
-        + cartItemService.findAllByUserUid(userId).get().size());
     BigDecimal finalSum = BigDecimal.ZERO;
     for (CartItemData data : cartItemService.findAllByUserUid(userId).get()) {
       BigDecimal total = BigDecimal.ZERO;
       total = data.getQuantity().multiply(data.getPrice());
       finalSum = finalSum.add(total);
     }
-    log.info("finalSum : " + finalSum);
     // for Transaction DataBase
     Transaction recode = Transaction.builder()//
         .user(userService.getUserById(userId))//
@@ -73,6 +76,7 @@ public class TransactionServiceImpl implements TransactionService {
         .get()) {
       TransactionProductData transactionProductData =
           TransactionProductData.builder()//
+              .tid(recode.getTid())//
               .cartItemData(cartItemData)//
               .quantity(cartItemData.getQuantity())//
               .totalPrice(BigDecimal.valueOf(cartItemData.getStock())
@@ -81,6 +85,9 @@ public class TransactionServiceImpl implements TransactionService {
       // for new TransactionProduct to DB
       TransactionProduct transactionProduct =
           Mapper.map(transactionProductData);
+
+      // 19-12-2023 , set transaction into transactionProduct
+      transactionProduct.setTransaction(recode);
       transactionProductServiceImpl.save(transactionProduct);
 
       // after save to DB , get primary key , set back to DTO
@@ -91,7 +98,8 @@ public class TransactionServiceImpl implements TransactionService {
       listOfTPD.add(transactionProductData);
     }
     output.setItems(listOfTPD);
-
+    // Add at 19/12/2023 , clear the shopping cart
+    cartItemService.deleteAllCartItem();
     return output;
 
   }
@@ -116,15 +124,13 @@ public class TransactionServiceImpl implements TransactionService {
       Long uid) {
     // 2. get all transaction by userId
     TransactionData tList = this.findByTidAndUid(tid, uid);
-    log.info("Service tList : " + tList);
     // 3.get transaction product by tid
     List<TransactionProduct> tpList = transactionProductServiceImpl
         .findAllTransactionProductByTransactionId(tid);
-    log.info("Service tpList : " + tpList.size());
 
     // 4.get all cart_item by userId
-    List<CartItemData> cList = cartItemService.findAllByUserUid(uid).get();
-    log.info("Service cList : " + cList.size());
+    // List<CartItemData> cList = cartItemService.findAllByUserUid(uid).get();
+    List<ProductData> pList = productService.getAllProduct();
 
     // 5.convent from List<TransactionProduct> to List<TransactionProductData>
     List<TransactionProductData> items = new ArrayList<>();
@@ -133,18 +139,15 @@ public class TransactionServiceImpl implements TransactionService {
     // CartItemData matchedCartItem = null;
     for (TransactionProduct tp : tpList) {
       Transaction t = tp.getTransaction();
-      log.info("Service t : " + t);
-      CartItemData matchedCartItem = findMatchingCartItem(tp, t, cList);
-      log.info("Service matchedCartItem : " + matchedCartItem);
+      ProductData matchedCartItem = findMatchingCartItem(tp, t, pList);
       // Create a new TransactionProductData instance for each iteration
       TransactionProductData transactionProductData = Mapper.map(tp);
-      log.info("Service transactionProductData : " + transactionProductData);
+      transactionProductData.setTid(tid);
 
       if (matchedCartItem != null) {
         items.add(transactionProductData);
-        total = total.add(matchedCartItem.getPrice()
+        total = total.add(BigDecimal.valueOf(matchedCartItem.getProductPrice())
             .multiply(transactionProductData.getQuantity()));
-        log.info("Service : " + total);
       }
     }
     // 6.ensure correct placement of return statement
@@ -176,9 +179,9 @@ public class TransactionServiceImpl implements TransactionService {
   }
 
   // 7.Encapsulate for finding match cart item
-  private CartItemData findMatchingCartItem(TransactionProduct tp,
-      Transaction t, List<CartItemData> cList) {
-    for (CartItemData c : cList) {
+  private ProductData findMatchingCartItem(TransactionProduct tp, Transaction t,
+      List<ProductData> cList) {
+    for (ProductData c : cList) {
       if (c.getPid().equals(tp.getPid())
           && tp.getTransaction().getTid().equals(t.getTid())) {
         return c;
@@ -211,7 +214,7 @@ public class TransactionServiceImpl implements TransactionService {
     List<TransactionProduct> tpList = transactionProductServiceImpl
         .findAllTransactionProductByTransactionId(tid);
     // 4.get all cart_item by userId
-    List<CartItemData> cList = cartItemService.findAllByUserUid(uid).get();
+    List<ProductData> pList = productService.getAllProduct();
 
     if (transaction != null) {
       // update the transaction status to FINISH
@@ -223,10 +226,10 @@ public class TransactionServiceImpl implements TransactionService {
       // return ResponseEntity.ok(Mapper.map(transaction));
       List<TransactionProductData> items = new ArrayList<>();
 
-      CartItemData matchedCartItem = null;
+      ProductData matchedCartItem = null;
       for (TransactionProduct tp : tpList) {
         Transaction t = tp.getTransaction();
-        matchedCartItem = findMatchingCartItem(tp, t, cList);
+        matchedCartItem = findMatchingCartItem(tp, t, pList);
 
         // Create a new TransactionProductData instance for each iteration
         TransactionProductData transactionProductData = Mapper.map(tp);

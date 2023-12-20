@@ -15,7 +15,7 @@ export const addCartItemApi = async (productId: string, productQty: string) => {
     };
     if (productId) {
       const apiUrl = `${baseUrl}/cart/${productId}/${productQty}`
-      const response = await axios.put(apiUrl,null, config);
+      const response = await axios.put(apiUrl,"", config);
       console.log(response.data);
     }
   }

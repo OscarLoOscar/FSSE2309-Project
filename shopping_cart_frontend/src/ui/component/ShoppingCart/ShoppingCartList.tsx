@@ -24,11 +24,11 @@ export default function ShoppingCartList() {
     let totalAmt = 0;
 
     const fetchCartData = async () => {
-        try {
-            setCartItemList(await CartApi.getCartItemListApi())
-        } catch (e) {
-            navigate("/error")
-        }
+        // try {
+        setCartItemList(await CartApi.getCartItemListApi())
+        // } catch (e) {
+        //     navigate("/error")
+        // }
     }
 
     const handleCheckout = async () => {
@@ -36,8 +36,9 @@ export default function ShoppingCartList() {
         setTransId(undefined)
         const result = await TransApi.createTransaction()
         setTransId(result.tid.toString())
-        console.log("result.tid.toString() : "+ result.tid.toString())
+        console.log("result.tid.toString() : " + result.tid.toString())
         setLoadingBackdrop(false)
+        navigate("/checkout/" + transId?.toString())
     }
 
     const renderCartItemList = () => {

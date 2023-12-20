@@ -16,11 +16,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@JsonPropertyOrder({"cid","pid", "name", "description", "image_url", "price",
+@JsonPropertyOrder({"pid", "name", "description", "image_url", "price",
     "cart_quantity", "stock"})
 public class CartItemData {
 
-  private Long cid;
+  //private Long cid;
 
   private Long pid;
 

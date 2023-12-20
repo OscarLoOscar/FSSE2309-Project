@@ -12,10 +12,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@JsonPropertyOrder({"tpid", "product", "quantity", "subtotal"})
+@JsonPropertyOrder({"tpid", "tid", "product", "quantity", "subtotal"})
 public class TransactionProductData {
 
   private Long tpid;
+
+  private Long tid;
 
   @JsonProperty("product")
   private CartItemData cartItemData;

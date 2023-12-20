@@ -84,10 +84,7 @@ export default function ProductDetailsCard({ productData }: Props) {
         if (stock > 0) {
             return <ColorButton
                 variant="contained"
-                onClick={(event) => {
-                    event.preventDefault();
-                    handleAddCartItem
-                }}
+                onClick={handleAddCartItem}
             >Add to Cart</ColorButton>
         } else {
             return <ColorButton variant="contained" disabled>Not Available</ColorButton>

@@ -233,9 +233,6 @@ public class CartItemServiceImpl implements CartItemService {
     // Retrieve UserEntity and Product
     UserEntity user = userService.getUserById(userId);
     Product product = productService.getProductEntityById(productId);
-    log.info("CHECTK1: " + user.toString());
-    log.info("CHECTK2: " + product.toString());
-
     // Check if the product and user exist
     if (user == null || product == null) {
       throw new UserNotExistException(Code.USER_NOT_FOUND);
@@ -245,21 +242,17 @@ public class CartItemServiceImpl implements CartItemService {
     cartItemRepository.findByUser_UidAndProduct_Pid(userId, productId)
         .ifPresent(existingCartItem -> {
           // If the cart item already exists, update the quantity
-          existingCartItem.setQuantity(BigDecimal.valueOf(1));
-          // existingCartItem.getQuantity().add(BigDecimal.valueOf(quantity)));
+          existingCartItem.setQuantity(
+          existingCartItem.getQuantity().add(BigDecimal.valueOf(quantity)));
           cartItemRepository.save(existingCartItem);
-          log.info("CHECTK3: " + existingCartItem.toString());
-
         });
 
     // If the cart item does not exist, create a new one
     if (!cartItemRepository.findByUser_UidAndProduct_Pid(userId, productId)
         .isPresent()) {
       CartItem newCartItem = CartItem.builder().user(user).product(product)
-          .quantity(BigDecimal.valueOf(1)).build();
+          .quantity(BigDecimal.valueOf(quantity)).build();
       cartItemRepository.save(newCartItem);
-      log.info("CHECTK4: " + newCartItem.toString());
-
     }
   }
 

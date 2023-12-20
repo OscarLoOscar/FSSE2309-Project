@@ -42,7 +42,6 @@ export const updateTransactionToProcessing = async (tid: string) => {
 export const getTransactionDetailByTid = async (tid: string) => {
   const accessToken = await FirebaseAuthService.getAccessToken();
   console.log(accessToken)
-
   try {
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
