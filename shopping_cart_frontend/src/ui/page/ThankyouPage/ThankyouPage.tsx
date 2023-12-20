@@ -26,7 +26,7 @@ export default function ThankyouPage() {
 
     return (
         <>
-            <title>Venturenix Lab React Project</title>
+            <title>Thank you</title>
             <TopContainer />
             <LogoImage />
             <ItemTab />

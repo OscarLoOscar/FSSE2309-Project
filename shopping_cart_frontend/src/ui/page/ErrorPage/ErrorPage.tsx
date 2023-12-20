@@ -9,7 +9,7 @@ import TopContainer from "../../component/TopContainer/TopContainer";
 export default function ErrorPage() {
     return (
         <>
-            <title>Venturenix Lab React Project</title>
+            <title>Error Page</title>
             <TopContainer />
             <LogoImage />
             <ItemTab />

@@ -6,7 +6,7 @@ import Footer from "../../component/Footer/Footer";
 import { useEffect, useState } from "react";
 import { GetTransDto } from "../../../data/Trans/GetTransDto";
 import * as TransApi from "../../../api/TransactionApi"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../component/Utility/Loading";
 import LogoImage from "../../component/LogoImage/LogoImage";
 import TransItemCard from "../../component/Transaction/TransItemCard";
@@ -16,7 +16,7 @@ export default function CartPage() {
   const [transData, setTransData] = useState<GetTransDto | undefined>(undefined);
   const [payStatus, setPayStatus] = useState<string | undefined>(undefined)
   const navigate = useNavigate();
-  const [transactionId, setTransactionId] = useState<string | undefined>(undefined);
+  const { transactionId } = useParams(); // useParams to get parameters from the URL
 
   const fetchTransData = async () => {
     try {
@@ -55,12 +55,11 @@ export default function CartPage() {
     }
     setTransData(undefined)
     void fetchTransData();
-  }, []);
-  // }, [fetchTransData, handlePaymentSuccess, payStatus]);
+  }, [transactionId, payStatus]);
 
   return (
     <>
-      <title>Venturenix Lab React Project</title>
+      <title>Check Out</title>
       <TopContainer />
       <LogoImage />
       <ItemTab />

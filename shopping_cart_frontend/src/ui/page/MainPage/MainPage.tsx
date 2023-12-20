@@ -21,7 +21,7 @@ const photos = [
 export default function MainPage() {
   return (
     <>
-      <title>Venturenix Lab React Project</title>
+      <title>Main Page</title>
       <TopContainer />
       <LogoImage />
       <ItemTab />

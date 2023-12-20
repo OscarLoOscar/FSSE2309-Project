@@ -1,5 +1,5 @@
-import { useState, useEffect, Fragment } from 'react';
-import { Toolbar, Link, CssBaseline, AppBar, Container, Paper, Stepper, Step, StepLabel, Button, Box, Typography } from '@mui/material';
+import { useState, useEffect, Fragment, useCallback } from 'react';
+import { Link, CssBaseline, AppBar, Container, Paper, Stepper, Step, StepLabel, Button, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
@@ -34,16 +34,21 @@ export default function Checkout({ transactionId }: Props) {
   const [transProductData, setTransData] = useState<GetTransDto | undefined>(undefined);
   const navigate = useNavigate();
 
-  const fetchTransData = async (transactionId) => {
-    try {
-      if (transactionId) {
-        const data = await TransApi.getTransactionDetailByTid(transactionId);
-        setTransData(data);
+  const fetchTransData = useCallback(
+    async (transactionId: string | undefined) => {
+      try {
+        if (transactionId) {
+          const data = await TransApi.getTransactionDetailByTid(transactionId);
+          console.log(data)
+          setTransData(data);
+        }
+      } catch (e) {
+        navigate('/error');
       }
-    } catch (e) {
-      navigate('/error');
-    }
-  };
+    },
+    [navigate]
+  );
+
 
 
   const handleNext = () => {
@@ -58,7 +63,9 @@ export default function Checkout({ transactionId }: Props) {
     // Implement your logic to place the order and get the transaction ID
     // const transactionId = '123'; // Replace this with your actual transaction ID
     setTid(transactionId);
-    await fetchTransData(transactionId);
+    console.log(transactionId)
+    await fetchTransData(tid);
+    console.log(tid)
     handleNext();
   };
 
@@ -76,10 +83,10 @@ export default function Checkout({ transactionId }: Props) {
   }
 
   useEffect(() => {
-    if (tid) {
-      void fetchTransData(tid);
+    if (transactionId) {
+      fetchTransData(transactionId);
     }
-  }, [tid, fetchTransData]);
+  }, [transactionId,fetchTransData]);
 
 
   return (
@@ -94,11 +101,11 @@ export default function Checkout({ transactionId }: Props) {
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
       >
-        <Toolbar>
+        {/* <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Company name
           </Typography>
-        </Toolbar>
+        </Toolbar> */}
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>

@@ -9,7 +9,7 @@ import TopContainer from "../../component/TopContainer/TopContainer";
 export default function LoginSuccessPage() {
     return (
         <>
-            <title>Venturenix Lab React Project</title>
+            <title>Login Success</title>
             <TopContainer />
             <LogoImage />
             <ItemTab />

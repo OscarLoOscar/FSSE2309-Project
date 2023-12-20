@@ -19,7 +19,7 @@ const photos = [
 export default function ShoppingSite() {
   return (
     <>
-      <title>Venturenix Lab React Project</title>
+      <title>Shopping Page</title>
       <TopContainer />
       <LogoImage />
       <ItemTab />

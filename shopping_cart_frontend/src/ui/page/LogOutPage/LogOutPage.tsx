@@ -25,7 +25,7 @@ export default function LogOutPage() {
 
     return (
         <>
-            <title>Venturenix Lab React Project</title>
+            <title>Logout Page</title>
             <TopContainer />
             <img
                 alt="Logo"

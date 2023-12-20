@@ -33,12 +33,11 @@ export default function ShoppingCartList() {
 
     const handleCheckout = async () => {
         setLoadingBackdrop(true)
-        setTransId(undefined)
         const result = await TransApi.createTransaction()
         setTransId(result.tid.toString())
         console.log("result.tid.toString() : " + result.tid.toString())
         setLoadingBackdrop(false)
-        navigate("/checkout/" + transId?.toString())
+        navigate("/checkout/" + result.tid.toString())
     }
 
     const renderCartItemList = () => {
@@ -165,9 +164,14 @@ export default function ShoppingCartList() {
             navigate('/login')
         }
         if (transId) {
-            navigate('/checkout/' + transId)
+            navigate('/checkout/' + `${transId}`)
+            console.log(transId)
         }
     }, [loginUser, transId]);
+
+    useEffect(() => {
+        console.log(transId);
+    }, [transId]);
 
     return <>
         <Box height="70px"></Box>

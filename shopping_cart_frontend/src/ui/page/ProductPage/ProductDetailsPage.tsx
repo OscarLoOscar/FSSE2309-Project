@@ -20,7 +20,7 @@ const photos = [
 export default function ProductDetailsPage() {
   return (
     <>
-      <title>Venturenix Lab React Project</title>
+      <title>Project Page</title>
       <TopContainer />
       <LogoImage />
 

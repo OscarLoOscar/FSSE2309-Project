@@ -11,7 +11,7 @@ const products = [
   { name: 'Shipping', desc: '', price: 'Free' },
 ];
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+const addresses = ['1203', 'The Burrow', '212 Choi Hung Road', 'Diamond Hill', 'HK'];
 const payments = [
   { name: 'Card type', detail: 'Visa' },
   { name: 'Card holder', detail: 'Mr John Smith' },
@@ -22,6 +22,7 @@ type ReviewProps = {
   transProductData: GetTransDto | undefined;
 };
 export default function Review({ transProductData }: ReviewProps) {
+  console.log('transProductData:', transProductData);
   const renderTransProductList = () => {
     if (!transProductData) {
       return <Loading />; // You can replace this with a loading component
@@ -37,7 +38,7 @@ export default function Review({ transProductData }: ReviewProps) {
             <ListItem key={item.tpid} sx={{ py: 1, px: 0 }}>
               <ListItemText primary={item.product.name} secondary={item.product.description} />
               {/* <Typography variant="body2">{item.product.price}</Typography> */}
-              <Typography variant="body2">{item.subtotal}</Typography>
+             <Typography variant="body2">{item.subtotal}</Typography>
 
             </ListItem>
           ))}
