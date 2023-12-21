@@ -1,4 +1,4 @@
-import { useState, MouseEvent, SyntheticEvent, useContext } from 'react';
+import { useState, MouseEvent, SyntheticEvent, useContext, useEffect } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,9 +10,18 @@ import { useNavigate } from 'react-router-dom';
 import { handleSignOut } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
 import * as CartApi from '../../../../api/CartItemApi';
-import { Box, Divider, Popover, Skeleton, Typography } from '@mui/material';
+import { Badge, BadgeProps, Box, Divider, IconButton, Popover, Skeleton, Typography, styled } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { LoginUserContext } from '../../../../App';
+
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}));
 
 export default function UserStatus() {
   const [value, setValue] = useState('Login');
@@ -34,7 +43,9 @@ export default function UserStatus() {
     } else if (loginUser === null) {
       return (
         <>
-          Login
+          <Skeleton variant="circular" width={40} height={40} >
+            Login
+          </Skeleton>
         </>
       )
     } else {
@@ -85,6 +96,7 @@ export default function UserStatus() {
 
   const getCartItemList = async () => {
     const result = await CartApi.getCartItemListApi();
+    setCartItems(result);
     console.log(result);
   }
 
@@ -167,7 +179,8 @@ export default function UserStatus() {
       </Box>
     </Box>
   );
-
+  useEffect(() => {
+  }, [cartItems])
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -229,7 +242,10 @@ export default function UserStatus() {
         <BottomNavigationAction
           aria-describedby={id}
           label="Shopping Cart"
-          icon={<ShoppingCartIcon sx={{ color: 'white' }} />}
+          icon={
+            <StyledBadge badgeContent={cartItems.length} color="secondary">
+              <ShoppingCartIcon sx={{ color: 'white' }} />
+            </StyledBadge>}
           onClick={handleOpenPopoverClick}
           sx={{
             width: 100,
@@ -238,7 +254,10 @@ export default function UserStatus() {
             },
           }}
         />
-      </BottomNavigation>
+        {/* </IconButton> */}
+      </BottomNavigation >
+
+
       {/* CART */}
       {/* Popover */}
       <Popover

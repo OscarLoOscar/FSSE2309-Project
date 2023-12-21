@@ -6,6 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import { GetTransDto } from '../../../data/Trans/GetTransDto';
 import Loading from '../Utility/Loading';
+import { Box, ImageListItem } from '@mui/material';
 
 const products = [
   { name: 'Shipping', desc: '', price: 'Free' },
@@ -35,12 +36,23 @@ export default function Review({ transProductData }: ReviewProps) {
         </Typography>
         <List disablePadding>
           {transProductData?.items?.map((item) => (
-            <ListItem key={item.tpid} sx={{ py: 1, px: 0 }}>
-              <ListItemText primary={item.product.name} secondary={item.product.description} />
-              {/* <Typography variant="body2">{item.product.price}</Typography> */}
-             <Typography variant="body2">{item.subtotal}</Typography>
+            <React.Fragment key={item.tpid}>
+              {/* Image */}
+              <ImageListItem sx={{ width: '30%', marginRight: '10px' }}>
+                <img
+                  srcSet={`${item.product.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  src={`${item.product.image_url}?w=164&h=164&fit=crop&auto=format`}
+                  alt={item.product.name}
+                  loading="lazy"
+                />
+              </ImageListItem>
 
-            </ListItem>
+              {/* Other Details */}
+              <ListItem sx={{ py: 1, px: 0, display: 'flex', alignItems: 'center' }}>
+                <ListItemText primary={item.product.name} secondary={item.product.description} />
+                <Typography variant="body2">{item.subtotal}</Typography>
+              </ListItem>
+            </React.Fragment>
           ))}
           <ListItem sx={{ py: 1, px: 0 }}>
             <ListItemText primary="Total" />
