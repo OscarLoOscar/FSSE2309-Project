@@ -49,5 +49,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 npm install recharts
 npm install @types/recharts
 
+[Stripe](https://stripe.com/docs)
+
 [Optional]
 `npm install react-bootstrap`

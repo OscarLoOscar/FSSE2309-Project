@@ -47,6 +47,7 @@ export default function NavBar() {
         <AppBar position="static"
           sx={{
             width: "100%",
+            top: 0,
             display: 'block',
             margin: "auto",
           }}>
