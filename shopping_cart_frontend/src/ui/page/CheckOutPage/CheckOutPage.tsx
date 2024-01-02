@@ -48,7 +48,6 @@ export default function CartPage() {
       navigate('/thankyou')
     }
   }
-
   useEffect(() => {
     if (payStatus === 'SUCCESS') {
       void handlePaymentSuccess()

@@ -1,4 +1,4 @@
-import { useState, MouseEvent, SyntheticEvent, useContext, useEffect } from 'react';
+import { useState, MouseEvent, useContext, useEffect } from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { handleSignOut } from '../../../../authService/FirebaseAuthService';
 import { CartItemListDto } from '../../../../data/CartItem/CartItemListDto';
 import * as CartApi from '../../../../api/CartItemApi';
-import { Badge, BadgeProps, Box, Divider, IconButton, Popover, Skeleton, Typography, styled } from '@mui/material';
+import { Badge, BadgeProps, Box, Button, Divider, Popover, Skeleton, Typography, styled } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { LoginUserContext } from '../../../../App';
+import * as TransApi from "../../../../api/TransactionApi";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -24,10 +25,10 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 export default function UserStatus() {
-  const [value, setValue] = useState('Login');
-  const handleChange = (_event: SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+  // const [value, setValue] = useState('Login');
+  // const handleChange = (_event: SyntheticEvent, newValue: string) => {
+  //   setValue(newValue);
+  // };
 
   //user login
   const loginUser = useContext(LoginUserContext);
@@ -59,8 +60,8 @@ export default function UserStatus() {
   // For Popover
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopoverClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpenPopoverClick = (event: MouseEvent<HTMLButtonElement> | null = null) => {
+    setAnchorEl(event ? event.currentTarget : null);
   };
 
   const handleClose = () => {
@@ -84,26 +85,40 @@ export default function UserStatus() {
     navigate('/error');
   };
 
-  const navigateShoppingCartPage = () => {
-    navigate('/shoppingcart');
-  };
+  // const navigateShoppingCartPage = () => {
+  //   navigate('/shoppingcart');
+  // };
 
   const handleUserLogout = async () => {
     await handleSignOut();
     navigate('/logout');
   }
+  const [transId, setTransId] = useState<string | undefined>(undefined);
+  const [loadingBackdrop, setLoadingBackdrop] = useState<boolean>(false);
+  const handleCheckout = async () => {
+    setLoadingBackdrop(true)
+    const result = await TransApi.createTransaction()
+    setTransId(result.tid.toString())
+    setLoadingBackdrop(false)
+    navigate("/checkout/" + transId)
+}
+
   const [cartItems, setCartItems] = useState<CartItemListDto[]>([]);
+  const [cartItemLength, setCartItemLength] = useState<number>(0);
 
   const getCartItemList = async () => {
     const result = await CartApi.getCartItemListApi();
     setCartItems(result);
+    setCartItemLength(result.length);
+    console.log("cartItemLength" + cartItemLength);
+    console.log("result.length" + result.length);
     console.log(result);
   }
 
-  const handleUpdateCartItem = async (pid: string) => {
-    const result = await CartApi.updateCartItemApi(pid.toString(), "1")
-    console.log(result);
-  }
+  // const handleUpdateCartItem = async (pid: string) => {
+  //   const result = await CartApi.updateCartItemApi(pid.toString(), "1")
+  //   console.log(result);
+  // }
 
   const handleDeleteCartItem = async (cid: string) => {
     const result = await CartApi.deleteCartItemApi(cid.toString())
@@ -176,10 +191,29 @@ export default function UserStatus() {
         ) : (
           <Typography sx={{ p: 2, fontWeight: '700', color: '#4caf50' }}>Your cart is empty.</Typography>
         )}
+        <Box width="25%" sx={{
+          display: "flex",
+          alignItems: "center"
+        }}>
+          <Button variant="contained" fullWidth
+            onClick={handleCheckout}
+          >Checkout</Button>
+        </Box>
       </Box>
     </Box>
   );
   useEffect(() => {
+    // Update cartItems and cartItemLength
+    const updateCartItems = async () => {
+      await getCartItemList();
+      handleOpenPopoverClick();
+    };
+
+    updateCartItems();
+  }, []);
+
+  useEffect(() => {
+    setCartItemLength(cartItems.length);
   }, [cartItems])
   return (
     <>
@@ -200,7 +234,7 @@ export default function UserStatus() {
           },
         }}
         showLabels
-        onChange={handleChange}
+      //  onChange={handleChange}
       >
         <BottomNavigationAction
           label={renderLoginContainer()}
@@ -243,10 +277,13 @@ export default function UserStatus() {
           aria-describedby={id}
           label="Shopping Cart"
           icon={
-            <StyledBadge badgeContent={cartItems.length} color="secondary">
+            <StyledBadge badgeContent={cartItemLength} color="secondary">
               <ShoppingCartIcon sx={{ color: 'white' }} />
             </StyledBadge>}
-          onClick={handleOpenPopoverClick}
+          onClick={(event) => {
+            handleOpenPopoverClick(event);
+            getCartItemList();
+          }}
           sx={{
             width: 100,
             '&:hover': {

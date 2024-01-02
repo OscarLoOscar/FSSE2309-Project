@@ -2,17 +2,18 @@ package com.example.shoppingcart.exception.setting;
 
 import lombok.Getter;
 
+//SysCode
 @Getter
-public enum Code {
+public enum Code { 
   OK(20000, "OK"),
   // 40000 - 49999
-  NOTFOUND(40000, "Resource NOT FOUND."), //
+  NOT_FOUND(40000, "Resource NOT FOUND."), //
   // Shop
-  SHOP_NOTENOUGH_PRODUCT(41002, "Shop has not enough product."), //
+  SHOP_NOT_ENOUGH_PRODUCT(41002, "Shop has not enough product."), //
   PRODUCT_NOT_EXIST(41003, "Product not exist."), //
-  InsufficientStockException(41004,
+  INSUFFICIENT_STOCK_EXCEPTION(41004,
       "Can't add more items to the cart than the available stock."), //
-  CartItemNotFoundException(41005, "Item is not found in the cart."), //
+  CART_ITEM_NOT_FOUND_EXCEPTION(41005, "Item is not found in the cart."), //
   USER_NOT_FOUND(41006, "User not exists."), //
   CART_IS_EMPTY(41007, "Cart is empty"), //
   OUT_OF_STOCK(41008, "Out of Stock"), //

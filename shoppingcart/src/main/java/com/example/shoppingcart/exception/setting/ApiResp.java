@@ -52,8 +52,8 @@ public class ApiResp<T> {
     }
 
     public ApiResponseBuilder<T> error() {
-      this.code = Code.NOTFOUND.getCode();
-      this.message = Code.NOTFOUND.getDesc();
+      this.code = Code.NOT_FOUND.getCode();
+      this.message = Code.NOT_FOUND.getDesc();
       return this;
     }
 

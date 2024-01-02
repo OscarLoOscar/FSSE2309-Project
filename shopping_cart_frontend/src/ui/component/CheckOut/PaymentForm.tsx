@@ -1,13 +1,14 @@
-import * as React from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+
 export default function PaymentForm() {
   return (
-    <React.Fragment>
+    <Fragment>
       <Typography variant="h6" gutterBottom>
         Payment method
       </Typography>
@@ -60,6 +61,6 @@ export default function PaymentForm() {
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </Fragment>
   );
 }
