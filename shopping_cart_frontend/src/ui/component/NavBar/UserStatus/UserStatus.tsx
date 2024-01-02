@@ -106,7 +106,7 @@ export default function UserStatus() {
   const [cartItems, setCartItems] = useState<CartItemListDto[]>([]);
   const [cartItemLength, setCartItemLength] = useState<number>(0);
 
-  const getCartItemList = async () => {
+  const getCartItemListLength = async () => {
     const result = await CartApi.getCartItemListApi();
     setCartItems(result);
     setCartItemLength(result.length);
@@ -201,17 +201,14 @@ export default function UserStatus() {
   );
   useEffect(() => {
     // Update cartItems and cartItemLength
-    const updateCartItems = async () => {
-      await getCartItemList();
-      handleOpenPopoverClick();
-    };
+    if (loginUser) {
+      getCartItemListLength();
+    }
+  }, [loginUser]);
 
-    updateCartItems();
-  }, []);
-
-  useEffect(() => {
-    setCartItemLength(cartItems.length);
-  }, [cartItems])
+  // useEffect(() => {
+  //   setCartItemLength(cartItems.length);
+  // }, [cartItems])
   return (
     <>
       {/** handleChange之後keep白色 */}
@@ -280,7 +277,6 @@ export default function UserStatus() {
             </StyledBadge>}
           onClick={(event) => {
             handleOpenPopoverClick(event);
-            getCartItemList();
           }}
           sx={{
             width: 100,
