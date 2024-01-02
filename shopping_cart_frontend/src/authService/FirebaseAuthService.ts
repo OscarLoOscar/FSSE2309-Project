@@ -4,6 +4,7 @@ import {
     getAuth,
     GoogleAuthProvider,
     onAuthStateChanged,
+    onIdTokenChanged,
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut
@@ -64,6 +65,13 @@ export const handleOnAuthStateChanged = (callback: (user: UserData | null) => vo
             loginUser = null;
         }
         callback(loginUser);
+    });
+    
+    onIdTokenChanged(auth, (user) => {
+        if (user) {
+            // Token refreshed, you can handle it here
+            console.log("Token refreshed:", user);
+        }
     });
 };
 

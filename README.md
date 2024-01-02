@@ -3,7 +3,7 @@
 ## Getting Started with Create React App
 
 [Must]
-`npm install @mui/base`
+`npm install @mui/base @mui/lab @mui/material`
 
 `npm i react-collapsed`
 [Nested collapsible components](https://blog.logrocket.com/create-collapsible-react-components-react-collapsed/)

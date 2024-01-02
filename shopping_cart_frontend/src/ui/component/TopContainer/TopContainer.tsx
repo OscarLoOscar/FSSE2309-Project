@@ -13,11 +13,18 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { useNavigate } from 'react-router-dom';
 type Anchor = 'right';
 export default function TopContainer() {
   const [state, setState] = useState({
     right: false,
   });
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/orderList");
+  };
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
       (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -42,7 +49,7 @@ export default function TopContainer() {
         {['用戶資料', '訂單查詢', '通知', '訊息'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon onClick={index === 1 ? handleClick : undefined}>
                 {index % 3 === 0 ? <AccountBoxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />

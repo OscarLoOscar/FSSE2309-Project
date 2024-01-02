@@ -9,7 +9,6 @@ import { CartItemListDto } from "../../../data/CartItem/CartItemListDto.js";
 import { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import ProductDetails from "../Product/ProductDetails.js";
 type Props = {
     data: CartItemListDto
     update: () => void;

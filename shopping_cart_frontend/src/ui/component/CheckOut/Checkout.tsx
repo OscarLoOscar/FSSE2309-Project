@@ -76,7 +76,7 @@ export default function Checkout({ transactionId }: Props) {
       case 1:
         return <PaymentForm />;
       case 2:
-        return <Review transProductData={transProductData} />;
+        return <Review transProductData={transProductData} />
       default:
         throw new Error('Unknown step');
     }

@@ -12,6 +12,7 @@ import * as FirebaseAuthService from "./authService/FirebaseAuthService"
 import LogOutPage from "./ui/page/LogOutPage/LogOutPage";
 import ShoppingCartPage from "./ui/page/ShoppingCartPage/ShoppingCartPage";
 import CheckOutPage from "./ui/page/CheckOutPage/CheckOutPage";
+import OrderListPage from "./ui/page/OrderListPage/OrderListPage";
 
 //useContext - is a way to manage state globally
 
@@ -69,7 +70,10 @@ function App() {
       path: "/logout",
       element: <LogOutPage />
     }
-
+    , {
+      path: "/orderList",
+      element: <OrderListPage />
+    }
   ])
 
   return (

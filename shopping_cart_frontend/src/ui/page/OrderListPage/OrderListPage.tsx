@@ -4,16 +4,16 @@ import ItemTab from "../../component/ItemTab/ItemTab";
 import NavBar from "../../component/NavBar/NavBar";
 import TopContainer from "../../component/TopContainer/TopContainer";
 import LogoImage from "../../component/LogoImage/LogoImage";
-import ShoppingCartList from "../../component/ShoppingCart/ShoppingCartList";
+import OrderList from "../../component/OrderList/OrderList";
 
-export default function ShoppingCartPage() {
+export default function OrderListPage() {
     return <>
         <TopContainer />
         <LogoImage />
         <ItemTab />
         <NavBar />
         <BottomWrapper />
-        <ShoppingCartList/>
+        <OrderList/>
         <Footer />
     </>
-}
+} 

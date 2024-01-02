@@ -2,6 +2,7 @@ package com.example.shoppingcart.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.entity.CartItem;
@@ -44,7 +45,7 @@ public class Mapper {
 
   public static CartItemData map(CartItem cartItem) {
     return CartItemData.builder()//
-     //   .cid(cartItem.getCartId())//
+        // .cid(cartItem.getCartId())//
         .pid(cartItem.getProduct().getProductId())//
         .name(cartItem.getProduct().getProductName())//
         .imageUrl(cartItem.getProduct().getImageUrl())//
@@ -81,11 +82,13 @@ public class Mapper {
   }
 
   public static TransactionData map(Transaction transactionEntity) {
-    return TransactionData.builder().transactionId(transactionEntity.getTid())
+    return TransactionData.builder()//
+        .transactionId(transactionEntity.getTid())//
         .buyerUid(transactionEntity.getUser().getUserId()) // Assuming there's a getUserId method in UserEntity
         .datetime(transactionEntity.getDatetime())
         .status(transactionEntity.getStatus()) // Adjust accordingly
-        .total(transactionEntity.getTotalPrice().setScale(2)).build();
+        .total(transactionEntity.getTotalPrice().setScale(2))//
+        .build();
   }
 
   public static TransactionProductData map(
@@ -95,8 +98,8 @@ public class Mapper {
         .tpid(transactionProduct.getTpid())//
         .quantity(transactionProduct.getQuantity())//
         .cartItemData(cartItemData)//
-        .totalPrice(transactionProduct.getPrice()
-            .multiply(transactionProduct.getQuantity()).setScale(2))
+        .totalPrice(transactionProduct.getPrice()//
+            .multiply(transactionProduct.getQuantity()).setScale(2))//
         .build();
   }
 
@@ -124,6 +127,5 @@ public class Mapper {
         .quantity(tpd.getQuantity())//
         .stock(tpd.getCartItemData().getStock())//
         .build();
-
   }
 }

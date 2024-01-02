@@ -1,5 +1,7 @@
 package com.example.shoppingcart.controller.impl;
 
+import java.util.LinkedList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -7,10 +9,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.shoppingcart.controller.TransactionController;
+import com.example.shoppingcart.entity.Transaction;
 import com.example.shoppingcart.entity.UserEntity;
 import com.example.shoppingcart.infra.JwtUntil;
 import com.example.shoppingcart.infra.enums.TranStatus;
 import com.example.shoppingcart.model.FireBaseUserData;
+import com.example.shoppingcart.model.Mapper;
 import com.example.shoppingcart.model.TransactionData;
 import com.example.shoppingcart.model.TransactionUpdateResponse;
 import com.example.shoppingcart.services.UserService;
@@ -158,4 +162,20 @@ public class TransactionControllerImpl implements TransactionController {
 
         }
 
+        @Override
+        public ResponseEntity<List<TransactionData>> getAllTransactionDetail(
+                        JwtAuthenticationToken jwt) {
+                FireBaseUserData fireBaseUserData =
+                                JwtUntil.getFireBaseUser(jwt);
+                UserEntity userEntity = userService
+                                .getEntityByFireBaseUserData(fireBaseUserData);
+                Long uid = userEntity.getUserId();
+
+                List<TransactionData> convertData = new LinkedList<>();
+                for (Transaction t : transactionService
+                                .findAllByBuyerUid(uid)) {
+                        convertData.add(Mapper.map(t));
+                }
+                return ResponseEntity.ok(convertData);
+        }
 }
