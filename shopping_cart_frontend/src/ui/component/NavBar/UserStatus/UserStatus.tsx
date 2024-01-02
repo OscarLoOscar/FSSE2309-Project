@@ -101,7 +101,7 @@ export default function UserStatus() {
     setTransId(result.tid.toString())
     setLoadingBackdrop(false)
     navigate("/checkout/" + transId)
-}
+  }
 
   const [cartItems, setCartItems] = useState<CartItemListDto[]>([]);
   const [cartItemLength, setCartItemLength] = useState<number>(0);
@@ -110,9 +110,6 @@ export default function UserStatus() {
     const result = await CartApi.getCartItemListApi();
     setCartItems(result);
     setCartItemLength(result.length);
-    console.log("cartItemLength" + cartItemLength);
-    console.log("result.length" + result.length);
-    console.log(result);
   }
 
   // const handleUpdateCartItem = async (pid: string) => {
@@ -277,7 +274,8 @@ export default function UserStatus() {
           aria-describedby={id}
           label="Shopping Cart"
           icon={
-            <StyledBadge badgeContent={cartItemLength} color="secondary">
+            <StyledBadge badgeContent={cartItemLength}
+              color="secondary">
               <ShoppingCartIcon sx={{ color: 'white' }} />
             </StyledBadge>}
           onClick={(event) => {
