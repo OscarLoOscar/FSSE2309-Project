@@ -2,54 +2,49 @@
 
 ## Getting Started with Create React App
 
-[Must]
-`npm install @mui/base @mui/lab @mui/material`
+testing login username :
+`"email": "client1@client.com"`,
+`"password": "password"`
 
-`npm i react-collapsed`
-[Nested collapsible components](https://blog.logrocket.com/create-collapsible-react-components-react-collapsed/)
-`npm install @mui/material @emotion/react @emotion/styled`
 
-`npm install react-router-dom `
+`npm install`
 
-`npm install react@latest react-dom@latest`
+--- 
+# [Google Firebase](https://firebase.google.com/?hl=zh-cn )
 
-`npm install mui-nested-menu`
+![start_google_firebase](https://hackmd.io/_uploads/B10zh_p8p.png)
+![firebase_ Authentication](https://hackmd.io/_uploads/S18I3dTIa.png)
+![firebase_signin_method](https://hackmd.io/_uploads/Bkp_2Oa86.png)
 
-`npm install axios`
 
-`npm install react-virtuoso`
+### [Sign in by password](https://firebase.google.com/docs/reference/rest/auth)
+![signin_by_password_doc](https://hackmd.io/_uploads/rkh_pOT8p.png)
 
-`npm i @mui/styles --save --force` => ==NPM install of @mui/styles is not working for React 18==
-???
-`npm install moment --save`
+```javascript=
+{
+    "email": "client1@client.com",
+    "password": "password",
+    "returnSecureToken": "true"
+}
+```
 
-`npm install @mui/icons-material @mui/material @emotion/styled @emotion/react --force`
+![login_postman](https://hackmd.io/_uploads/HyV2a_T8T.png)
 
-`npm i @fortawesome/react-fontawesome --force`
+![how_to_use_auth](https://hackmd.io/_uploads/rkXAJtpUT.png)
 
-`npm i styled-components --force`
+---
+![Project_Main_page](https://hackmd.io/_uploads/H1-E-CWOa.png)
+![Project_popover](https://hackmd.io/_uploads/Hyy4-R-_a.png)
+![Project_ProductList](https://hackmd.io/_uploads/SyZE-R-da.png)
+![Project_Shopping_Cart](https://hackmd.io/_uploads/Syx4ZC-ua.png)
+![Project_Order_Details](https://hackmd.io/_uploads/B167-CW_a.png)
+![Project_shipping_address](https://hackmd.io/_uploads/rJyE-0bd6.png)
+![Project_Payment_method](https://hackmd.io/_uploads/B11EZCZua.png)
+![Project_CheckOut2](https://hackmd.io/_uploads/rJy4WRZ_p.png)
+![Project_Checkout](https://hackmd.io/_uploads/H1TQbC-O6.png)
 
-`npm i firebase --force` 
 
-`npm i polished --force`
 
-Parallax
-`npm install gsap --force`
 
-` npm install --save react-credit-cards-2 --force`
-[Styling BottomNavigation in React.js Material-UI](https://stackoverflow.com/questions/54375096/styling-bottomnavigation-in-react-js-material-ui)
 
-[Nested Menu ](https://medium.com/geekculture/creating-a-dropdown-with-nested-menu-items-using-react-mui-bb0c084226da)
-https://mdbootstrap.com/docs/react/extended/dropdown-multilevel/#
 
-### Open src/index.js, add the following import statement in the file head:
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-npm install recharts
-npm install @types/recharts
-
-[Stripe](https://stripe.com/docs)
-
-[Optional]
-`npm install react-bootstrap`
